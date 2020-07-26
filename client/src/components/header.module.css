@@ -1,0 +1,55 @@
+.header {
+    padding: 12px;
+    box-shadow: 0px 0px 4px grey;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    width: 40px;
+}
+
+.brandName{
+    font-size: 18px;
+    margin-right: 24px;
+    padding: 6px;
+    border-radius: 4px;
+}
+.brandName:hover{
+    background-color: #0454cc25;
+    cursor: pointer;
+}
+
+.headerLinks{
+    margin: 0px 12px;
+    font-size: 10pt;
+    font-weight: bold;
+    padding: 7px;
+    border-radius: 4px;
+}
+
+.headerLinks:hover, .userLogo:hover{
+    /* background-color: rgb(182, 227, 255); */
+    background-color: #0454cc25;
+    cursor: pointer;
+    color: #0352CC;
+}
+
+.createButton {
+    background-color: #0352CC;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    font-size: 10pt;
+    padding: 5px 10px;
+    font-weight: bold;
+    margin: 0px 12px;
+}
+
+.userLogo{
+    width: 30px;
+    margin-right: 12px;
+    margin-top: 4px;
+    padding: 6px 6px 6px 7px;
+    border-radius: 50%;
+}
