@@ -1,9 +1,10 @@
 const {User} = require('../models/user.model');
 
+
 module.exports.create = (req, res) =>{
     User.create(req.body)
         .then(user =>{
-            res.json({message:"Success!", user: user});
+            res.json({message:"Success!", user: user._id}); //only returning id here to prevent password from showing up
         })
         .catch(err => res.status(400).json(err));
 }

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb://localhost/playerdb", {
+mongoose.connect("mongodb://localhost/jiradb", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })

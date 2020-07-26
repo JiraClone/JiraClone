@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
         validate: {
             validator: val => /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(val),
             message: "Please enter a valid email"
-          }
+        }
     },
     password:{
         type: String,
@@ -19,3 +19,5 @@ const UserSchema = new mongoose.Schema({
         minlength: [6, "Password must be at least 6 characters"]
     }
 }, {timestamps: true});
+
+module.exports.User = mongoose.model('User', UserSchema);
