@@ -1,4 +1,9 @@
 const mongoose = require('mongoose');
+const autoIncrement = require('mongoose-auto-increment');
+
+var connection = mongoose.createConnection("mongodb://localhost/jiradb")
+
+autoIncrement.initialize(connection);
 
 mongoose.connect("mongodb://localhost/jiradb", {
     useNewUrlParser: true,
@@ -6,3 +11,4 @@ mongoose.connect("mongodb://localhost/jiradb", {
 })
     .then(() => console.log("Established connection to the database"))
     .catch(err => console.log("Something went wrong ", err));
+
