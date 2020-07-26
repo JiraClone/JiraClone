@@ -8,8 +8,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 require('./routes/user.routes')(app);
-require('./routes/label.routes')(app);
-require('./routes/message.routes')(app);
 require('./routes/project.routes')(app);
 require('./routes/task.routes')(app);
     

@@ -18,9 +18,7 @@ const ProjectSchema = new mongoose.Schema({
             ref: 'User'
         }
     ],
-    dueDate:{
-        type: Date
-    }
+    dueDate: Date
 }, {timestamps: true});
 
 module.exports.Project = mongoose.model('Project', ProjectSchema);

@@ -1,31 +1,22 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { User } = require('./user.model');
-const {Message} = require('./message.model');
 
 const TaskSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Name is required"]
     },
-    description:{
-        type: String
-    },
+    number: Number,
+    description: String,
     comments:[
         {
-            type: Schema.Types.ObjectId,
-            ref: 'Message'
+            sender: String,
+            message: String
         }
     ],
-    type:{
-        type: String
-    },
-    dueDate:{
-        type: Date
-    },
-    priority:{
-        type: String
-    },
+    type: String,
+    dueDate: Date,
+    priority: String,
     assignee:{
         type: Schema.Types.ObjectId,
         ref: "User"
@@ -34,21 +25,10 @@ const TaskSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
-    estimate:{
-        type: Number
-    },
-    timeTracked:{
-        type: Number
-    },
-    labels:[
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Label"
-        }
-    ],
-    status:{
-        type: String
-    },
+    estimate: Number,
+    timeTracked: Number,
+    labels: [String],
+    status: String,
 }, {timestamps: true});
 
 module.exports.Task = mongoose.model('Task', TaskSchema);
