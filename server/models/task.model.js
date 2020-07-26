@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const { User } = require('./user.model');
 const {Message} = require('./message.model');
 
@@ -10,9 +11,12 @@ const TaskSchema = new mongoose.Schema({
     description:{
         type: String
     },
-    comments:{
-        type: [Message]
-    },
+    comments:[
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Message'
+        }
+    ],
     type:{
         type: String
     },
@@ -23,10 +27,12 @@ const TaskSchema = new mongoose.Schema({
         type: String
     },
     assignee:{
-        type: User
+        type: Schema.Types.ObjectId,
+        ref: "User"
     },
     creator:{
-        type: User
+        type: Schema.Types.ObjectId,
+        ref: "User"
     },
     estimate:{
         type: Number
@@ -34,9 +40,12 @@ const TaskSchema = new mongoose.Schema({
     timeTracked:{
         type: Number
     },
-    labels:{
-        type: String
-    },
+    labels:[
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Label"
+        }
+    ],
     status:{
         type: String
     },

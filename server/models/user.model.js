@@ -13,6 +13,7 @@ const UserSchema = new mongoose.Schema({
             message: "Please enter a valid email"
         }
     },
+    //TODO make sure password is never returned with the model data
     password:{
         type: String,
         required:[true, "Password is required"],
