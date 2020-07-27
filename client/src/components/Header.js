@@ -12,8 +12,9 @@ export default function Header() {
                 <span className={ styles.headerLinks }>Filters</span>
                 <button className={ styles.createButton }>Create</button>
             </div>
-            <div>
-                <span><img className={ styles.userLogo }src="https://www.underconsideration.com/brandnew/archives/boundless_logo_detail.png" alt="user"/></span>
+            <div className={ styles.logoDiv }>
+                <img className={ styles.userLogo }src="https://www.underconsideration.com/brandnew/archives/boundless_logo_detail.png" alt="user"/>
+                <span className={ styles.userProfileText }>Your profile and settings</span>
             </div>
         </div>
     )
