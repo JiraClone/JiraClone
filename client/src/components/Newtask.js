@@ -19,6 +19,7 @@ export default function NewTask() {
     const [status, setStatus] = useState('');
     const [projects, setProjects] = useState(null);
     const [project, setProject] = useState(null);
+    const [errors, setErrors] = useState(null);
 
     useEffect(() => {
         axios
@@ -68,7 +69,7 @@ export default function NewTask() {
                     onChange={(e) => setProject(e.target.value)}
                 >
                     {projects.map((p, idx) => {
-                        <option key={idx} value={p}>
+                       return <option key={idx} value={p}>
                             {p.name}
                         </option>;
                     })}
