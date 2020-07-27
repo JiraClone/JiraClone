@@ -1,6 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Link, navigate } from '@reach/router';
+import Axios from 'axios';
 
 const Login = (props) => {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState("");
+
+    function handleSubmit(e){
+        e.preventDefault();
+        const user = {
+            email,
+            password
+        }
+        Axios.post('http://localhost:8000/api/users/login', user)
+            .then(res =>{
+                console.log("Log in successful");
+                navigate("/");
+            })
+            .catch(err =>{
+                setErrors(err.response.data.message);
+            })
+    }
+
     return ( 
         <div className="container">
             <div className="row">
@@ -15,17 +38,29 @@ const Login = (props) => {
                             Log in to your account
                         </div>
                     </div>
-                    <div className="row">
-                        <input className="col text-center m-3" type="email" placeholder="Enter email"/>
-                    </div>
-                    <div className="row my-3">
-                        <div className="col text-center">
-                            <button className="btn btn-primary">Continue</button>
+                    <form onSubmit={handleSubmit} >
+                        <div className="row">
+                            {errors && (
+                                    <span className="text-danger">
+                                    {errors}
+                                    </span>
+                                )}
                         </div>
-                    </div>
+                        <div className="row">
+                            <input className="col text-center m-3" type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
+                        </div>
+                        <div className="row">
+                            <input className="col text-center m-3" type="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.target.value)} />
+                        </div>
+                        <div className="row my-3">
+                            <div className="col text-center">
+                                <button type="submit" className="btn btn-primary">Continue</button>
+                            </div>
+                        </div>
+                    </form>
                     <div className="row my-3">
                         <div className="col text-center">
-                            <a href="">Sign up for an account</a>
+                            <Link to="/">Sign up for an account</Link>
                         </div>
                     </div>
                 </div>
