@@ -12,5 +12,3 @@ require('./routes/project.routes')(app);
 require('./routes/task.routes')(app);
 
 app.listen(port, () => console.log(`Listening on port: ${port}`));
-
-//this is only for a test.
