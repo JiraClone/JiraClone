@@ -1,10 +1,18 @@
 const {User} = require('../models/user.model');
-
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 module.exports.create = (req, res) =>{
     User.create(req.body)
         .then(user =>{
-            res.json({message:"Success!", user: user._id}); //only returning id here to prevent password from showing up
+            const userToken = jwt.sign({
+                id: user._id
+            }, process.env.SECRET_KEY);
+            res
+                .cookie("usertoken", userToken, {
+                    httpOnly: true
+                })
+                .json({message: "Success!", user: user});
         })
         .catch(err => res.status(400).json(err));
 }
@@ -31,4 +39,32 @@ module.exports.update = (req, res) =>{
     User.updateOne({_id: req.params.id}, req.body, {new:true, runValidators: true})
         .then(r => res.json(r))
         .catch(err => res.status(400).json(err));
+}
+
+module.exports.login = async(req, res) =>{
+
+    const errorMessage = "Email or password is incorrect";
+
+    try{
+        const user = await User.findOne({email: req.body.email});
+        if(user === null){
+           throw new Error(errorMessage);
+        }
+        const correctPassword = await bcrypt.compare(req.body.password, user.password);
+        if(!correctPassword){
+            console.log("Password incorrect for: " + req.body.email);
+            throw new Error(errorMessage);
+        }
+        const userToken = jwt.sign({
+            id: user._id
+        }, process.env.SECRET_KEY);
+        res
+            .cookie("usertoken", userToken, {
+                httpOnly: true
+            })
+            .json({message: "Success!", user: user});
+    }catch{
+        res.status(401).json({message: errorMessage});
+    }
+    
 }

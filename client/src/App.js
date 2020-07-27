@@ -1,15 +1,17 @@
 import React from 'react';
 import './App.css';
-import Header from './components/Header';
-import TaskContent from './components/TaskContent';
-import Sidebar from './components/Sidebar';
+import Login from './views/Login';
+import Registration from './views/Registration';
+import {Router} from '@reach/router';
+
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Sidebar />
-      <TaskContent />
+      <Router>
+        <Registration path="/register"/>
+        <Login path="/login"/>
+      </Router>
     </div>
   );
 
