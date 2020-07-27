@@ -54,6 +54,15 @@ export default function TaskContent(props) {
             name,
             description,
             comments,
+            type,
+            dueDate,
+            priority,
+            assignee,
+            creator,
+            estimate,
+            timeTracked,
+            labels,
+            status,
         };
 
         axios
