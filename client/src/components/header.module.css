@@ -3,6 +3,7 @@
     box-shadow: 0px 0px 4px grey;
     display: flex;
     justify-content: space-between;
+    position: relative;
 }
 
 .logo {
@@ -29,7 +30,6 @@
 }
 
 .headerLinks:hover, .userLogo:hover{
-    /* background-color: rgb(182, 227, 255); */
     background-color: #0454cc25;
     cursor: pointer;
     color: #0352CC;
@@ -46,10 +46,39 @@
     margin: 0px 12px;
 }
 
+.createButton:hover {
+    background-color: #0353cce7;
+}
+
+.logoDiv{
+    position: relative;
+}
+
 .userLogo{
     width: 30px;
     margin-right: 12px;
     margin-top: 4px;
     padding: 6px 6px 6px 7px;
     border-radius: 50%;
+}
+
+.userProfileText{
+    opacity: 0;
+    background-color: rgb(16, 16, 66);
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 1;
+    top: 120%;
+    left: 50%;
+    width: 160px;
+    margin-left: -140px;
+    font-size: 9pt;
+    transition: opacity 0.6s;
+}
+
+.logoDiv:hover .userProfileText{
+    opacity: 1;
+    transition-delay: 0.4s;
 }
