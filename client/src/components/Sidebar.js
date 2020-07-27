@@ -36,6 +36,14 @@ export default function Sidebar() {
                 </svg>
                 <div className={ styles.link }>View all filters</div>
             </div>
+            <div className={ styles.collapseButtonDiv }>
+                <svg className={ styles.collapseButton } width="26" height="26">
+                    <circle cx="13" cy="13" r="12" stroke="white" strokeWidth="1" fill="white"/> 
+                    <foreignObject x="7" y="-2" width="24" height="24">
+                        <p style={{fontWeight:"bold"}}>{'<'}</p>
+                    </foreignObject>
+                </svg>
+            </div>
         </div>
     )
 }
