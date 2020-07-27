@@ -4,6 +4,7 @@ import Login from './views/Login';
 import Registration from './views/Registration';
 import {Router} from '@reach/router';
 
+
 function App() {
   return (
     <div className="App">
@@ -11,7 +12,6 @@ function App() {
         <Registration path="/"/>
         <Login path="/login"/>
       </Router>
-      
     </div>
   );
 }
