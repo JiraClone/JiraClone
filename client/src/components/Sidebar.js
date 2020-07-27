@@ -1,21 +1,41 @@
 import React from 'react';
+import styles from './sidebar.module.css';
 
 export default function Sidebar() {
     return (
-        <div>
-            <p>Project Title</p>
-            <p>Project Link</p>
-            <p>Current Section</p>
-            <p>My open issues</p>
-            <p>Reported by me</p>
-            <p>All issues</p>
-            <p>Open issues</p>
-            <p>Done issues</p>
-            <p>Viewed recently</p>
-            <p>Created recently</p>
-            <p>Resolved recently</p>
-            <p>Updated recently</p>
-            <p>View all filters</p>
+        <div className={ styles.sidebar }>
+            <div className={ styles.sidebarContent }>
+                <div className={ styles.projectTitleDiv }>
+                    <img className={ styles.logo } src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Picasa.svg/256px-Picasa.svg.png" alt="logo"/>
+                    <div>
+                        <span className={ styles.projectTitle }>ProjectTitle</span>
+                        <span className={ styles.titleInfo }>Classic business project</span>
+                    </div>
+                </div>
+                <div className={ styles.link }>
+                    <img className={ styles.arrow } src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTOuGJsBtw7TwvfGIR-4W-uLYvTS2lSsswVLw&usqp=CAU" alt="arrow"/>
+                    Back to project
+                </div>
+                <svg width="240" height="24">
+                    <rect x="4" y="12" rx="2" ry="2" width="220" height="1"
+                        style={{stroke:"black", strokeWidth:"1", opacity:"0.1"}} />
+                </svg>
+                <div className={ styles.currentSection }>Current Section</div>
+                <div className={ styles.link }>My open issues</div>
+                <div className={ styles.link }>Reported by me</div>
+                <div className={ styles.currentlySelected }>All issues</div>
+                <div className={ styles.link }>Open issues</div>
+                <div className={ styles.link }>Done issues</div>
+                <div className={ styles.link }>Viewed recently</div>
+                <div className={ styles.link }>Created recently</div>
+                <div className={ styles.link }>Resolved recently</div>
+                <div className={ styles.link }>Updated recently</div>
+                <svg width="240" height="24">
+                    <rect x="4" y="12" rx="2" ry="2" width="220" height="1"
+                        style={{stroke:"black", strokeWidth:"1", opacity:"0.1"}} />
+                </svg>
+                <div className={ styles.link }>View all filters</div>
+            </div>
         </div>
     )
 }
