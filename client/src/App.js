@@ -9,11 +9,12 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Registration path="/"/>
+        <Registration path="/register"/>
         <Login path="/login"/>
       </Router>
     </div>
   );
+
 }
 
 export default App;
