@@ -6,6 +6,7 @@ import { Router, Redirect, navigate } from '@reach/router';
 import Main from './views/Main';
 import Header from './components/Header';
 import Axios from 'axios';
+import Test from './views/Test';
 
 //Handles redirect if user is not logged in
 Axios.interceptors.response.use(
@@ -18,18 +19,19 @@ Axios.interceptors.response.use(
 );
 
 function App() {
-    return (
-        <div className="App">
-            <Router>
-                <Redirect from="/" to="/register" noThrow />
-                <Registration path="/register" />
-                <Login path="/login" />
-                <Main path="/home" />
-                <Main path="/home/geer/:id" />
-                <Header path="/header" />
-            </Router>
-        </div>
-    );
+  return (
+    <div className="App">
+      <Router>
+        <Redirect from="/" to="/register" noThrow />
+        <Registration path="/register"/>
+        <Login path="/login"/>
+        <Main path="/home"/>
+        <Header path="/header"/>
+        <Test path="/test"/>
+      </Router>
+    </div>
+  );
+
 }
 
 export default App;
