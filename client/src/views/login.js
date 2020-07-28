@@ -14,10 +14,10 @@ const Login = (props) => {
             email,
             password
         }
-        Axios.post('http://localhost:8000/api/users/login', user)
+        Axios.post('http://localhost:8000/api/users/login', user, {withCredentials: true})
             .then(res =>{
                 console.log("Log in successful");
-                navigate("/");
+                navigate("/header");
             })
             .catch(err =>{
                 setErrors(err.response.data.message);
