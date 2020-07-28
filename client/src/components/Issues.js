@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './issues.module.css';
 import io from 'socket.io-client';
+import {Dropdown, ButtonGroup, NavDropdown, Navbar} from 'react-bootstrap';
+import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
+
 // import { useDispatch} from 'react-redux';
 
 export default function Issues(props) {
@@ -39,24 +42,68 @@ export default function Issues(props) {
 
     if (issues === null) return 'Loading...';
 
+    const DropdownPersist = (props) => {
+        const [open, setOpen] = useState(false);
+        const onToggle = (isOpen, ev, metadata) => {
+          if (metadata.source === "select" || metadata.source === "change") {
+              console.log(metadata.source);
+            setOpen(true);
+            return;
+          }
+          setOpen(isOpen);
+        };
+        return <Dropdown show={open} onToggle={onToggle} {...props}></Dropdown>;
+    };
+
+    const sort = field => {
+
+        function merge(left, right){
+            let result = [];
+            let i = 0;
+            let j = 0;
+            while(i<left.length && j<right.length){
+                if(left[i][field] < right[j][field]){
+                    result.push(left[i])
+                    i++;
+                }else{
+                    result.push(right[j]);
+                    j++
+                }
+            }
+            while(i < left.length){
+                result.push(left[i]);
+                i++;
+            }
+            while(j < right.length){
+                result.push(right[j]);
+                j++;
+            }
+            return result;
+        }
+        
+        function mergeSort(dataset){
+            if(dataset.length<2){
+                return dataset;
+            }else{
+                let middle = Math.floor(dataset.length/2);
+                let left = mergeSort(dataset.slice(0,middle));
+                let right = mergeSort(dataset.slice(middle, dataset.length));
+                return merge(left, right);
+            }
+        }
+        setIssues(mergeSort(issues));
+    }
+
     return (
         <div className={`${styles.panel} col-2`}>
-            <div className="btn-group">
-                <button
-                    type="button"
-                    className="btn btn-secondary dropdown-toggle"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                >
-                    Action
-                </button>
-                <div className="dropdown-menu">
-                    <p className="dropdown-item">Created</p>
-                    <p className="dropdown-item">Priority</p>
-                    <p className="dropdown-item">Updated</p>
-                </div>
-            </div>
+            <DropdownPersist as={ButtonGroup} >
+                <DropdownToggle style={{"backgroundColor":"transparent", "border": "none"}}><span style={{color:"black"}}>Sort by</span></DropdownToggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item onSelect={() => sort('createdAt')}>Created</Dropdown.Item>
+                    <Dropdown.Item onSelect={() => sort('priority')}>Priority</Dropdown.Item>
+                    <Dropdown.Item onSelect={() => sort('status')}>Status</Dropdown.Item>
+                </Dropdown.Menu>
+            </DropdownPersist>
             <div className={styles.issueGroup}>
                 {issues.map((issue) => {
                     return (
