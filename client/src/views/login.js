@@ -17,7 +17,7 @@ const Login = (props) => {
         Axios.post('http://localhost:8000/api/users/login', user)
             .then(res =>{
                 console.log("Log in successful");
-                navigate("/");
+                navigate("/header");
             })
             .catch(err =>{
                 setErrors(err.response.data.message);
