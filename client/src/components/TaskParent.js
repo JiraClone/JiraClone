@@ -7,7 +7,7 @@ export default function TaskParent(props) {
     const [taskNum, setTaskNum] = useState(props.id);
 
     return (
-        <div className="ml-3 col-10">
+        <div className="ml-3 col-9">
             <TaskHeader />
             <div className="row mt-5 ml-1">
                 <Issues setTaskNumber={setTaskNum} />

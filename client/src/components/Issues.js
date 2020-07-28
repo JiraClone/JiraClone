@@ -84,14 +84,7 @@ export default function Issues(props) {
                 })}
             </div>
             <div className={styles.bottom}>
-                <div className={styles.refresh}>
-                    <img
-                        className={styles.refreshIcon}
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Refresh_icon.svg/1200px-Refresh_icon.svg.png"
-                        alt="refresh"
-                    />
-                </div>
-                <span className={styles.bottomText}>issue 3 of 24</span>
+                <span className={styles.bottomText}>{ highlighted!==null ? `issue ${highlighted} of ${ issues.length }` : ' ' }</span>
             </div>
         </div>
     );
