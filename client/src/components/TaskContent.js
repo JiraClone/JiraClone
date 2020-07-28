@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import styles from './taskContent.module.css';
-// import { useDispatch, useSelector } from 'react-redux';
+import { Form, Button } from 'react-bootstrap';
 
 export default function TaskContent(props) {
-    // const dispatch = useDispatch();
-    // const rTask = useSelector((state) => state.task);
-
     const [task, setTask] = useState(null);
     const [users, setUsers] = useState(null);
     const [name, setName] = useState('');
@@ -31,7 +27,7 @@ export default function TaskContent(props) {
                 withCredentials: true,
             })
             .then((res) => {
-                // Destructuring did not work here
+                // Destructuring for DRY
                 console.log(res.data);
                 setTask(res.data);
                 setName(res.data.name);
@@ -107,61 +103,81 @@ export default function TaskContent(props) {
     }
 
     return (
-        <div className={styles.content}>
-            <form onSubmit={handleSubmit}>
-                <div className={styles.content}>
+        <div className="col-9">
+            <form onSubmit={handleSubmit} className="row">
+                <div className="col-9">
                     {errors.map((err, idx) => (
                         <p key={idx}>{err}</p>
                     ))}
-                    {/* Likely will need to incorporate 'projectname-autoincrementingID' here*/}
+                    <p>
+                        <img
+                            style={{ width: '18px' }}
+                            src="https://upload.wikimedia.org/wikipedia/donate/thumb/8/89/Ooui-checkbox-selected.svg/1024px-Ooui-checkbox-selected.svg.png"
+                            alt="check"
+                        />
+                        GEER-{props.taskNumber}
+                    </p>
                     <h3>
-                        <input
+                        <Form.Control
+                            size="lg"
                             value={task.name}
                             onChange={(e) => setName(e.target.value)}
-                        ></input>
+                        ></Form.Control>
                     </h3>
                     <div>
-                        <button>Attach</button>
-                        <button>Create subtask</button>
-                        <button>Link issue</button>
+                        <Button variant="light" className="mr-1">
+                            Attach
+                        </Button>
+                        <Button variant="light" className="mr-1">
+                            Create subtask
+                        </Button>
+                        <Button variant="light" className="mr-1">
+                            Link issue
+                        </Button>
                     </div>
-                    <p>
-                        <strong>Description</strong>
-                    </p>
-                    <textarea
-                        rows="4"
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows="2"
                         aria-label="Add a description..."
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                    ></textarea>
-                    <p>
-                        <strong>Activity</strong>
-                    </p>
+                    ></Form.Control>
+                    <Form.Label>Activity</Form.Label>
                     <div>
                         Show:
-                        <button>Comments</button>
-                        <button>History</button>
-                        <button>Work log</button>
-                        <textarea
+                        <Button variant="light">Comments</Button>
+                        <Button variant="light">History</Button>
+                        <Button variant="light">Work log</Button>
+                        <Form.Control
+                            as="textarea"
                             rows="1"
                             aria-label="Add a comment..."
                             value={newComment}
                             onChange={(e) => setNewComment(e.target.value)}
-                        ></textarea>
+                        ></Form.Control>
                     </div>
-                    <div>
-                        <button type="submit">Submit</button>
+                    <div className="mt-2">
+                        <Button type="submit" variant="primary">
+                            Submit
+                        </Button>
                     </div>
                 </div>
-                <div className={styles.content}>
-                    <select value={type} onChange={(e) => e.target.value}>
+                <div className="col-3">
+                    <Form.Control
+                        as="select"
+                        value={type}
+                        onChange={(e) => e.target.value}
+                    >
                         <option value="To Do">To Do</option>
                         <option value="In Progress">In Progress</option>
                         <option value="Done">Done</option>
-                    </select>
-                    <div>
-                        <label>Assignee</label>
-                        <select
+                    </Form.Control>
+                    <Form.Group>
+                        <Form.Label>Assignee</Form.Label>
+                        <Form.Control
+                            as="select"
+                            size="sm"
                             value={assignee}
                             onChange={(e) => e.target.value}
                         >
@@ -170,11 +186,13 @@ export default function TaskContent(props) {
                                     {user.name}
                                 </option>
                             ))}
-                        </select>
-                    </div>
-                    <div>
-                        <label>Reporter</label>
-                        <select
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Reporter</Form.Label>
+                        <Form.Control
+                            as="select"
+                            size="sm"
                             value={creator}
                             onChange={(e) => e.target.value}
                         >
@@ -183,19 +201,22 @@ export default function TaskContent(props) {
                                     {user.name}
                                 </option>
                             ))}
-                        </select>
-                    </div>
-                    <div>
-                        <label>Due date</label>
-                        <input
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Due date</Form.Label>
+                        <Form.Control
                             type="datetime-local"
+                            size="sm"
                             value={dueDate}
                             onChange={(e) => e.target.value}
                         />
-                    </div>
-                    <div>
-                        <label>Priority</label>
-                        <select
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Priority</Form.Label>
+                        <Form.Control
+                            as="select"
+                            size="sm"
                             value={priority}
                             onChange={(e) => e.target.value}
                         >
@@ -204,32 +225,35 @@ export default function TaskContent(props) {
                                 Medium
                             </option>
                             <option value="Low">Low</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Labels</label>
-                        <input
+                        </Form.Control>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Labels</Form.Label>
+                        <Form.Control
                             type="text"
+                            size="sm"
                             value={labels}
                             onChange={(e) => handleLabels(e.target.value)}
                         />
-                    </div>
-                    <div>
-                        <label>Original Estimate</label>
-                        <input
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Original Estimate</Form.Label>
+                        <Form.Control
                             type="number"
+                            size="sm"
                             value={estimate}
                             onChange={(e) => setEstimate(e.target.value)}
                         />
-                    </div>
-                    <div>
-                        <label>Time tracking</label>
-                        <input
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Time tracking</Form.Label>
+                        <Form.Control
                             type="number"
+                            size="sm"
                             value={timeTracked}
                             onChange={(e) => setTimeTracked(e.target.value)}
                         />
-                    </div>
+                    </Form.Group>
                     {/* Implement timestamp properties */}
                 </div>
             </form>

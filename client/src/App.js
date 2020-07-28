@@ -1,5 +1,6 @@
 import React from 'react';
-import './App.css';
+// import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './views/Login';
 import Registration from './views/Registration';
 import { Router, Redirect, navigate } from '@reach/router';
