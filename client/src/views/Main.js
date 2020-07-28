@@ -2,15 +2,15 @@ import React from 'react';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import TaskContent from '../components/TaskContent';
-import NewTask from '../components/Newtask';
+import NewTask from '../components/NewTask';
 
-export default function Main(){
-    return(
+export default function Main() {
+    return (
         <div>
-            <Header/>
-            <Sidebar/>
+            <Header />
+            <Sidebar />
             <NewTask />
-            <TaskContent/>
+            <TaskContent />
         </div>
-    )
+    );
 }

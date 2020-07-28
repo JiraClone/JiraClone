@@ -61,7 +61,7 @@ export default function NewTask() {
 
     return (
         <form className="form" onSubmit={handleSubmit}>
-            <div className="form-group">
+            {/* <div className="form-group">
                 <label>Project</label>
                 <select
                     className="form-control"
@@ -69,12 +69,14 @@ export default function NewTask() {
                     onChange={(e) => setProject(e.target.value)}
                 >
                     {projects.map((p, idx) => {
-                       return <option key={idx} value={p}>
-                            {p.name}
-                        </option>;
+                        return (
+                            <option key={idx} value={p}>
+                                {p.name}
+                            </option>
+                        );
                     })}
                 </select>
-            </div>
+            </div> */}
             {/* This is for issue Type
             <div className="form-group">
                 <label>Issue Type</label>
