@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './header.module.css';
-import {Dropdown, ButtonGroup, Button, DropdownButton} from 'react-bootstrap';
+import {Dropdown, ButtonGroup} from 'react-bootstrap';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import Axios from 'axios';
 
@@ -10,14 +10,14 @@ export default function Header() {
         //Code for when a project is selected in the dropdown menu
     }
 
-    const [projects, setProjects] = useState([]);
+    const [projects, setProjects] = useState(null);
 
     useEffect(() =>{
         //Load projects
-        Axios.get('http://localhost:8000/api/projects')
+        Axios.get('http://localhost:8000/api/projects', {withCredentials: true})
             .then(projects =>{
                 console.log(projects);
-                setProjects(projects);
+                setProjects(projects.data);
             })
     }, [])
 
@@ -31,8 +31,9 @@ export default function Header() {
                     <DropdownToggle style={{"backgroundColor":"transparent", "border": "none"}}><span className={ styles.headerLinks }>Projects</span></DropdownToggle>
                     <Dropdown.Menu>
                         {
+                            projects &&
                             projects.map(project => 
-                                <Dropdown.Item onSelect={() => selectProject(project._id)} >{project.name}</Dropdown.Item>
+                                <Dropdown.Item key={project._id} onSelect={() => selectProject(project._id)} >{project.name}</Dropdown.Item>
                             )
                         }
                         <Dropdown.Divider />

@@ -18,7 +18,7 @@ const Registration = (props) => {
             password,
             confirmPassword
         }
-        Axios.post('http://localhost:8000/api/users', newUser)
+        Axios.post('http://localhost:8000/api/users', newUser, {withCredentials: true})
             .then(res =>{
                 console.log("User created successfully");
                 navigate("/");
