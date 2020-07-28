@@ -23,7 +23,9 @@ export default function NewTask() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8000/api/projects')
+            .get('http://localhost:8000/api/projects', {
+                withCredentials: true,
+            })
             .then((res) => setProjects(res.data))
             .catch(console.log);
     });
@@ -47,8 +49,13 @@ export default function NewTask() {
         };
 
         axios
-            .post('http://localhost:8000/api/tasks', newTask)
-            .then((res) => res.data)
+            .post('http://localhost:8000/api/tasks/', newTask, {
+                withCredentials: true,
+            })
+            .then((res) => {
+                console.log('Successfully created new task! : ', res.data);
+                return res.data;
+            })
             .catch((err) => {
                 const errorResponse = err.response.data.errors;
                 const errorArr = [];
@@ -61,6 +68,11 @@ export default function NewTask() {
 
     return (
         <form className="form" onSubmit={handleSubmit}>
+            {/* {errors.map((err, idx) => (
+                <p key={idx} className="text-danger">
+                    {err}
+                </p>
+            ))} */}
             {/* <div className="form-group">
                 <label>Project</label>
                 <select
