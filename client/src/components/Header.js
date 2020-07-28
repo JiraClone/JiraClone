@@ -18,8 +18,7 @@ export default function Header() {
     function createProject(){
         //Get value from projectName component
         const name = document.getElementById('projectName').value;
-        console.log(name);
-        Axios.post('http://localhost:8000/api/projects', {name}, {withCredentials: true})
+        Axios.post('http://localhost:8000/api/projects', {name, users: [localStorage.getItem("userID")]}, {withCredentials: true})
             .then(res =>{
                 const updatedProjects = [...projects, res.data.project];
                 console.log(updatedProjects);
@@ -40,7 +39,7 @@ export default function Header() {
 
     useEffect(() =>{
         //Load projects
-        Axios.get('http://localhost:8000/api/projects', {withCredentials: true})
+        Axios.get('http://localhost:8000/api/projects/user/'+localStorage.getItem("userID"), {withCredentials: true})
             .then(projects =>{
                 console.log(projects);
                 setProjects(projects.data);
