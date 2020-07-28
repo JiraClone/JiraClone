@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import styles from './taskContent.module.css';
+// import { useDispatch, useSelector } from 'react-redux';
 
 export default function TaskContent(props) {
+    // const dispatch = useDispatch();
+    // const rTask = useSelector((state) => state.task);
+
     const [task, setTask] = useState(null);
     const [users, setUsers] = useState(null);
     const [name, setName] = useState('');
@@ -22,9 +27,12 @@ export default function TaskContent(props) {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8000/api/tasks' + props.id)
+            .get('http://localhost:8000/api/tasks/' + props.taskNumber, {
+                withCredentials: true,
+            })
             .then((res) => {
                 // Destructuring did not work here
+                console.log(res.data);
                 setTask(res.data);
                 setName(res.data.name);
                 setDescription(res.data.description);
@@ -42,10 +50,12 @@ export default function TaskContent(props) {
             .catch(console.log);
 
         axios
-            .get('http://localhost:8000/api/users')
+            .get('http://localhost:8000/api/users', {
+                withCredentials: true,
+            })
             .then((res) => setUsers(res.data))
             .catch(console.log);
-    }, []);
+    }, [props.taskNumber]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -66,7 +76,13 @@ export default function TaskContent(props) {
         };
 
         axios
-            .put(`http://localhost:8000/api/tasks/${props.id}`, updatedTask)
+            .put(
+                `http://localhost:8000/api/tasks/${props.taskNumber}`,
+                updatedTask,
+                {
+                    withCredentials: true,
+                }
+            )
             .then((res) => setTask(res.data))
             .catch((err) => {
                 const errorResponse = err.response.data.errors;
@@ -86,40 +102,34 @@ export default function TaskContent(props) {
         setComments(...comments, value);
     };
 
-    if (task == null) {
+    if (task == null || users == null) {
         return <p>The task you have selected does not exist!</p>;
     }
 
     return (
-        <div className="row task-content">
-            <form className="form">
-                <div className="col-9">
+        <div className={styles.content}>
+            <form onSubmit={handleSubmit}>
+                <div className={styles.content}>
                     {errors.map((err, idx) => (
-                        <p key={idx} className="text-danger">
-                            {err}
-                        </p>
+                        <p key={idx}>{err}</p>
                     ))}
                     {/* Likely will need to incorporate 'projectname-autoincrementingID' here*/}
                     <h3>
                         <input
-                            className="form-control"
                             value={task.name}
                             onChange={(e) => setName(e.target.value)}
                         ></input>
                     </h3>
                     <div>
-                        <button className="btn btn-light">Attach</button>
-                        <button className="btn btn-light">
-                            Create subtask
-                        </button>
-                        <button className="btn btn-light">Link issue</button>
+                        <button>Attach</button>
+                        <button>Create subtask</button>
+                        <button>Link issue</button>
                     </div>
                     <p>
                         <strong>Description</strong>
                     </p>
                     <textarea
                         rows="4"
-                        className="form-control"
                         aria-label="Add a description..."
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
@@ -129,35 +139,29 @@ export default function TaskContent(props) {
                     </p>
                     <div>
                         Show:
-                        <button className="btn btn-light">Comments</button>
-                        <button className="btn btn-light">History</button>
-                        <button className="btn btn-light">Work log</button>
+                        <button>Comments</button>
+                        <button>History</button>
+                        <button>Work log</button>
                         <textarea
                             rows="1"
-                            className="form-control"
                             aria-label="Add a comment..."
                             value={newComment}
                             onChange={(e) => setNewComment(e.target.value)}
                         ></textarea>
                     </div>
-                    <div className="text-left">
+                    <div>
                         <button type="submit">Submit</button>
                     </div>
                 </div>
-                <div className="col-3">
-                    <select
-                        className="form-control"
-                        value={type}
-                        onChange={(e) => e.target.value}
-                    >
+                <div className={styles.content}>
+                    <select value={type} onChange={(e) => e.target.value}>
                         <option value="To Do">To Do</option>
                         <option value="In Progress">In Progress</option>
                         <option value="Done">Done</option>
                     </select>
-                    <div className="form-group">
+                    <div>
                         <label>Assignee</label>
                         <select
-                            className="form-control"
                             value={assignee}
                             onChange={(e) => e.target.value}
                         >
@@ -168,10 +172,9 @@ export default function TaskContent(props) {
                             ))}
                         </select>
                     </div>
-                    <div className="form-group">
+                    <div>
                         <label>Reporter</label>
                         <select
-                            className="form-control"
                             value={creator}
                             onChange={(e) => e.target.value}
                         >
@@ -182,51 +185,46 @@ export default function TaskContent(props) {
                             ))}
                         </select>
                     </div>
-                    <div className="form-group">
+                    <div>
                         <label>Due date</label>
                         <input
-                            className="form-control"
                             type="datetime-local"
                             value={dueDate}
                             onChange={(e) => e.target.value}
                         />
                     </div>
-                    <div className="form-group">
+                    <div>
                         <label>Priority</label>
                         <select
-                            className="form-control"
                             value={priority}
                             onChange={(e) => e.target.value}
                         >
                             <option value="High">High</option>
-                            <option selected value="Medium">
+                            <option defaultValue value="Medium">
                                 Medium
                             </option>
                             <option value="Low">Low</option>
                         </select>
                     </div>
-                    <div className="form-group">
+                    <div>
                         <label>Labels</label>
                         <input
-                            className="form-control"
                             type="text"
                             value={labels}
                             onChange={(e) => handleLabels(e.target.value)}
                         />
                     </div>
-                    <div className="form-group">
+                    <div>
                         <label>Original Estimate</label>
                         <input
-                            className="form-control"
                             type="number"
                             value={estimate}
                             onChange={(e) => setEstimate(e.target.value)}
                         />
                     </div>
-                    <div className="form-group">
+                    <div>
                         <label>Time tracking</label>
                         <input
-                            className="form-control"
                             type="number"
                             value={timeTracked}
                             onChange={(e) => setTimeTracked(e.target.value)}
@@ -238,3 +236,11 @@ export default function TaskContent(props) {
         </div>
     );
 }
+
+// function mapStateToProps(state) {
+//     return {
+//         user: state.user,
+//     };
+// }
+
+// export default connect(mapStateToProps)(TaskContent);

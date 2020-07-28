@@ -3,28 +3,29 @@ import { Link, navigate } from '@reach/router';
 import Axios from 'axios';
 
 const Login = (props) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [errors, setErrors] = useState('');
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [errors, setErrors] = useState("");
-
-    function handleSubmit(e){
+    function handleSubmit(e) {
         e.preventDefault();
         const user = {
             email,
-            password
-        }
-        Axios.post('http://localhost:8000/api/users/login', user, {withCredentials: true})
-            .then(res =>{
-                console.log("Log in successful");
-                navigate("/header");
+            password,
+        };
+        Axios.post('http://localhost:8000/api/users/login', user, {
+            withCredentials: true,
+        })
+            .then((res) => {
+                console.log('Log in successful');
+                navigate('/home');
             })
-            .catch(err =>{
+            .catch((err) => {
                 setErrors(err.response.data.message);
-            })
+            });
     }
 
-    return ( 
+    return (
         <div className="container">
             <div className="row">
                 <div className="col text-center">
@@ -38,23 +39,38 @@ const Login = (props) => {
                             Log in to your account
                         </div>
                     </div>
-                    <form onSubmit={handleSubmit} >
+                    <form onSubmit={handleSubmit}>
                         <div className="row">
                             {errors && (
-                                    <span className="text-danger">
-                                    {errors}
-                                    </span>
-                                )}
+                                <span className="text-danger">{errors}</span>
+                            )}
                         </div>
                         <div className="row">
-                            <input className="col text-center m-3" type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} />
+                            <input
+                                className="col text-center m-3"
+                                type="email"
+                                placeholder="Enter email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
                         </div>
                         <div className="row">
-                            <input className="col text-center m-3" type="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.target.value)} />
+                            <input
+                                className="col text-center m-3"
+                                type="password"
+                                placeholder="Enter password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
                         </div>
                         <div className="row my-3">
                             <div className="col text-center">
-                                <button type="submit" className="btn btn-primary">Continue</button>
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                >
+                                    Continue
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -66,7 +82,7 @@ const Login = (props) => {
                 </div>
             </div>
         </div>
-     );
-}
- 
+    );
+};
+
 export default Login;
