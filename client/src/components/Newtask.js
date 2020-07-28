@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import io from 'socket.io-client';
+
 
 export default function NewTask() {
     const [task, setTask] = useState(null);
@@ -20,6 +22,8 @@ export default function NewTask() {
     const [projects, setProjects] = useState(null);
     const [project, setProject] = useState(null);
     const [errors, setErrors] = useState(null);
+    const [socket] = useState(() => io(':8000'));
+
 
     useEffect(() => {
         axios
@@ -54,6 +58,8 @@ export default function NewTask() {
             })
             .then((res) => {
                 console.log('Successfully created new task! : ', res.data);
+                //broadcasts new task so the issues list will auto update
+                socket.emit('new task created', res.data.task);
                 return res.data;
             })
             .catch((err) => {

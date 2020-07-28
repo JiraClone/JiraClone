@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './issues.module.css';
+import io from 'socket.io-client';
 // import { useDispatch} from 'react-redux';
 
 export default function Issues(props) {
     const [issues, setIssues] = useState(null);
     const [highlighted, setHighlighted] = useState(null);
+    const [socket] = useState(() => io(':8000'));
 
     // const dispatch = useDispatch();
 
@@ -25,6 +27,14 @@ export default function Issues(props) {
             .get('http://localhost:8000/api/tasks')
             .then((res) => setIssues(res.data))
             .catch(console.log);
+        
+        socket.on('new task added', newTask => {
+            setIssues(prevIssues => {
+                return [...prevIssues, newTask];
+            })
+        })
+
+        return () => socket.disconnect(true);
     }, []);
 
     if (issues === null) return 'Loading...';
