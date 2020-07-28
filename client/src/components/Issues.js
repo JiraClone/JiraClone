@@ -30,7 +30,7 @@ export default function Issues(props) {
     if (issues === null) return 'Loading...';
 
     return (
-        <div className={styles.panel}>
+        <div className={`${styles.panel} col-2`}>
             <div className="btn-group">
                 <button
                     type="button"
