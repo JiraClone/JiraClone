@@ -3,14 +3,30 @@ import styles from './header.module.css';
 import {Dropdown, ButtonGroup} from 'react-bootstrap';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import Axios from 'axios';
+import { navigate } from '@reach/router';
 
 export default function Header() {
 
+    const [projects, setProjects] = useState(null);
+
+    //Function to handle when a project is selected in the dropdown menu
     function selectProject(id){
-        //Code for when a project is selected in the dropdown menu
+        navigate('/projects/'+id);
     }
 
-    const [projects, setProjects] = useState(null);
+    //Function to create a new project
+    function createProject(){
+        //Get value from projectName component
+        const name = document.getElementById('projectName').value;
+        console.log(name);
+        Axios.post('http://localhost:8000/api/projects', {name}, {withCredentials: true})
+            .then(res =>{
+                const updatedProjects = [...projects, res.data.project];
+                console.log(updatedProjects);
+                setProjects(updatedProjects);
+            })
+            .catch(err => console.log(err));
+    }
 
     useEffect(() =>{
         //Load projects
@@ -21,13 +37,27 @@ export default function Header() {
             })
     }, [])
 
+    //Component wrapper on Bootstrap Dropdown to make sure dropdown menu doesn't close after selecting something
+    const DropdownPersist = (props) => {
+        const [open, setOpen] = useState(false);
+        const onToggle = (isOpen, ev, metadata) => {
+          if (metadata.source === "select" || metadata.source === "change") {
+              console.log(metadata.source);
+            setOpen(true);
+            return;
+          }
+          setOpen(isOpen);
+        };
+        return <Dropdown show={open} onToggle={onToggle} {...props}></Dropdown>;
+      };
+
     return (
         <div className={ styles.header }>
             <div>
                 <img className={ styles.logo }src="https://cdn.dribbble.com/users/317366/screenshots/3696949/dribbble-icecream.png" alt="logo"/>
                 <span className={ styles.brandName }>Geera Software</span>
                 <span className={ styles.headerLinks }>Your Work</span>
-                <Dropdown as={ButtonGroup}>
+                <DropdownPersist as={ButtonGroup} >
                     <DropdownToggle style={{"backgroundColor":"transparent", "border": "none"}}><span className={ styles.headerLinks }>Projects</span></DropdownToggle>
                     <Dropdown.Menu>
                         {
@@ -37,9 +67,12 @@ export default function Header() {
                             )
                         }
                         <Dropdown.Divider />
-                        <Dropdown.Item eventKey="4">+ Create Project</Dropdown.Item>
+                        <Dropdown.Item onSelect={createProject}>+ Create New Project</Dropdown.Item>
+                        <Dropdown.Item>
+                            <input id="projectName" type="text" placeholder="New project name"/>
+                        </Dropdown.Item>
                     </Dropdown.Menu>
-                </Dropdown>
+                </DropdownPersist>
                 <span className={ styles.headerLinks }>Filters</span>
                 <button className={ styles.createButton }>Create</button>
             </div>
