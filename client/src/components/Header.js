@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './header.module.css';
-import {Dropdown, ButtonGroup} from 'react-bootstrap';
+import {Dropdown, ButtonGroup, NavDropdown, Navbar} from 'react-bootstrap';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import Axios from 'axios';
 import { navigate } from '@reach/router';
@@ -26,6 +26,16 @@ export default function Header() {
                 setProjects(updatedProjects);
             })
             .catch(err => console.log(err));
+    }
+
+    //Sign out function
+    function signOut(){
+        Axios.delete('http://localhost:8000/api/logout')
+            .then(res =>{
+                console.log("Successfully logged out");
+                localStorage.clear();
+                navigate("/login");
+            })
     }
 
     useEffect(() =>{
@@ -77,10 +87,16 @@ export default function Header() {
                 <button className={ styles.createButton }>Create</button>
             </div>
             
-            <div className={ styles.logoDiv }>
+            <NavDropdown title={<div className={ styles.logoDiv }>
                 <img className={ styles.userLogo }src="https://www.underconsideration.com/brandnew/archives/boundless_logo_detail.png" alt="user"/>
                 <span className={ styles.userProfileText }>Your profile and settings</span>
-            </div>
+                </div>} id="nav-dropdown">
+                <NavDropdown.ItemText>{localStorage.getItem("userName")}</NavDropdown.ItemText>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onSelect={signOut}>Sign Out</NavDropdown.Item>
+            </NavDropdown>
+
+            
         </div>
     )
 }

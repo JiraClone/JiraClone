@@ -20,8 +20,10 @@ const Registration = (props) => {
         }
         Axios.post('http://localhost:8000/api/users', newUser, {withCredentials: true})
             .then(res =>{
-                console.log("User created successfully");
-                navigate("/");
+                console.log("User created successfully: " + res.data.user_id);
+                localStorage.setItem('userID', res.data.user._id);
+                localStorage.setItem('userName', res.data.user.name);
+                navigate("/header");
             })
             .catch(err => {
                 setErrors(err.response.data.errors);

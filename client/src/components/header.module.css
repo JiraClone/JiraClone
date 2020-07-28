@@ -54,6 +54,7 @@
 
 .logoDiv{
     position: relative;
+    display: inline-block;
 }
 
 .userLogo{
