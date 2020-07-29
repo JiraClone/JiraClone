@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './header.module.css';
-import { Dropdown, ButtonGroup, NavDropdown, Navbar } from 'react-bootstrap';
+import { Dropdown, ButtonGroup, NavDropdown} from 'react-bootstrap';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import Axios from 'axios';
 import { navigate } from '@reach/router';

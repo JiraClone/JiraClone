@@ -10,14 +10,14 @@ import Axios from 'axios';
 import Test from './views/Test';
 
 //Handles redirect if user is not logged in
-Axios.interceptors.response.use(
-    (res) => res,
-    (err) => {
-        console.log(err.response.data);
-        navigate('/login');
-        return err;
-    }
-);
+// Axios.interceptors.response.use(
+//     (res) => res,
+//     (err) => {
+//         console.log(err.response.data);
+//         navigate('/login');
+//         return err;
+//     }
+// );
 
 function App() {
     const onSubmit = (e) => {
