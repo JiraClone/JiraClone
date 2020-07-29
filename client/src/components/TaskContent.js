@@ -7,7 +7,7 @@ export default function TaskContent(props) {
     const [users, setUsers] = useState(null);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [comments, setComments] = useState({});
+    const [comments, setComments] = useState([]);
     //maybe won't have to initialize it to 'To Do'
     const [type, setType] = useState('To Do');
     const [dueDate, setDueDate] = useState('');
@@ -53,13 +53,23 @@ export default function TaskContent(props) {
             .catch(console.log);
     }, [props.taskNumber]);
 
+    console.log(comments);
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        const newCom = {
+            sender: localStorage.getItem('userName'),
+            message: newComment
+        }
+        if(newComment !== ''){
+            if(comments.length>0) setComments(...comments, newCom);
+            else setComments([newCom]);
+        }
 
         const updatedTask = {
             name,
             description,
-            comments,
+            comments: [...comments, newCom],
             type,
             dueDate,
             priority,
