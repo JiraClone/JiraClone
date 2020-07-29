@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TaskTitle from './TaskTitle';
 import TaskActivity from './TaskActivity';
+import styles from './task.module.css';
 
 
 export default function TaskInfo({ taskNumber }) {
@@ -10,6 +11,7 @@ export default function TaskInfo({ taskNumber }) {
     // const [task, setTask] = useState(null)
     const [name, setName] = useState(null)
     const [number, setNumber] = useState(null)
+    const [comments, setComments] = useState(null)
     
     useEffect(() => {
         axios.get(`http://localhost:8000/api/tasks/${taskNumber}`, {withCredentials: true})
@@ -17,6 +19,7 @@ export default function TaskInfo({ taskNumber }) {
                 // setTask(res.data);
                 setName(res.data.name);
                 setNumber(res.data.number);
+                setComments(res.data.comments)
                 setLoaded(true);
             })
             .catch(console.log);
@@ -24,12 +27,9 @@ export default function TaskInfo({ taskNumber }) {
 
     if(!loaded) return "Loading...";
     
-    // if(loaded) {
-    //     var { name, number } = task;
-    // }
 
     return(
-        <div className="row">
+        <div className={`row ${ styles.taskInfo }`}>
             <div className="col-9">
                 <p>GEER-{number}</p>
                 <TaskTitle name={name} setName={setName} number={number}/>
@@ -43,7 +43,7 @@ export default function TaskInfo({ taskNumber }) {
                     <p>Description</p>
                     <input type="text"/>
                 </div>
-                <TaskActivity />
+                <TaskActivity comments={comments} setComments={setComments} number={number}/>
             </div>
             <div className="col-3">
                 <p>todo</p>
