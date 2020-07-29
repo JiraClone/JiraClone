@@ -8,13 +8,20 @@ import TaskParent from '../components/TaskParent';
 
 export default function Main(props) {
     return (
-        <div>
-            <Header />
-
-            <div className="row">
+        <>
+        <div className="row">
+            <div className="col-12">
+                <Header></Header>
+            </div>
+        </div>
+        <div className="row">
+            <div className="col-2">
                 <Sidebar />
+            </div>
+            <div className="col-9">
                 <TaskParent id={props.id} />
             </div>
         </div>
+        </>
     );
 }
