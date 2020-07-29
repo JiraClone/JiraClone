@@ -20,19 +20,21 @@ Axios.interceptors.response.use(
 );
 
 function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Redirect from="/" to="/register" noThrow />
-        <Registration path="/register"/>
-        <Login path="/login"/>
-        <Main path="/home"/>
-        <Header path="/header"/>
-        <Test path="/test"/>
-      </Router>
-    </div>
-  );
-
+    const onSubmit = (e) => {
+        e.preventDefault();
+    };
+    return (
+        <div className="App">
+            <Router>
+                <Redirect from="/" to="/register" noThrow />
+                <Registration path="/register" />
+                <Login path="/login" />
+                <Main path="/home" onSubmit={onSubmit} />
+                <Header path="/header" onSubmit={onSubmit} />
+                <Test path="/test" />
+            </Router>
+        </div>
+    );
 }
 
 export default App;
