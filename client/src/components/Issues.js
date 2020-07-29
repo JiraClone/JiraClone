@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import styles from './issues.module.css';
 import io from 'socket.io-client';
 import {Dropdown, ButtonGroup, NavDropdown, Navbar} from 'react-bootstrap';
@@ -8,6 +7,7 @@ import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 // import { useDispatch} from 'react-redux';
 
 export default function Issues(props) {
+    const {filteredTasks} = props;
     const [issues, setIssues] = useState(null);
     const [highlighted, setHighlighted] = useState(null);
     const [socket] = useState(() => io(':8000'));
@@ -25,12 +25,12 @@ export default function Issues(props) {
         // });
     };
 
+    useEffect(()=>{
+        console.log("Filtered: ", props.filteredTasks);
+        setIssues(filteredTasks);
+    }, [filteredTasks])
+
     useEffect(() => {
-        axios
-            .get('http://localhost:8000/api/tasks')
-            .then((res) => setIssues(res.data))
-            .catch(console.log);
-        
         socket.on('new task added', newTask => {
             setIssues(prevIssues => {
                 return [...prevIssues, newTask];
@@ -106,6 +106,7 @@ export default function Issues(props) {
             </DropdownPersist>
             <div className={styles.issueGroup}>
                 {issues.map((issue) => {
+                    console.log(issue);
                     return (
                         <div
                             key={issue.number}
