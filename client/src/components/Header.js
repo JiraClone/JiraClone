@@ -17,13 +17,9 @@ export default function Header(props) {
     function createProject() {
         //Get value from projectName component
         const name = document.getElementById('projectName').value;
-        console.log(name);
-        Axios.post(
-            'http://localhost:8000/api/projects',
-            { name },
-            { withCredentials: true }
-        )
-            .then((res) => {
+
+        Axios.post('http://localhost:8000/api/projects', {name, users: [localStorage.getItem("userID")]}, {withCredentials: true})
+            .then(res =>{
                 const updatedProjects = [...projects, res.data.project];
                 console.log(updatedProjects);
                 setProjects(updatedProjects);
@@ -42,13 +38,13 @@ export default function Header(props) {
 
     useEffect(() => {
         //Load projects
-        Axios.get('http://localhost:8000/api/projects', {
-            withCredentials: true,
-        }).then((projects) => {
-            console.log(projects);
-            setProjects(projects.data);
-        });
-    }, []);
+
+        Axios.get('http://localhost:8000/api/projects/user/'+localStorage.getItem("userID"), {withCredentials: true})
+            .then(projects =>{
+                console.log(projects);
+                setProjects(projects.data);
+            })
+    }, [])
 
     //Component wrapper on Bootstrap Dropdown to make sure dropdown menu doesn't close after selecting something
     const DropdownPersist = (props) => {

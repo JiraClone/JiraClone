@@ -10,5 +10,4 @@ module.exports = function(app){
     app.delete('/api/users/:id', authenticate , UserController.delete);
     app.put('/api/users/:id', authenticate, UserController.update);
     app.get('/api/users/:id', authenticate, UserController.findById);
-    
 }

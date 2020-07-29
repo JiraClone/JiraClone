@@ -3,7 +3,9 @@ import styles from './sidebar.module.css';
 
 export default function Sidebar() {
     return (
-        <div className={ styles.sidebar }>
+        <div className="row">
+            <div className="col">
+            <div className={ styles.sidebar }>
             <div className={ styles.sidebarContent }>
                 <div className={ styles.projectTitleDiv }>
                     <img className={ styles.logo } src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Picasa.svg/256px-Picasa.svg.png" alt="logo"/>
@@ -45,5 +47,8 @@ export default function Sidebar() {
                 </svg>
             </div>
         </div>
+            </div>
+        </div>
+        
     )
 }
