@@ -1,7 +1,59 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './sidebar.module.css';
+import Axios from 'axios';
 
 export default function Sidebar() {
+    
+    const [tasks, setTasks] = useState([]);
+    const [filteredTasks, setFilteredTasks] = useState([]);
+    const [selected, setSelected] = useState(3);
+
+    useEffect(() =>{
+        Axios.get('http://localhost:8000/api/tasks')
+            .then(res =>{
+                setTasks(res.data);
+                setFilteredTasks(res.data);
+            })
+    }, []);
+
+    //Handle selection
+    function handleClick(e){
+        setSelected(e.target.id);
+        switch(e.target.id){
+            case '1':
+                console.log("My Open Issues");
+                let temp = tasks.filter(task => task.assignee === localStorage.getItem("userID") && task.status === "0" );
+                setFilteredTasks(temp);
+                console.log(temp);
+                break;
+            case '2':
+                console.log("Reported By Me");
+                let temp1 = tasks.filter(task => task.creator === localStorage.getItem("userID"));
+                setFilteredTasks(temp1);
+                console.log(temp1);
+                break;
+            case '3':
+                console.log("All Issues");
+                setFilteredTasks(tasks);
+                console.log(tasks);
+                break;
+            case '4':
+                console.log("Open Issues");
+                let temp2 = tasks.filter(task => task.status === "0" );
+                setFilteredTasks(temp2);
+                console.log(temp2);
+                break;
+            case '5':
+                console.log("Done Issues");
+                let temp3 = tasks.filter(task => task.status === "1" );
+                setFilteredTasks(temp3);
+                console.log(temp3);
+                break;
+            default:
+                console.log("Error: No filter matching for selected item");
+        }
+    }
+
     return (
         <div className="row">
             <div className="col">
@@ -22,21 +74,16 @@ export default function Sidebar() {
                     <rect x="4" y="12" rx="2" ry="2" width="220" height="1"
                         style={{stroke:"black", strokeWidth:"1", opacity:"0.1"}} />
                 </svg>
-                <div className={ styles.currentSection }>Current Section</div>
-                <div className={ styles.link }>My open issues</div>
-                <div className={ styles.link }>Reported by me</div>
-                <div className={ styles.currentlySelected }>All issues</div>
-                <div className={ styles.link }>Open issues</div>
-                <div className={ styles.link }>Done issues</div>
-                <div className={ styles.link }>Viewed recently</div>
-                <div className={ styles.link }>Created recently</div>
-                <div className={ styles.link }>Resolved recently</div>
-                <div className={ styles.link }>Updated recently</div>
+                <div className={ styles.currentSection }>Issues and Filters</div>
+                <div id="1" onClick={handleClick} className={ (selected === 1) ? styles.currentlySelected : styles.link }>My open issues</div>
+                <div id="2" onClick={handleClick} className={ (selected === 2) ? styles.currentlySelected : styles.link }>Reported by me</div>
+                <div id="3" onClick={handleClick} className={ (selected === 3) ? styles.currentlySelected : styles.link }>All issues</div>
+                <div id="4" onClick={handleClick} className={ (selected === 4) ? styles.currentlySelected : styles.link }>Open issues</div>
+                <div id="5" onClick={handleClick} className={ (selected === 5) ? styles.currentlySelected : styles.link  }>Done issues</div>
                 <svg width="240" height="24">
                     <rect x="4" y="12" rx="2" ry="2" width="220" height="1"
                         style={{stroke:"black", strokeWidth:"1", opacity:"0.1"}} />
                 </svg>
-                <div className={ styles.link }>View all filters</div>
             </div>
             <div className={ styles.collapseButtonDiv }>
                 <svg className={ styles.collapseButton } width="26" height="26">
