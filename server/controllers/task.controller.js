@@ -35,7 +35,6 @@ module.exports.delete = (req, res) => {
 //         .catch((err) => res.status(400).json(err));
 // };
 
-
 //changed this update function to search by tast.number instead of task._id
 module.exports.update = (req, res) => {
     Task.updateOne({ number: req.params.id }, req.body, {
