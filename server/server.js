@@ -29,7 +29,7 @@ io.on("connection", socket => {
     })
     
     //don't think we actually need this
-    socket.on('disconnect', () => {
-        console.log(`Someone left`);
-    })
+    // socket.on('disconnect', () => {
+    //     console.log(`Someone left`);
+    // })
 })
