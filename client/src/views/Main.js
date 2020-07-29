@@ -5,6 +5,7 @@ import NewTask from '../components/NewTask';
 import TaskParent from '../components/TaskParent';
 import { Modal, Button } from 'react-bootstrap';
 import Axios from 'axios';
+import ProjectSettings from '../components/ProjectSettings';
 
 export default function Main(props) {
     const [show, setShow] = useState(false);
@@ -17,6 +18,7 @@ export default function Main(props) {
 
     const [tasks, setTasks] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
+    const [currentView, setCurrentView] = useState("tasks");
 
     useEffect(() => {
         Axios.get(
@@ -94,15 +96,26 @@ export default function Main(props) {
                         setTasks={setTasks}
                         filteredTasks={filteredTasks}
                         setFilteredTasks={setFilteredTasks}
+                        setCurrentView={setCurrentView}
                     />
                 </div>
-                <div className="col-9">
-                    <TaskParent
-                        id={props.id}
-                        filteredTasks={filteredTasks}
-                        currentProject={currentProj}
-                    />
-                </div>
+                {
+                    (currentView === "tasks") ?
+                    <div className="col-9">
+                        <TaskParent
+                            id={props.id}
+                            filteredTasks={filteredTasks}
+                            currentProject={currentProj}
+                        />
+                    </div>
+                    :
+                    <div className="col-9">
+                        <ProjectSettings
+                            currentProject={currentProj}
+                            setCurrentView={setCurrentView}
+                        />
+                    </div>
+                }
             </div>
         </>
     );

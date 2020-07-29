@@ -6,6 +6,7 @@ const ProjectSettings = (props) => {
 
     const projectID = "5f2095232eb7bf4afc8fd3bd";
 
+    const {setCurrentView} = props;
     const [projectName, setProjectName] = useState("");
     const [projectUsers, setProjectUsers] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
@@ -34,7 +35,7 @@ const ProjectSettings = (props) => {
         Axios.put('http://localhost:8000/api/projects/'+projectID, projectUpdates, {withCredentials: true})
             .then(res =>{
                 console.log(res);
-                navigate('/home');
+                setCurrentView("tasks");
             })
             .catch(err =>{
                 console.log(err);
@@ -101,7 +102,7 @@ const ProjectSettings = (props) => {
                     <div className="col-5">
                         <div className="row">
                             <div className="col-6 text-right">
-                                <Link to="/home" className="btn btn-secondary">Cancel</Link>
+                                <div onClick={() => setCurrentView("tasks")} className="btn btn-secondary">Cancel</div>
                             </div>
                             <div className="col-6">
                                 <button type="submit" className="btn btn-primary">Save Changes</button>
