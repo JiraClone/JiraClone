@@ -8,6 +8,7 @@ import Axios from 'axios';
 
 export default function Main(props) {
     const [show, setShow] = useState(false);
+    const [currentProj, setCurrentProj] = useState(null);
     // const [submitFunction, setSubmitFunction] = useState(null);
 
     const [tasks, setTasks] = useState([]);
@@ -48,6 +49,7 @@ export default function Main(props) {
                 <Modal.Body>
                     <NewTask
                         closeModal={handleClose}
+                        setCurrentProject={setCurrentProj}
                         // onSubmit={(f) => setSubmitFunction(f)}
                     />
                 </Modal.Body>
