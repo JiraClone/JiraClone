@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
+import { Button, Form } from 'react-bootstrap';
 
-
-export default function NewTask() {
+export default function NewTask(props) {
     const [task, setTask] = useState(null);
     const [users, setUsers] = useState(null);
     const [name, setName] = useState('');
@@ -23,7 +23,6 @@ export default function NewTask() {
     const [project, setProject] = useState(null);
     const [errors, setErrors] = useState(null);
     const [socket] = useState(() => io(':8000'));
-
 
     useEffect(() => {
         axios
@@ -73,7 +72,7 @@ export default function NewTask() {
     };
 
     return (
-        <form className="form" onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
             {/* {errors.map((err, idx) => (
                 <p key={idx} className="text-danger">
                     {err}
@@ -110,40 +109,86 @@ export default function NewTask() {
                     })}
                 </select>
             </div> */}
-            <div className="form-group">
-                <label>Summary</label>
-                <input
+            <Form.Group>
+                <Form.Label>Summary</Form.Label>
+                <Form.Control
                     className="form-control"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
-            </div>
-            <div className="form-group">
-                <label>Attachment</label>
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Attachment</Form.Label>
                 <p>This is for the attachment feature</p>
-            </div>
-            <div className="form-group">
-                <label>Due Date</label>
-                <input
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Due Date</Form.Label>
+                <Form.Control
                     className="form-control"
                     type="datetime-local"
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
                 />
-            </div>
-            <div className="form-group">
-                <label>Description</label>
-                <textarea
-                    className="form-control"
-                    rows="10"
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                    as="textarea"
+                    rows="2"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                ></textarea>
-            </div>
+                ></Form.Control>
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Reporter</Form.Label>
+                <Form.Control
+                    value={creator}
+                    onChange={(e) => setCreator(e.target.value)}
+                ></Form.Control>
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Assignee</Form.Label>
+                <Form.Control
+                    as="select"
+                    value={assignee}
+                    onChange={(e) => setAssignee(e.target.value)}
+                >
+                    <option value={null}>Unassigned</option>
+                    {/* {users.map((user,idx) => {
+                        <option value={user} key={idx}>{user.name}</option>
+                    })} */}
+                </Form.Control>
+                <a>Assign to me</a>
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Priority</Form.Label>
+                <Form.Control
+                    as="select"
+                    value={priority}
+                    onChange={(e) => setPriority(e.target.value)}
+                >
+                    <option value={1}>High</option>
+                    <option value={2}>Medium</option>
+                    <option value={3}>Low</option>
+                </Form.Control>
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Labels</Form.Label>
+                <Form.Control
+                    value={labels}
+                    onChange={(e) => setLabels(e.target.value)}
+                ></Form.Control>
+            </Form.Group>
             <div className="text-right">
-                <button type="submit">Create</button>
+                <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={props.closeModal}
+                >
+                    Create
+                </Button>
             </div>
-        </form>
+        </Form>
     );
 }
