@@ -67,7 +67,7 @@ export default function Issues(props) {
                     i++;
                 }else{
                     result.push(right[j]);
-                    j++
+                    j++;
                 }
             }
             while(i < left.length){
