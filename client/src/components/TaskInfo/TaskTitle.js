@@ -26,8 +26,8 @@ export default function TaskTitle({name, setName, number}){
             <h1 onClick={() => setSelected(!selected)}>{name}</h1>
             <div style={selected ? {visibility: "visible"} : {visibility:"hidden"}}>
                 <input type="text" value={newName} onChange={e => setNewName(e.target.value)}/>
-                <button type="button" onClick={ changeName }>Change Name</button>
-                <button type="button" onClick={ cancelChanges }>Cancel</button>
+                <button type="button" onClick={ changeName } className="btn btn-primary btn-sm">Change Name</button>
+                <button type="button" onClick={ cancelChanges } className="btn btn-danger btn-sm">Cancel</button>
             </div>
         </div>
     )
