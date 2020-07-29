@@ -8,28 +8,53 @@ import Axios from 'axios';
 
 export default function Main(props) {
     const [show, setShow] = useState(false);
+
+    const [allUsers, setAllUsers] = useState(null);
+
+    const [allProjects, setAllProjects] = useState(null);
     const [currentProj, setCurrentProj] = useState(null);
     // const [submitFunction, setSubmitFunction] = useState(null);
 
     const [tasks, setTasks] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
 
-    useEffect(() =>{
-        Axios.get('http://localhost:8000/api/tasks')
-            .then(res =>{
-                setTasks(res.data);
-                setFilteredTasks(res.data);
-            })
+    useEffect(() => {
+        Axios.get(
+            'http://localhost:8000/api/projects/user/' +
+                localStorage.getItem('userID'),
+            { withCredentials: true }
+        ).then((projects) => {
+            console.log(projects);
+            setAllProjects(projects.data);
+            //updating currentProj to a default
+            setCurrentProj(projects.data[0]);
+        });
+
+        Axios.get('http://localhost:8000/api/users', {
+            withCredentials: true,
+        }).then((users) => setAllUsers(users.data));
     }, []);
+
+    useEffect(() => {});
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    if (allProjects == null) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <>
             <div className="row">
                 <div className="col-12">
-                    <Header showModal={handleShow} />
+                    <Header
+                        showModal={handleShow}
+                        setCurrentProject={setCurrentProj}
+                        projects={allProjects}
+                        setTasks={setTasks}
+                        setFilteredTasks={setFilteredTasks}
+                    />
                 </div>
             </div>
 
@@ -49,7 +74,9 @@ export default function Main(props) {
                 <Modal.Body>
                     <NewTask
                         closeModal={handleClose}
-                        setCurrentProject={setCurrentProj}
+                        currentProject={currentProj}
+                        projects={allProjects}
+                        users={allUsers}
                         // onSubmit={(f) => setSubmitFunction(f)}
                     />
                 </Modal.Body>
@@ -62,10 +89,19 @@ export default function Main(props) {
 
             <div className="row">
                 <div className="col-2">
-                    <Sidebar tasks={tasks} setTasks={setTasks} filteredTasks={filteredTasks} setFilteredTasks={setFilteredTasks} />
+                    <Sidebar
+                        tasks={tasks}
+                        setTasks={setTasks}
+                        filteredTasks={filteredTasks}
+                        setFilteredTasks={setFilteredTasks}
+                    />
                 </div>
                 <div className="col-9">
-                    <TaskParent id={props.id} filteredTasks={filteredTasks} />
+                    <TaskParent
+                        id={props.id}
+                        filteredTasks={filteredTasks}
+                        currentProject={currentProj}
+                    />
                 </div>
             </div>
         </>

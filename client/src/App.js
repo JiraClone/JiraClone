@@ -31,6 +31,7 @@ function App() {
                 <Registration path="/register" />
                 <Login path="/login" />
                 <Main path="/home" onSubmit={onSubmit} />
+                <Main path="/home/geer/:id" onSubmit={onSubmit} />
                 <Header path="/header" onSubmit={onSubmit} />
                 <Test path="/test" />
                 <ProjectSettings path="/settings"/>
