@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import styles from './header.module.css';
-import { Dropdown, ButtonGroup, NavDropdown} from 'react-bootstrap';
+import { Dropdown, ButtonGroup, NavDropdown } from 'react-bootstrap';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import Axios from 'axios';
 import { navigate } from '@reach/router';
 
 export default function Header(props) {
-    const [projects, setProjects] = useState(null);
+    const [projects, setProjects] = useState(props.allProjects);
 
     //Function to handle when a project is selected in the dropdown menu
-    function selectProject(id) {
-        navigate('/projects/' + id);
+    function selectProject(project, id) {
+        console.log('from the header: ', project);
+        props.setCurrentProject(project);
+        props.setTasks(project.tasks);
+        props.setFilteredTasks(project.tasks);
+        // navigate('/projects/' + id);
     }
 
     //Function to create a new project
@@ -18,8 +22,12 @@ export default function Header(props) {
         //Get value from projectName component
         const name = document.getElementById('projectName').value;
 
-        Axios.post('http://localhost:8000/api/projects', {name, users: [localStorage.getItem("userID")]}, {withCredentials: true})
-            .then(res =>{
+        Axios.post(
+            'http://localhost:8000/api/projects',
+            { name, users: [localStorage.getItem('userID')] },
+            { withCredentials: true }
+        )
+            .then((res) => {
                 const updatedProjects = [...projects, res.data.project];
                 console.log(updatedProjects);
                 setProjects(updatedProjects);
@@ -39,12 +47,15 @@ export default function Header(props) {
     useEffect(() => {
         //Load projects
 
-        Axios.get('http://localhost:8000/api/projects/user/'+localStorage.getItem("userID"), {withCredentials: true})
-            .then(projects =>{
-                console.log(projects);
-                setProjects(projects.data);
-            })
-    }, [])
+        Axios.get(
+            'http://localhost:8000/api/projects/user/' +
+                localStorage.getItem('userID'),
+            { withCredentials: true }
+        ).then((projects) => {
+            console.log(projects);
+            setProjects(projects.data);
+        });
+    }, []);
 
     //Component wrapper on Bootstrap Dropdown to make sure dropdown menu doesn't close after selecting something
     const DropdownPersist = (props) => {
@@ -84,7 +95,9 @@ export default function Header(props) {
                             projects.map((project) => (
                                 <Dropdown.Item
                                     key={project._id}
-                                    onSelect={() => selectProject(project._id)}
+                                    onSelect={() =>
+                                        selectProject(project, project._id)
+                                    }
                                 >
                                     {project.name}
                                 </Dropdown.Item>
