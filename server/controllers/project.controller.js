@@ -10,6 +10,8 @@ module.exports.create = (req, res) =>{
 
 module.exports.findAll = (req, res)=>{
     Project.find({})
+        .populate('users')
+        .populate('tasks')
         .then(projects => res.json(projects))
         .catch(err => res.json(err));
 }
@@ -22,6 +24,8 @@ module.exports.findByUserId = (req, res) =>{
 
 module.exports.findById =(req, res)=>{
     Project.findOne({_id: req.params.id})
+        .populate('users')
+        .populate('tasks')
         .then(project => res.json(project))
         .catch(err => res.json(err));
 }
