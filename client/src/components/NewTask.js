@@ -5,7 +5,7 @@ import { Button, Form } from 'react-bootstrap';
 
 export default function NewTask(props) {
     const [task, setTask] = useState(null);
-    const [users, setUsers] = useState(null);
+    const [users] = useState(props.users);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [comments, setComments] = useState({});
@@ -14,27 +14,29 @@ export default function NewTask(props) {
     const [dueDate, setDueDate] = useState('');
     const [priority, setPriority] = useState(0);
     const [assignee, setAssignee] = useState(null);
-    const [creator, setCreator] = useState(null);
+    const [creator, setCreator] = useState(localStorage.getItem('userID'));
     const [estimate, setEstimate] = useState(0);
     const [timeTracked, setTimeTracked] = useState(0);
     const [labels, setLabels] = useState([]);
     const [status, setStatus] = useState('');
-    const [projects, setProjects] = useState(null);
-    const [project, setProject] = useState(null);
+    const [projects] = useState(props.projects);
+    const [project, setProject] = useState(props.currentProject);
     const [errors, setErrors] = useState(null);
     const [socket] = useState(() => io(':8000'));
 
-    useEffect(() => {
-        axios
-            .get('http://localhost:8000/api/projects', {
-                withCredentials: true,
-            })
-            .then((res) => setProjects(res.data))
-            .catch(console.log);
-    });
+    // useEffect(() => {
+    //     axios
+    //         .get('http://localhost:8000/api/projects', {
+    //             withCredentials: true,
+    //         })
+    //         .then((res) => setProjects(res.data))
+    //         .catch(console.log);
+    // }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        //Creating new task
 
         const newTask = {
             name,
@@ -62,16 +64,67 @@ export default function NewTask(props) {
                 return res.data;
             })
             .catch((err) => {
+                console.log(
+                    'this is from new task page: ',
+                    err.response.data.errors
+                );
                 const errorResponse = err.response.data.errors;
                 const errorArr = [];
                 for (const key of Object.keys(errorResponse)) {
                     errorArr.push(errorResponse[key].properties.message);
                 }
                 setErrors(errorArr);
+                // setErrors(err.response.data.message);
+                // Object.values(err.response.data.errors).map(
+                //     (field) => field.properties.message
+                // )
             });
 
-        // axios.put('http://localhost:8000/api/projects')
+        // Adding the task to the project selected
+
+        // axios
+        //     .put(
+        //         `http://localhost:8000/api/projects/${
+        //             project._id
+        //         }/${localStorage.getItem('userId')}`
+        //     )
+        //     .then((res) => res.data)
+        //     .catch((err) => {
+        //         const errorResponse = err.response.data.errors;
+        //         const errorArr = [];
+        //         for (const key of Object.keys(errorResponse)) {
+        //             errorArr.push(errorResponse[key].properties.message);
+        //         }
+        //         setErrors(errorArr);
+        //     });
+
+        const updatedProj = {
+            name: project.name,
+            tasks: [...project.tasks, newTask],
+            users: project.users,
+            dueDate: project.dueDate,
+        };
+
+        axios
+            .put(
+                'http://localhost:8000/api/projects' + project._id,
+                updatedProj
+            )
+            .then((res) => res.data)
+            .catch((err) => {
+                // const errorResponse = err.response.data.errors;
+                // const errorArr = [];
+                // for (const key of Object.keys(errorResponse)) {
+                //     errorArr.push(errorResponse[key].properties.message);
+                // }
+                // setErrors(errorArr);
+                setErrors(err.response.data.message);
+            });
     };
+
+    if (projects == null) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -80,7 +133,7 @@ export default function NewTask(props) {
                     {err}
                 </p>
             ))} */}
-            {/* <Form.Group>
+            <Form.Group>
                 <Form.Label>Project</Form.Label>
                 <Form.Control
                     as="select"
@@ -95,26 +148,24 @@ export default function NewTask(props) {
                         );
                     })}
                 </Form.Control>
-            </Form.Group> */}
-            {/* This is for issue Type
-            <div className="form-group">
-                <label>Issue Type</label>
-                <select
-                    className="form-control"
+            </Form.Group>
+            {/* This is for issue Type */}
+            {/* <Form.Group>
+                <Form.Label>Issue Type</Form.Label>
+                <Form.Control as="select"
                     value={type}
-                    onChange={(e) => setProject(e.target.value)}
+                    onChange={(e) => setType(e.target.value)}
                 >
-                    {projects.map((p, idx) => {
-                        <option key={idx} value={p}>
-                            {p.name}
+                    {tasks.map((t, idx) => {
+                        <option key={idx} value={t}>
+                            {t.type}
                         </option>;
                     })}
-                </select>
-            </div> */}
+                </Form.Control>
+            </Form.Group> */}
             <Form.Group>
                 <Form.Label>Summary</Form.Label>
                 <Form.Control
-                    className="form-control"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -127,8 +178,7 @@ export default function NewTask(props) {
             <Form.Group>
                 <Form.Label>Due Date</Form.Label>
                 <Form.Control
-                    className="form-control"
-                    type="datetime-local"
+                    type="date"
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
                 />
@@ -142,13 +192,13 @@ export default function NewTask(props) {
                     onChange={(e) => setDescription(e.target.value)}
                 ></Form.Control>
             </Form.Group>
-            <Form.Group>
+            {/* <Form.Group>
                 <Form.Label>Reporter</Form.Label>
                 <Form.Control
                     value={creator}
                     onChange={(e) => setCreator(e.target.value)}
                 ></Form.Control>
-            </Form.Group>
+            </Form.Group> */}
             <Form.Group>
                 <Form.Label>Assignee</Form.Label>
                 <Form.Control
@@ -157,9 +207,13 @@ export default function NewTask(props) {
                     onChange={(e) => setAssignee(e.target.value)}
                 >
                     <option value={null}>Unassigned</option>
-                    {/* {users.map((user,idx) => {
-                        <option value={user} key={idx}>{user.name}</option>
-                    })} */}
+                    {users.map((user, idx) => {
+                        return (
+                            <option value={user._id} key={idx}>
+                                {user.name}
+                            </option>
+                        );
+                    })}
                 </Form.Control>
                 <a>Assign to me</a>
             </Form.Group>
