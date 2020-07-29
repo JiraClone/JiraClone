@@ -12,7 +12,7 @@ export default function NewTask(props) {
     //maybe won't have to initialize it to 'To Do'
     const [type, setType] = useState('To Do');
     const [dueDate, setDueDate] = useState('');
-    const [priority, setPriority] = useState('');
+    const [priority, setPriority] = useState(0);
     const [assignee, setAssignee] = useState(null);
     const [creator, setCreator] = useState(null);
     const [estimate, setEstimate] = useState(0);
@@ -69,6 +69,8 @@ export default function NewTask(props) {
                 }
                 setErrors(errorArr);
             });
+
+        // axios.put('http://localhost:8000/api/projects')
     };
 
     return (
@@ -78,10 +80,10 @@ export default function NewTask(props) {
                     {err}
                 </p>
             ))} */}
-            {/* <div className="form-group">
-                <label>Project</label>
-                <select
-                    className="form-control"
+            {/* <Form.Group>
+                <Form.Label>Project</Form.Label>
+                <Form.Control
+                    as="select"
                     value={project}
                     onChange={(e) => setProject(e.target.value)}
                 >
@@ -92,8 +94,8 @@ export default function NewTask(props) {
                             </option>
                         );
                     })}
-                </select>
-            </div> */}
+                </Form.Control>
+            </Form.Group> */}
             {/* This is for issue Type
             <div className="form-group">
                 <label>Issue Type</label>

@@ -2,19 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styles from './sidebar.module.css';
 import Axios from 'axios';
 
-export default function Sidebar() {
+export default function Sidebar(props) {
     
-    const [tasks, setTasks] = useState([]);
-    const [filteredTasks, setFilteredTasks] = useState([]);
+    const {tasks, setTasks, filteredTasks, setFilteredTasks} = props;
+    
     const [selected, setSelected] = useState(3);
-
-    useEffect(() =>{
-        Axios.get('http://localhost:8000/api/tasks')
-            .then(res =>{
-                setTasks(res.data);
-                setFilteredTasks(res.data);
-            })
-    }, []);
 
     //Handle selection
     function handleClick(e){
