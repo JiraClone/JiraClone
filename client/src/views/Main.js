@@ -13,13 +13,12 @@ export default function Main(props) {
     const handleShow = () => setShow(true);
 
     return (
-
         <>
-        <div className="row">
-          <div className="col-12">
-            <Header showModal={handleShow} />
-          </div>
-        </div>
+            <div className="row">
+                <div className="col-12">
+                    <Header showModal={handleShow} />
+                </div>
+            </div>
 
             <Modal size="lg" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -47,14 +46,14 @@ export default function Main(props) {
                 </Modal.Footer> */}
             </Modal>
 
-          <div className="row">
-            <div className="col-2">
-              <Sidebar />
+            <div className="row">
+                <div className="col-2">
+                    <Sidebar />
+                </div>
+                <div className="col-9">
+                    <TaskParent id={props.id} />
+                </div>
             </div>
-            <div className="col-9">
-              <TaskParent id={props.id} />
-            </div>
-        </div>
         </>
     );
 }
