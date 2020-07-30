@@ -26,10 +26,13 @@ export default function Main(props) {
                 localStorage.getItem('userID'),
             { withCredentials: true }
         ).then((projects) => {
-            console.log("Projects:",projects);
+            console.log(projects.data)
+            console.log("Projects:",projects.data[0].tasks);
             setAllProjects(projects.data);
             //updating currentProj to a default
             setCurrentProj(projects.data[0]);
+            setFilteredTasks(projects.data[0].tasks);
+            setTasks(projects.data[0].tasks);
         });
 
         Axios.get('http://localhost:8000/api/users', {
@@ -79,6 +82,7 @@ export default function Main(props) {
                         currentProject={currentProj}
                         projects={allProjects}
                         users={allUsers}
+                        setTasks = {setTasks}
                         // onSubmit={(f) => setSubmitFunction(f)}
                     />
                 </Modal.Body>

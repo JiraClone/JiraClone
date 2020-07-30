@@ -18,7 +18,7 @@ export default function NewTask(props) {
     const [estimate, setEstimate] = useState(0);
     const [timeTracked, setTimeTracked] = useState(0);
     const [labels, setLabels] = useState([]);
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState('0');
     const [projects] = useState(props.projects);
     const [project, setProject] = useState(props.currentProject);
     const [errors, setErrors] = useState(null);
@@ -62,7 +62,6 @@ export default function NewTask(props) {
                 //broadcasts new task so the issues list will auto update
                 socket.emit('new task created', res.data.task);
                 setTask(res.data.task);
-
                 const updatedProj = {
                     name: project.name,
                     tasks: [...project.tasks, res.data.task._id],
