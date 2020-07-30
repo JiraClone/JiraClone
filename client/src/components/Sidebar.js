@@ -63,12 +63,7 @@ export default function Sidebar(props) {
                     <img className={ styles.logo } src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Picasa.svg/256px-Picasa.svg.png" alt="logo"/>
                     <div>
                         <span className={ styles.projectTitle }>{currentProj.name}</span>
-                        <span className={ styles.titleInfo }>Classic business project</span>
                     </div>
-                </div>
-                <div className={ styles.link }>
-                    <img className={ styles.arrow } src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTOuGJsBtw7TwvfGIR-4W-uLYvTS2lSsswVLw&usqp=CAU" alt="arrow"/>
-                    Back to project
                 </div>
                 <svg width="240" height="24">
                     <rect x="4" y="12" rx="2" ry="2" width="220" height="1"
