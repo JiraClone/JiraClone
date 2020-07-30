@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FormControl } from 'react-bootstrap';
 
-export default function TaskAssignee({
-    assignee,
-    setAssignee,
+export default function TaskReporter({
+    reporter,
+    setReporter,
     currentTask,
     allUsers,
     // errors,
     // setErrors,
 }) {
-    // const [user, setUser] = useState(assignee);
+    // const [user, setUser] = useState(reporter);
     const handleChange = (value) => {
         // setUser(value);
-        setAssignee(value);
+        setReporter(value);
         let updatedTask = { ...currentTask };
-        updatedTask.assignee = value;
+        updatedTask.creator = value;
         axios
             .put(
                 `http://localhost:8000/api/tasks/${currentTask.number}`,
@@ -27,12 +27,12 @@ export default function TaskAssignee({
         // (err) => setErrors([...errors, err.response.data.message]));
     };
 
-    if (assignee === undefined) return 'Loading...';
+    if (reporter === undefined) return 'Loading...';
     return (
         <div>
             <FormControl
                 as="select"
-                value={assignee}
+                value={reporter}
                 onChange={(e) => handleChange(e.target.value)}
             >
                 {allUsers.map((user, idx) => {

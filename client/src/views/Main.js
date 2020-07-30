@@ -111,6 +111,7 @@ export default function Main(props) {
                             id={props.id}
                             filteredTasks={filteredTasks}
                             currentProject={currentProj}
+                            allUsers={allUsers}
                         />
                     </div>
                     :
