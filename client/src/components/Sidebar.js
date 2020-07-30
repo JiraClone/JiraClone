@@ -4,7 +4,7 @@ import Axios from 'axios';
 
 export default function Sidebar(props) {
     
-    const {tasks, setTasks, filteredTasks, setFilteredTasks, setCurrentView} = props;
+    const {tasks, setTasks, filteredTasks, setFilteredTasks, setCurrentView, currentProj} = props;
     
     const [selected, setSelected] = useState(3);
 
@@ -53,6 +53,8 @@ export default function Sidebar(props) {
         setCurrentView("settings");
     }
 
+    if(currentProj === null) return <div>Loading...</div>
+
     return (
         <div className="row">
             <div className="col">
@@ -61,7 +63,7 @@ export default function Sidebar(props) {
                 <div className={ styles.projectTitleDiv }>
                     <img className={ styles.logo } src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Picasa.svg/256px-Picasa.svg.png" alt="logo"/>
                     <div>
-                        <span className={ styles.projectTitle }>ProjectTitle</span>
+                        <span className={ styles.projectTitle }>{currentProj.name}</span>
                         <span className={ styles.titleInfo }>Classic business project</span>
                     </div>
                 </div>

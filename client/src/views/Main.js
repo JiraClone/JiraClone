@@ -26,7 +26,7 @@ export default function Main(props) {
                 localStorage.getItem('userID'),
             { withCredentials: true }
         ).then((projects) => {
-            console.log(projects);
+            console.log("Projects:",projects);
             setAllProjects(projects.data);
             //updating currentProj to a default
             setCurrentProj(projects.data[0]);
@@ -97,6 +97,7 @@ export default function Main(props) {
                         filteredTasks={filteredTasks}
                         setFilteredTasks={setFilteredTasks}
                         setCurrentView={setCurrentView}
+                        currentProj = {currentProj}
                     />
                 </div>
                 {
@@ -111,7 +112,7 @@ export default function Main(props) {
                     :
                     <div className="col-9">
                         <ProjectSettings
-                            currentProject={currentProj}
+                            currentProj={currentProj}
                             setCurrentView={setCurrentView}
                         />
                     </div>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import { navigate, Link } from '@reach/router';
 
 const ProjectSettings = (props) => {
 
-    const projectID = "5f2095232eb7bf4afc8fd3bd";
+    
 
-    const {setCurrentView} = props;
+    const {setCurrentView, currentProj} = props;
+    const projectID = currentProj._id;
     const [projectName, setProjectName] = useState("");
     const [projectUsers, setProjectUsers] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
@@ -23,7 +23,7 @@ const ProjectSettings = (props) => {
             setProjectName(res.data.name);
             setProjectUsers(res.data.users);
         })
-    }, [])
+    }, [currentProj])
 
     //Handle update of project
     function handleSubmit(e){
@@ -57,6 +57,8 @@ const ProjectSettings = (props) => {
         console.log("userID: ", userID);
         setProjectUsers(projectUsers.filter(user => user._id != userID));
     }
+
+    if(currentProj === null) return <div>Loading...</div>
 
     return ( 
         <div className="container">
