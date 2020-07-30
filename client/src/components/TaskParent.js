@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TaskHeader from './TaskHeader';
 import Issues from './Issues';
 import TaskContent from './TaskContent';
+import TaskInfo from './TaskInfo/TaskInfo';
 
 export default function TaskParent(props) {
     const { filteredTasks } = props;
@@ -16,6 +17,7 @@ export default function TaskParent(props) {
                     setTaskNumber={setTaskNum}
                     filteredTasks={filteredTasks}
                 />
+                {/* <TaskInfo taskNumber={taskNum} /> */}
                 <TaskContent taskNumber={taskNum} className="col-8" />
             </div>
         </div>

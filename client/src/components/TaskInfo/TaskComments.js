@@ -17,6 +17,8 @@ export default function TaskComments({comments, number}) {
             .catch(console.log)
     }
 
+    if(comments === undefined) return "Loading...";
+    
     return(
         <div>
             <div className={ styles.commentArea }>
