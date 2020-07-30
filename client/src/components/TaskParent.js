@@ -17,6 +17,7 @@ export default function TaskParent(props) {
                     setTaskNumber={setTaskNum}
                     filteredTasks={filteredTasks}
                 />
+                {/* <TaskInfo taskNumber={taskNum} /> */}
                 <TaskContent taskNumber={taskNum} className="col-8" />
                 {/* <TaskInfo
                     allUsers={props.allUsers}
