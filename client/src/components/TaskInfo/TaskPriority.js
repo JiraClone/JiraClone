@@ -2,20 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FormControl } from 'react-bootstrap';
 
-export default function TaskAssignee({
-    assignee,
-    setAssignee,
-    currentTask,
-    allUsers,
-    // errors,
-    // setErrors,
-}) {
-    // const [user, setUser] = useState(assignee);
+export default function TaskPriority({ priority, setPriority, currentTask }) {
     const handleChange = (value) => {
-        // setUser(value);
-        setAssignee(value);
+        setPriority(value);
         let updatedTask = { ...currentTask };
-        updatedTask.assignee = value;
+        updatedTask.priority = value;
         axios
             .put(
                 `http://localhost:8000/api/tasks/${currentTask.number}`,
@@ -27,21 +18,16 @@ export default function TaskAssignee({
         // (err) => setErrors([...errors, err.response.data.message]));
     };
 
-    if (assignee === undefined) return 'Loading...';
     return (
         <div>
             <FormControl
                 as="select"
-                value={assignee}
+                value={priority}
                 onChange={(e) => handleChange(e.target.value)}
             >
-                {allUsers.map((user, idx) => {
-                    return (
-                        <option key={idx} value={user}>
-                            {user.name}
-                        </option>
-                    );
-                })}
+                <option value={1}>High</option>
+                <option value={2}>Medium</option>
+                <option value={3}>Low</option>
             </FormControl>
         </div>
     );

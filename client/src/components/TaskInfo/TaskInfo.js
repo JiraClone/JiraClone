@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import TaskTitle from './TaskTitle';
 import TaskActivity from './TaskActivity';
-
 import TaskAssignee from './TaskAssignee';
+import TaskReporter from './TaskReporter';
+import TaskPriority from './TaskPriority';
 
 import styles from './task.module.css';
 
-export default function TaskInfo({ taskNumber }) {
+export default function TaskInfo({ allUsers, taskNumber }) {
     const [loaded, setLoaded] = useState(false);
     // const [task, setTask] = useState(null)
 
@@ -23,7 +24,7 @@ export default function TaskInfo({ taskNumber }) {
     const [timeTracked, setTimeTracked] = useState(0);
     const [labels, setLabels] = useState([]);
     const [status, setStatus] = useState('');
-    const [comments, setComments] = useState({});
+    const [comments, setComments] = useState(null);
 
     useEffect(() => {
         axios
@@ -76,10 +77,27 @@ export default function TaskInfo({ taskNumber }) {
             </div>
             <div className="col-3">
                 <p>todo</p>
-                <TaskAssignee assignee={assignee} setAssignee={setAssignee} />
-                <p>reporter</p>
+                <p>Assignee</p>
+                <TaskAssignee
+                    allUsers={allUsers}
+                    assignee={assignee}
+                    setAssignee={setAssignee}
+                    currentTask={task}
+                />
+                <p>Reporter</p>
+                <TaskReporter
+                    allUsers={allUsers}
+                    reporter={creator}
+                    setReporter={setCreator}
+                    currentTask={task}
+                />
                 <p>due date</p>
                 <p>priority</p>
+                <TaskPriority
+                    priority={priority}
+                    setPriority={setPriority}
+                    currentTask={task}
+                />
                 <p>show 3 more fields</p>
             </div>
         </div>
