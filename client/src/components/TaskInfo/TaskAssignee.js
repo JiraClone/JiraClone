@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import { FormControl } from 'react-bootstrap';
 import Select from 'react-dropdown-select';
 
 export default function TaskAssignee({
@@ -25,7 +24,7 @@ export default function TaskAssignee({
         // (err) => setErrors([...errors, err.response.data.message]));
     };
 
-    if (assignee === undefined) return 'Loading...';
+    if (assignee === undefined || allUsers === undefined) return 'Loading...';
     return (
         <div>
             {/* <FormControl
@@ -48,6 +47,7 @@ export default function TaskAssignee({
                 clearable={true}
                 searchable={true}
                 dropdownHandle={false}
+                searchBy="name"
             />
         </div>
     );
