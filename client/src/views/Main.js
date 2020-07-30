@@ -6,6 +6,7 @@ import TaskParent from '../components/TaskParent';
 import { Modal, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import ProjectSettings from '../components/ProjectSettings';
+import io from 'socket.io-client';
 
 export default function Main(props) {
     const [show, setShow] = useState(false);
@@ -19,6 +20,18 @@ export default function Main(props) {
     const [tasks, setTasks] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
     const [currentView, setCurrentView] = useState("tasks");
+
+    const [socket] = useState(() => io(':8000'));
+
+    useEffect(() =>{
+        socket.on('new task added', newTask => {
+            setTasks(prevIssues => {
+                return [...prevIssues, newTask];
+            })
+        })
+
+        return () => socket.disconnect(true);
+    }, [socket])
 
     useEffect(() => {
         Axios.get(
