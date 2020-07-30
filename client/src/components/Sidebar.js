@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styles from './sidebar.module.css';
+import Axios from 'axios';
+import { navigate } from '@reach/router';
 
 export default function Sidebar(props) {
     
-    const {tasks, setTasks, filteredTasks, setFilteredTasks, setCurrentView, currentProj} = props;
+    const {tasks, setFilteredTasks, setCurrentView, currentProj, allProjects, setAllProjects, setCurrentProj} = props;
     
     const [selected, setSelected] = useState(3);
 
@@ -52,6 +54,28 @@ export default function Sidebar(props) {
         setCurrentView("settings");
     }
 
+    //Handle deleting the current project
+    function deleteProject(){
+        Axios.delete('http://localhost:8000/api/projects/'+currentProj._id)
+            .then(res =>{
+                //Remove project from all projects
+                const tempProjects = allProjects.filter(project => project._id != currentProj._id);
+                console.log("Temp Proj", tempProjects);
+                setAllProjects(tempProjects);
+                //If no more projects left then navigate to welcom
+                if(tempProjects.length < 1){
+                    navigate('/welcome');
+                }else{
+                    //Set the current project to the first in the project list
+                    setCurrentProj(tempProjects[0]);
+                }
+                
+            })
+            .catch(err =>{
+                console.log(err);
+            })
+    }
+
     if(currentProj === null) return <div>Loading...</div>
 
     return (
@@ -80,7 +104,7 @@ export default function Sidebar(props) {
                         style={{stroke:"black", strokeWidth:"1", opacity:"0.1"}} />
                 </svg>
                 <div id="6" onClick={showProjectSettings} className={ (selected == 6) ? styles.currentlySelected : styles.link } >Project Settings</div>
-                <div id="6" className={ styles.link + " text-danger"} >Delete Project</div>
+                <div onClick={deleteProject} className={ styles.link + " text-danger"} >Delete Project</div>
             </div>
             <div className={ styles.collapseButtonDiv }>
                 <svg className={ styles.collapseButton } width="26" height="26">
