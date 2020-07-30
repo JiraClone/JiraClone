@@ -27,7 +27,10 @@ export default function TaskInfo({ allUsers, taskNumber }) {
     // const [status, setStatus] = useState('');
     const [comments, setComments] = useState(null);
 
+    
+
     useEffect(() => {
+        setLoaded(false);
         axios.get(`http://localhost:8000/api/tasks/${taskNumber}`, 
             {withCredentials: true,})
             .then((res) => {
@@ -49,9 +52,10 @@ export default function TaskInfo({ allUsers, taskNumber }) {
                 setLoaded(true);
             })
             .catch(console.log);
-    },[]);
+    },[taskNumber]);
 
     if (!loaded) return 'Loading...';
+
 
     return (
         <div className={`row ${styles.taskInfo}`}>
