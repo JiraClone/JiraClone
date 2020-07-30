@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { FormControl } from 'react-bootstrap';
+// import { FormControl } from 'react-bootstrap';
+import Select from 'react-dropdown-select';
 
 export default function TaskAssignee({
-    assignee,
-    setAssignee,
     currentTask,
     allUsers,
     // errors,
     // setErrors,
 }) {
-    // const [user, setUser] = useState(assignee);
+    const [assignee, setAssignee] = useState(currentTask.assignee);
     const handleChange = (value) => {
-        // setUser(value);
         setAssignee(value);
         let updatedTask = { ...currentTask };
         updatedTask.assignee = value;
@@ -30,7 +28,7 @@ export default function TaskAssignee({
     if (assignee === undefined) return 'Loading...';
     return (
         <div>
-            <FormControl
+            {/* <FormControl
                 as="select"
                 value={assignee}
                 onChange={(e) => handleChange(e.target.value)}
@@ -42,7 +40,15 @@ export default function TaskAssignee({
                         </option>
                     );
                 })}
-            </FormControl>
+            </FormControl> */}
+            <Select
+                options={allUsers}
+                onChange={(values) => handleChange(values)}
+                multi={false}
+                clearable={true}
+                searchable={true}
+                dropdownHandle={false}
+            />
         </div>
     );
 }

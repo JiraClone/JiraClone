@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { FormControl } from 'react-bootstrap';
+// import { FormControl } from 'react-bootstrap';
+import Select from 'react-dropdown-select';
 
 export default function TaskReporter({
-    reporter,
-    setReporter,
     currentTask,
     allUsers,
     // errors,
     // setErrors,
 }) {
-    // const [user, setUser] = useState(reporter);
+    const [reporter, setReporter] = useState(currentTask.creator);
     const handleChange = (value) => {
-        // setUser(value);
         setReporter(value);
         let updatedTask = { ...currentTask };
         updatedTask.creator = value;
@@ -30,7 +28,7 @@ export default function TaskReporter({
     if (reporter === undefined) return 'Loading...';
     return (
         <div>
-            <FormControl
+            {/* <FormControl
                 as="select"
                 value={reporter}
                 onChange={(e) => handleChange(e.target.value)}
@@ -42,7 +40,15 @@ export default function TaskReporter({
                         </option>
                     );
                 })}
-            </FormControl>
+            </FormControl> */}
+            <Select
+                options={allUsers}
+                onChange={(values) => handleChange(values)}
+                multi={false}
+                clearable={true}
+                searchable={true}
+                dropdownHandle={false}
+            />
         </div>
     );
 }
