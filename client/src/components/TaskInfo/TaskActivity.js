@@ -1,44 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import io from 'socket.io-client';
+import React, { useState } from 'react';
+import styles from './task.module.css';
+import TaskComments from './TaskComments';
+import TaskHistory from './TaskHistory';
+import TaskWorkLog from './TaskWorkLog';
 
 
 export default function Activity({comments, setComments, number}) {
 
-    const [newComment, setNewComment] = useState('');
-
-    const addComment = () => {
-        const newCom = {
-            sender: localStorage.getItem('userName'),
-            message: newComment
-        }
-        axios.put(`http://localhost:8000/api/tasks/${number}`, {comments: [...comments, newCom]}, {withCredentials: true,})
-            .then(res => {
-                setNewComment('')
-                console.log(res.data);
-                // setComments(res.data.comments)
-            })
-            .catch(console.log)
-    }
+    const [display, setDisplay] = useState('comments');
 
     return (
-        <div>
-            <h3>Activity</h3>
+        <div className={styles.taskActivity}>
+            <h5>Activity</h5>
             <div>
-                <span>Show</span>
-                <button>Comments</button>
-                <button>History</button>
-                <button>Work Log</button>
+                <span style={{fontWeight:"bold"}}>Show:</span>
+                <button onClick={() => setDisplay('comments')} 
+                        className={ display === 'comments' ?  styles.selectedButton : styles.taskButton }>
+                            Comments
+                </button>
+                <button onClick={() => setDisplay('history')} 
+                        className={ display === 'history' ?  styles.selectedButton : styles.taskButton }>
+                            History
+                </button>
+                <button onClick={() => setDisplay('work log')} 
+                        className={ display === 'work log' ?  styles.selectedButton : styles.taskButton }>
+                            Work Log
+                </button>
             </div>
-            {comments.map((comment, idx) => {
-                return <div key={idx}>
-                        <p>{comment.sender}</p>
-                        <p>{comment.message}</p>
-                    </div>
-            })}
-            <input type="text" value={newComment} onChange={e => setNewComment(e.target.value)}/>
-            <button type="button" onClick={ addComment }>Save</button>
-            <button type="button" onClick={() => setNewComment('') }>Cancel</button>
+            <div className="row"><p></p></div>
+            {display === 'comments' ? <TaskComments comments={comments} number={number} />: <></>}
+            {display === 'history' ? <TaskHistory />: <></>}
+            {display === 'work log' ? <TaskWorkLog />: <></>}
         </div>
     )
 }
