@@ -3,6 +3,7 @@ import axios from 'axios';
 import TaskTitle from './TaskTitle';
 import TaskActivity from './TaskActivity';
 import TaskAssignee from './TaskAssignee';
+import TaskLabels from './TaskLabels';
 import TaskPriority from './TaskPriority';
 import TaskReporter from './TaskReporter';
 import TaskStatus from './TaskStatus';
@@ -81,6 +82,8 @@ export default function TaskInfo({ allUsers, taskNumber }) {
                 <p>due date</p>
                 <p>priority</p>
                 <TaskPriority currentTask={task} />
+                <p>labels</p>
+                <TaskLabels currentTask={task} />
                 <p>show 3 more fields</p>
             </div>
         </div>
