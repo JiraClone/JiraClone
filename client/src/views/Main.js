@@ -39,8 +39,8 @@ export default function Main(props) {
                 localStorage.getItem('userID'),
             { withCredentials: true }
         ).then((projects) => {
-            console.log(projects.data)
-            console.log("Projects:",projects.data[0].tasks);
+            // console.log(projects.data)
+            // console.log("Projects:",projects.data[0].tasks);
             setAllProjects(projects.data);
             //updating currentProj to a default
             setCurrentProj(projects.data[0]);
@@ -61,6 +61,8 @@ export default function Main(props) {
     if (allProjects == null) {
         return <p>Loading...</p>;
     }
+
+    console.log('props',props.id)
 
     return (
         <>

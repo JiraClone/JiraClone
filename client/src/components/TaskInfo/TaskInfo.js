@@ -8,6 +8,7 @@ import TaskReporter from './TaskReporter';
 import TaskStatus from './TaskStatus';
 
 import styles from './task.module.css';
+import TaskDesc from './TaskDesc';
 
 export default function TaskInfo({ allUsers, taskNumber }) {
     const [loaded, setLoaded] = useState(false);
@@ -28,6 +29,7 @@ export default function TaskInfo({ allUsers, taskNumber }) {
     const [comments, setComments] = useState(null);
 
     useEffect(() => {
+        setLoaded(false);
         axios
             .get(`http://localhost:8000/api/tasks/${taskNumber}`, {
                 withCredentials: true,
@@ -51,7 +53,7 @@ export default function TaskInfo({ allUsers, taskNumber }) {
                 setLoaded(true);
             })
             .catch(console.log);
-    }, []);
+    }, [taskNumber]);
 
     if (!loaded) return 'Loading...';
 
@@ -59,22 +61,15 @@ export default function TaskInfo({ allUsers, taskNumber }) {
         <div className={`row ${styles.taskInfo}`}>
             <div className="col-9">
                 <p>GEER-{number}</p>
-                <TaskTitle name={name} setName={setName} number={number} />
+                <TaskTitle task={task} />
                 <div>
                     <span>Attach </span>
                     <span>Create Subtask </span>
                     <span>Link Issue </span>
                     <span>LWaM</span>
                 </div>
-                <div>
-                    <p>Description</p>
-                    <input type="text" />
-                </div>
-                <TaskActivity
-                    comments={comments}
-                    setComments={setComments}
-                    number={number}
-                />
+                <TaskDesc task={task} />
+                <TaskActivity task={task} />
             </div>
             <div className="col-3">
                 <p>todo</p>

@@ -6,8 +6,7 @@ import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 
 // import { useDispatch} from 'react-redux';
 
-export default function Issues(props) {
-    const {filteredTasks} = props;
+export default function Issues({filteredTasks, setTaskNumber}) {
     const [issues, setIssues] = useState(null);
     const [highlighted, setHighlighted] = useState(null);
     const [socket] = useState(() => io(':8000'));
@@ -16,7 +15,7 @@ export default function Issues(props) {
 
     const handleClick = (issueNum) => {
         setHighlighted(issueNum);
-        props.setTaskNumber(issueNum);
+        setTaskNumber(issueNum);
         // dispatch({
         //     type: 'TASK_NUMBER',
         //     task: {
@@ -26,7 +25,7 @@ export default function Issues(props) {
     };
 
     useEffect(()=>{
-        console.log("Filtered: ", props.filteredTasks);
+        // console.log("Filtered: ", props.filteredTasks);
         setIssues(filteredTasks);
     }, [filteredTasks])
 
@@ -46,7 +45,7 @@ export default function Issues(props) {
         const [open, setOpen] = useState(false);
         const onToggle = (isOpen, ev, metadata) => {
           if (metadata.source === "select" || metadata.source === "change") {
-              console.log(metadata.source);
+            //   console.log(metadata.source);
             setOpen(true);
             return;
           }
@@ -106,7 +105,7 @@ export default function Issues(props) {
             </DropdownPersist>
             <div className={styles.issueGroup}>
                 {issues.map((issue) => {
-                    console.log(issue);
+                    // console.log(issue);
                     return (
                         <div
                             key={issue.number}
