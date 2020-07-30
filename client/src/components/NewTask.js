@@ -51,6 +51,7 @@ export default function NewTask(props) {
             timeTracked,
             labels,
             status,
+            projectID: project._id
         };
 
         axios
@@ -62,35 +63,6 @@ export default function NewTask(props) {
                 //broadcasts new task so the issues list will auto update
                 socket.emit('new task created', res.data.task);
                 setTask(res.data.task);
-                const updatedProj = {
-                    name: project.name,
-                    tasks: [...project.tasks, res.data.task._id],
-                    users: project.users,
-                    dueDate: project.dueDate,
-                };
-
-                console.log(
-                    'this is the project: ',
-                    project,
-                    'and this is the updated one: ',
-                    updatedProj
-                );
-                axios
-                    .put(
-                        'http://localhost:8000/api/projects/' + project._id,
-                        updatedProj,
-                        { withCredentials: true }
-                    )
-                    .then((res) => res.data)
-                    .catch((err) => {
-                        // const errorResponse = err.response.data.errors;
-                        // const errorArr = [];
-                        // for (const key of Object.keys(errorResponse)) {
-                        //     errorArr.push(errorResponse[key].properties.message);
-                        // }
-                        // setErrors(errorArr);
-                        setErrors(err.response.data.message);
-                    });
                 return res.data;
             })
             .catch((err) => {
