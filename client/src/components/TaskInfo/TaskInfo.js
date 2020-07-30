@@ -10,47 +10,45 @@ import styles from './task.module.css';
 
 export default function TaskInfo({ allUsers, taskNumber }) {
     const [loaded, setLoaded] = useState(false);
-    // const [task, setTask] = useState(null)
+    const [task, setTask] = useState(null)
 
     const [name, setName] = useState(null);
     const [number, setNumber] = useState(null);
-    const [description, setDescription] = useState('');
-    const [type, setType] = useState('To Do');
-    const [dueDate, setDueDate] = useState('');
+    // const [description, setDescription] = useState('');
+    // const [type, setType] = useState('To Do');
+    // const [dueDate, setDueDate] = useState('');
     const [priority, setPriority] = useState('');
     const [assignee, setAssignee] = useState(null);
     const [creator, setCreator] = useState(null);
-    const [estimate, setEstimate] = useState(0);
-    const [timeTracked, setTimeTracked] = useState(0);
-    const [labels, setLabels] = useState([]);
-    const [status, setStatus] = useState('');
+    // const [estimate, setEstimate] = useState(0);
+    // const [timeTracked, setTimeTracked] = useState(0);
+    // const [labels, setLabels] = useState([]);
+    // const [status, setStatus] = useState('');
     const [comments, setComments] = useState(null);
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:8000/api/tasks/${taskNumber}`, {
-                withCredentials: true,
-            })
+        axios.get(`http://localhost:8000/api/tasks/${taskNumber}`, 
+            {withCredentials: true,})
             .then((res) => {
-                // setTask(res.data);
+                setTask(res.data);
                 setName(res.data.name);
                 setNumber(res.data.number);
-                setDescription(res.data.description);
+                // setDescription(res.data.description);
                 setComments(res.data.comments);
-                setType(res.data.type);
-                setDueDate(res.data.dueDate);
+                // setType(res.data.type);
+                // setDueDate(res.data.dueDate);
                 setPriority(res.data.priority);
                 setAssignee(res.data.assignee);
                 setCreator(res.data.creator);
-                setEstimate(res.data.estimate);
-                setTimeTracked(res.data.timeTracked);
-                setLabels(res.data.labels);
-                setStatus(res.data.status);
+                // setEstimate(res.data.estimate);
+                // setTimeTracked(res.data.timeTracked);
+                // setLabels(res.data.labels);
+                // setStatus(res.data.status);
 
                 setLoaded(true);
             })
             .catch(console.log);
-    });
+    },[]);
 
     if (!loaded) return 'Loading...';
 

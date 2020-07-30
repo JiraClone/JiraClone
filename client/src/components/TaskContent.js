@@ -104,9 +104,6 @@ export default function TaskContent(props) {
         setLabels(...labels, value);
     };
 
-    const handleComments = (value) => {
-        setComments(...comments, value);
-    };
 
     if (task == null || users == null) {
         return <p>The task you have selected does not exist!</p>;

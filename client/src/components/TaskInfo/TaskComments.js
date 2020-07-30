@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './task.module.css';
 
-export default function TaskComments({ comments, number }) {
+export default function TaskComments({ comments, setComments, number }) {
     const [newComment, setNewComment] = useState('');
 
     const addComment = () => {
@@ -10,19 +10,20 @@ export default function TaskComments({ comments, number }) {
             sender: localStorage.getItem('userName'),
             message: newComment,
         };
-        axios
-            .put(
-                `http://localhost:8000/api/tasks/${number}`,
-                { comments: [...comments, newCom] },
+        axios.put(`http://localhost:8000/api/tasks/${number}`, 
+                { comments: [...comments, newCom] }, 
                 { withCredentials: true }
-            )
+                )
             .then((res) => {
+                setComments(prevComments => {
+                    return [...prevComments, newCom];
+                })
                 setNewComment('');
             })
             .catch(console.log);
     };
 
-    if(comments === undefined) return "Loading...";
+    if(comments === undefined) return "Loading..."; 
     
     return(
         <div>

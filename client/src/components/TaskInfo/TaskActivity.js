@@ -28,7 +28,7 @@ export default function Activity({comments, setComments, number}) {
                 </button>
             </div>
             <div className="row"><p></p></div>
-            {display === 'comments' ? <TaskComments comments={comments} number={number} />: <></>}
+            {display === 'comments' ? <TaskComments comments={comments} setComments={setComments} number={number} />: <></>}
             {display === 'history' ? <TaskHistory />: <></>}
             {display === 'work log' ? <TaskWorkLog />: <></>}
         </div>
