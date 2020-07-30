@@ -8,6 +8,7 @@ import Main from './views/Main';
 import Header from './components/Header';
 import Axios from 'axios';
 import Test from './views/Test';
+import ProjectSettings from './components/ProjectSettings';
 
 //Handles redirect if user is not logged in
 // Axios.interceptors.response.use(
@@ -33,6 +34,7 @@ function App() {
                 <Main path="/home/geer/:id" onSubmit={onSubmit} />
                 <Header path="/header" onSubmit={onSubmit} />
                 <Test path="/test" />
+                <ProjectSettings path="/settings"/>
             </Router>
         </div>
     );

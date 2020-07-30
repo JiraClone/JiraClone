@@ -4,13 +4,14 @@ import Axios from 'axios';
 
 export default function Sidebar(props) {
     
-    const {tasks, setTasks, filteredTasks, setFilteredTasks} = props;
+    const {tasks, setTasks, filteredTasks, setFilteredTasks, setCurrentView, currentProj} = props;
     
     const [selected, setSelected] = useState(3);
 
     //Handle selection
     function handleClick(e){
         setSelected(e.target.id);
+        setCurrentView("tasks");
         switch(e.target.id){
             case '1':
                 console.log("My Open Issues");
@@ -46,6 +47,14 @@ export default function Sidebar(props) {
         }
     }
 
+    //Handle showing project settings
+    function showProjectSettings(){
+        setSelected(6);
+        setCurrentView("settings");
+    }
+
+    if(currentProj === null) return <div>Loading...</div>
+
     return (
         <div className="row">
             <div className="col">
@@ -54,7 +63,7 @@ export default function Sidebar(props) {
                 <div className={ styles.projectTitleDiv }>
                     <img className={ styles.logo } src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Picasa.svg/256px-Picasa.svg.png" alt="logo"/>
                     <div>
-                        <span className={ styles.projectTitle }>ProjectTitle</span>
+                        <span className={ styles.projectTitle }>{currentProj.name}</span>
                         <span className={ styles.titleInfo }>Classic business project</span>
                     </div>
                 </div>
@@ -67,15 +76,16 @@ export default function Sidebar(props) {
                         style={{stroke:"black", strokeWidth:"1", opacity:"0.1"}} />
                 </svg>
                 <div className={ styles.currentSection }>Issues and Filters</div>
-                <div id="1" onClick={handleClick} className={ (selected === 1) ? styles.currentlySelected : styles.link }>My open issues</div>
-                <div id="2" onClick={handleClick} className={ (selected === 2) ? styles.currentlySelected : styles.link }>Reported by me</div>
-                <div id="3" onClick={handleClick} className={ (selected === 3) ? styles.currentlySelected : styles.link }>All issues</div>
-                <div id="4" onClick={handleClick} className={ (selected === 4) ? styles.currentlySelected : styles.link }>Open issues</div>
-                <div id="5" onClick={handleClick} className={ (selected === 5) ? styles.currentlySelected : styles.link  }>Done issues</div>
+                <div id="1" onClick={handleClick} className={ (selected == 1) ? styles.currentlySelected : styles.link }>My open issues</div>
+                <div id="2" onClick={handleClick} className={ (selected == 2) ? styles.currentlySelected : styles.link }>Reported by me</div>
+                <div id="3" onClick={handleClick} className={ (selected == 3) ? styles.currentlySelected : styles.link }>All issues</div>
+                <div id="4" onClick={handleClick} className={ (selected == 4) ? styles.currentlySelected : styles.link }>Open issues</div>
+                <div id="5" onClick={handleClick} className={ (selected == 5) ? styles.currentlySelected : styles.link  }>Done issues</div>
                 <svg width="240" height="24">
                     <rect x="4" y="12" rx="2" ry="2" width="220" height="1"
                         style={{stroke:"black", strokeWidth:"1", opacity:"0.1"}} />
                 </svg>
+                <div id="6" onClick={showProjectSettings} className={ (selected == 6) ? styles.currentlySelected : styles.link } >Project Settings</div>
             </div>
             <div className={ styles.collapseButtonDiv }>
                 <svg className={ styles.collapseButton } width="26" height="26">
