@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styles from './sidebar.module.css';
-import Axios from 'axios';
 
 export default function Sidebar(props) {
     
@@ -14,7 +13,7 @@ export default function Sidebar(props) {
         setCurrentView("tasks");
         switch(e.target.id){
             case '1':
-                console.log("My Open Issues");
+                console.log("My Open Issues", tasks);
                 let temp = tasks.filter(task => task.assignee === localStorage.getItem("userID") && task.status === "0" );
                 setFilteredTasks(temp);
                 console.log(temp);

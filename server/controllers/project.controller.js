@@ -18,6 +18,8 @@ module.exports.findAll = (req, res) => {
 
 module.exports.findByUserId = (req, res) => {
     Project.find({ users: req.params.user })
+        .populate('users')
+        .populate('tasks')
         .then((projects) => res.json(projects))
         .catch((err) => res.json(err));
 };
