@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const autoIncrement = require('mongoose-auto-increment');
 
 const TaskSchema = new mongoose.Schema({
     name: {
@@ -29,8 +28,8 @@ const TaskSchema = new mongoose.Schema({
     timeTracked: Number,
     labels: [String],
     status: String,
+    number: Number,
 }, {timestamps: true});
 
-TaskSchema.plugin(autoIncrement.plugin, {model: 'Task', field: 'number'});
 
 module.exports.Task = mongoose.model('Task', TaskSchema);
