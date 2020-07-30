@@ -18,6 +18,7 @@ const ProjectSchema = new mongoose.Schema({
             ref: 'User'
         }
     ],
+    numTasks: Number,
     dueDate: Date
 }, {timestamps: true});
 

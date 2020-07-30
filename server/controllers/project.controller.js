@@ -1,7 +1,14 @@
 const { Project } = require('../models/project.model');
 
 module.exports.create = (req, res) => {
-    Project.create(req.body)
+    const project = {
+        name: req.body.name,
+        numTasks: 0,
+        users: req.body.users,
+        tasks: req.body.tasks,
+        dueDate: req.body.dueDate
+    }
+    Project.create(project)
         .then((project) => {
             res.json({ project });
         })

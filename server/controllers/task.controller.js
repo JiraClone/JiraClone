@@ -1,11 +1,35 @@
 const { Task } = require('../models/task.model');
+const { Project } = require('../models/project.model');
 
-module.exports.create = (req, res) => {
-    Task.create(req.body)
-        .then((task) => {
-            res.json({ task });
-        })
-        .catch((err) => res.status(400).json(err));
+module.exports.create = async (req, res) => {
+    try{
+        //Get project ID from the body
+        const projectID = req.body.projectID;
+        //Find the project with the ID passed
+        const project = await Project.findById(projectID);
+        console.log("Num", project);
+        const newTask = {
+            name: req.body.name,
+            description: req.body.description,
+            type: req.body.type,
+            dueDate: req.body.dueDate,
+            priority: req.body.priority,
+            assignee: req.body.assignee,
+            creator: req.body.creator,
+            estimate: req.body.estimate,
+            labels: req.body.labels,
+            status: "0", //Default status to to do
+            number: project.numTasks+1 //Set task number to the number of tasks already associated with the project +1
+        }
+        const task = await Task.create(newTask);
+        //Link task to the project and update numTasks
+        console.log(task);
+        await Project.updateOne({_id: projectID}, {$push: {tasks: task._id}});
+        await Project.updateOne({_id: projectID}, {$set: {numTasks: project.numTasks+1}});
+        res.json({task});
+    }catch(err){
+        res.status(400).json(err);
+    }
 };
 
 module.exports.findAll = (req, res) => {
