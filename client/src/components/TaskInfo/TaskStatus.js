@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FormControl } from 'react-bootstrap';
 
-export default function TaskPriority(currentTask) {
-    const [priority, setPriority] = useState(currentTask.priority);
+export default function TaskStatus(currentTask) {
+    const [status, setStatus] = useState(currentTask.status);
 
     const handleChange = (value) => {
-        setPriority(value);
+        console.log('this is the value in status: ', value);
+        setStatus(value);
         let updatedTask = { ...currentTask };
-        updatedTask.currentTask.priority = value;
+        updatedTask.currentTask.status = value;
+        console.log(
+            '***** and this is the updatedTask: ',
+            updatedTask.currentTask
+        );
         axios
             .put(
                 `http://localhost:8000/api/tasks/${currentTask.number}`,
@@ -17,19 +22,19 @@ export default function TaskPriority(currentTask) {
             )
             .then((res) => res.data)
             .catch(console.log);
-        // (err) => setErrors([...errors, err.response.data.message]));
     };
 
     return (
         <div>
             <FormControl
                 as="select"
-                value={priority}
+                value={status}
                 onChange={(e) => handleChange(e.target.value)}
             >
-                <option value={1}>High</option>
-                <option value={2}>Medium</option>
-                <option value={3}>Low</option>
+                <option defaultValue value="Todo">
+                    To Do
+                </option>
+                <option value="Done">Done</option>
             </FormControl>
         </div>
     );
