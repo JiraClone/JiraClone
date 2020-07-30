@@ -80,6 +80,7 @@ export default function Sidebar(props) {
                         style={{stroke:"black", strokeWidth:"1", opacity:"0.1"}} />
                 </svg>
                 <div id="6" onClick={showProjectSettings} className={ (selected == 6) ? styles.currentlySelected : styles.link } >Project Settings</div>
+                <div id="6" className={ styles.link + " text-danger"} >Delete Project</div>
             </div>
             <div className={ styles.collapseButtonDiv }>
                 <svg className={ styles.collapseButton } width="26" height="26">

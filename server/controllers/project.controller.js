@@ -1,4 +1,5 @@
 const { Project } = require('../models/project.model');
+const { Task } = require('../models/task.model');
 
 module.exports.create = (req, res) => {
     const project = {
@@ -39,10 +40,19 @@ module.exports.findById = (req, res) => {
         .catch((err) => res.json(err));
 };
 
-module.exports.delete = (req, res) => {
-    Project.deleteOne({ _id: req.params.id })
-        .then((r) => res.json(r))
-        .catch((err) => res.json(err));
+module.exports.delete = async (req, res) => {
+    try{
+        const project = await Project.findOne({_id: req.params.id});
+        //Delete all the tasks
+        for(let i = 0; i < project.tasks.length; i++){
+            await Task.deleteOne({_id: project.tasks[i]._id});
+        }
+        //Delete the project
+        const response = await Project.deleteOne({ _id: req.params.id });
+        res.json(response);
+    }catch(err){
+        res.status(400).json(err);
+    }
 };
 
 module.exports.update = (req, res) => {
