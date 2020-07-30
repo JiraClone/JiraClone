@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-export default function TaskTitle({name, setName, number}){
-    // const [name, setName] = useState(title);
-    const [newName, setNewName] = useState(name);
+export default function TaskTitle({task}){
+    const [name, setName] = useState(task.name);
+    const [newName, setNewName] = useState(task.name);
     const [selected, setSelected] = useState(false);
+    const {number} = task;
 
     
     const changeName = () => {

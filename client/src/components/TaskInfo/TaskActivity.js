@@ -5,7 +5,7 @@ import TaskHistory from './TaskHistory';
 import TaskWorkLog from './TaskWorkLog';
 
 
-export default function Activity({comments, setComments, number}) {
+export default function Activity({task}) {
 
     const [display, setDisplay] = useState('comments');
 
@@ -28,7 +28,7 @@ export default function Activity({comments, setComments, number}) {
                 </button>
             </div>
             <div className="row"><p></p></div>
-            {display === 'comments' ? <TaskComments comments={comments} setComments={setComments} number={number} />: <></>}
+            {display === 'comments' ? <TaskComments task={task} />: <></>}
             {display === 'history' ? <TaskHistory />: <></>}
             {display === 'work log' ? <TaskWorkLog />: <></>}
         </div>

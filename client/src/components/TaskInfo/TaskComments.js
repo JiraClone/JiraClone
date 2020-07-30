@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './task.module.css';
 
-export default function TaskComments({ comments, setComments, number }) {
+export default function TaskComments({task}) {
     const [newComment, setNewComment] = useState('');
+    const [comments, setComments] = useState(task.comments)
+    const {number} = task;
 
     const addComment = () => {
         const newCom = {
@@ -42,7 +44,7 @@ export default function TaskComments({ comments, setComments, number }) {
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
                 placeholder="leave a comment"
-                className={styles.commentInput}
+                className={styles.textInput}
             />
             <button
                 type="button"
