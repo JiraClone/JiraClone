@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import TaskHeader from './TaskHeader';
 import Issues from './Issues';
-import TaskContent from './TaskContent';
 import TaskInfo from './TaskInfo/TaskInfo';
 
 export default function TaskParent({id, filteredTasks, currentProject, allUsers}) {
@@ -14,9 +13,6 @@ export default function TaskParent({id, filteredTasks, currentProject, allUsers}
                 <Issues setTaskNumber={setTaskNum} filteredTasks={filteredTasks} />
 
                 <TaskInfo allUsers={allUsers} taskNumber={taskNum} className="col-8" />
-
-                {/* <TaskInfo taskNumber={taskNum} /> */}
-                {/* <TaskContent taskNumber={taskNum} className="col-8" /> */}
             </div>
         </div>
     );

@@ -3,27 +3,43 @@ import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import NewTask from '../components/NewTask';
 import TaskParent from '../components/TaskParent';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import Axios from 'axios';
 import ProjectSettings from '../components/ProjectSettings';
 import io from 'socket.io-client';
+import { navigate } from '@reach/router';
 
-export default function Main(props) {
+
+export default function Main({id}) {
     const [show, setShow] = useState(false);
-
     const [allUsers, setAllUsers] = useState(null);
-
     const [allProjects, setAllProjects] = useState(null);
     const [currentProj, setCurrentProj] = useState(null);
-    // const [submitFunction, setSubmitFunction] = useState(null);
-
     const [tasks, setTasks] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
     const [currentView, setCurrentView] = useState("tasks");
-
     const [socket] = useState(() => io(':8000'));
 
-    useEffect(() =>{
+
+    useEffect(() => {
+        Axios.get('http://localhost:8000/api/projects/user/' + localStorage.getItem('userID'),
+                { withCredentials: true })
+            .then((res) => {
+            //this is to prevent the site from crashing if a user has no projects created yet
+            if(res.data.length === 0){
+                return navigate('/welcome');
+            }
+            setAllProjects(res.data);
+            //updating currentProj to a default
+            setCurrentProj(res.data[0]);
+            setFilteredTasks(res.data[0].tasks);
+            setTasks(res.data[0].tasks);
+        });
+
+        Axios.get('http://localhost:8000/api/users', 
+            {withCredentials: true,}).
+        then((users) => setAllUsers(users.data));
+
         socket.on('new task added', newTask => {
             setTasks(prevIssues => {
                 return [...prevIssues, newTask];
@@ -31,38 +47,14 @@ export default function Main(props) {
         })
 
         return () => socket.disconnect(true);
-    }, [socket])
-
-    useEffect(() => {
-        Axios.get(
-            'http://localhost:8000/api/projects/user/' +
-                localStorage.getItem('userID'),
-            { withCredentials: true }
-        ).then((projects) => {
-            // console.log(projects.data)
-            // console.log("Projects:",projects.data[0].tasks);
-            setAllProjects(projects.data);
-            //updating currentProj to a default
-            setCurrentProj(projects.data[0]);
-            setFilteredTasks(projects.data[0].tasks);
-            setTasks(projects.data[0].tasks);
-        });
-
-        Axios.get('http://localhost:8000/api/users', {
-            withCredentials: true,
-        }).then((users) => setAllUsers(users.data));
-    }, []);
+    }, [socket]);
 
     useEffect(() => {});
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    if (allProjects == null) {
-        return <p>Loading...</p>;
-    }
-
-    console.log('props',props.id)
+    if (allProjects == null) return <p>Loading...</p>;
 
     return (
         <>
@@ -123,7 +115,7 @@ export default function Main(props) {
                     (currentView === "tasks") ?
                     <div className="col-9">
                         <TaskParent
-                            id={props.id}
+                            id={id}
                             filteredTasks={filteredTasks}
                             currentProject={currentProj}
                             allUsers={allUsers}
