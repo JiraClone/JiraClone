@@ -7,12 +7,10 @@ export default function TaskPriority(currentTask) {
 
     const handleChange = (value) => {
         setPriority(value);
-        let updatedTask = { ...currentTask };
-        updatedTask.currentTask.priority = value;
         axios
             .put(
                 `http://localhost:8000/api/tasks/${currentTask.number}`,
-                updatedTask.currentTask,
+                { priority: value },
                 { withCredentials: true }
             )
             .then((res) => res.data)

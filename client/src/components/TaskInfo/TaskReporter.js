@@ -11,13 +11,12 @@ export default function TaskReporter({
 }) {
     const [reporter, setReporter] = useState(currentTask.creator);
     const handleChange = (value) => {
-        setReporter(value);
-        let updatedTask = { ...currentTask };
-        updatedTask.creator = value;
+        setReporter(value[0]);
+
         axios
             .put(
                 `http://localhost:8000/api/tasks/${currentTask.number}`,
-                updatedTask,
+                { creator: value[0] },
                 { withCredentials: true }
             )
             .then((res) => res.data)
@@ -48,6 +47,7 @@ export default function TaskReporter({
                 clearable={true}
                 searchable={true}
                 dropdownHandle={false}
+                labelField="name"
             />
         </div>
     );

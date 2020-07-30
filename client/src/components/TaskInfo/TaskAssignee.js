@@ -10,13 +10,12 @@ export default function TaskAssignee({
 }) {
     const [assignee, setAssignee] = useState(currentTask.assignee);
     const handleChange = (value) => {
-        setAssignee(value);
-        let updatedTask = { ...currentTask };
-        updatedTask.assignee = value;
+        setAssignee(value[0]);
+
         axios
             .put(
                 `http://localhost:8000/api/tasks/${currentTask.number}`,
-                updatedTask,
+                { assignee: value[0] },
                 { withCredentials: true }
             )
             .then((res) => res.data)
@@ -24,7 +23,7 @@ export default function TaskAssignee({
         // (err) => setErrors([...errors, err.response.data.message]));
     };
 
-    if (assignee === undefined || allUsers === undefined) return 'Loading...';
+    if (assignee === undefined) return 'Loading...';
     return (
         <div>
             {/* <FormControl
@@ -47,7 +46,8 @@ export default function TaskAssignee({
                 clearable={true}
                 searchable={true}
                 dropdownHandle={false}
-                searchBy="name"
+                labelField="name"
+                placeholder={assignee.name}
             />
         </div>
     );
