@@ -11,15 +11,11 @@ export default function TaskReporter({
 }) {
     const [reporter, setReporter] = useState(currentTask.creator);
     const handleChange = (value) => {
-        setReporter(value[0]);
-
-        axios
-            .put(
-                `http://localhost:8000/api/tasks/${currentTask.number}`,
+        axios.put(`http://localhost:8000/api/tasks/${currentTask._id}`,
                 { creator: value[0] },
                 { withCredentials: true }
             )
-            .then((res) => res.data)
+            .then(() => setReporter(value[0]))
             .catch(console.log);
         // (err) => setErrors([...errors, err.response.data.message]));
     };
@@ -40,6 +36,7 @@ export default function TaskReporter({
                     );
                 })}
             </FormControl> */}
+            <h5>Reporter</h5>
             <Select
                 options={allUsers}
                 onChange={(values) => handleChange(values)}

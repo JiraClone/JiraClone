@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './header.module.css';
-import { Dropdown, ButtonGroup, NavDropdown } from 'react-bootstrap';
+import { Dropdown, ButtonGroup, NavDropdown, FormControl } from 'react-bootstrap';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import Axios from 'axios';
 import { navigate } from '@reach/router';
@@ -108,13 +108,11 @@ export default function Header(props) {
                         <Dropdown.Item onSelect={createProject}>
                             + Create New Project
                         </Dropdown.Item>
-                        <Dropdown.Item>
-                            <input
-                                id="projectName"
-                                type="text"
-                                placeholder="New project name"
-                            />
-                        </Dropdown.Item>
+                        <FormControl
+                            id="projectName"
+                            type="text"
+                            placeholder="New project name"
+                        />
                     </Dropdown.Menu>
                 </DropdownPersist>
                 <span className={styles.headerLinks}>Filters</span>

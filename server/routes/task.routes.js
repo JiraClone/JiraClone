@@ -7,6 +7,6 @@ module.exports = function (app) {
     app.get('/api/tasks', TaskController.findAll);
     app.delete('/api/tasks/:id', TaskController.delete);
     app.put('/api/tasks/:id', TaskController.update);
-    // app.get('/api/tasks/:id', TaskController.findById);
-    app.get('/api/tasks/:id', TaskController.findByNumber);
+    app.get('/api/tasks/:id', TaskController.findById);
+    // app.get('/api/tasks/:id', TaskController.findByNumber);
 };

@@ -19,7 +19,7 @@ export default function TaskAssignee({
 
         axios
             .put(
-                `http://localhost:8000/api/tasks/${currentTask.number}`,
+                `http://localhost:8000/api/tasks/${currentTask._id}`,
                 { assignee: value[0] },
                 { withCredentials: true }
             )
@@ -44,6 +44,7 @@ export default function TaskAssignee({
                     );
                 })}
             </FormControl> */}
+            <h5>Assignee</h5>
             <Select
                 options={allUsers}
                 onChange={(values) => handleChange(values)}

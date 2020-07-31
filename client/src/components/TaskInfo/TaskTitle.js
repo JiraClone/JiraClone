@@ -5,14 +5,13 @@ export default function TaskTitle({task}){
     const [name, setName] = useState(task.name);
     const [newName, setNewName] = useState(task.name);
     const [selected, setSelected] = useState(false);
-    const {number} = task;
 
     
     const changeName = () => {
-        axios.put(`http://localhost:8000/api/tasks/${number}`, {name: newName}, {withCredentials: true,})
+        axios.put(`http://localhost:8000/api/tasks/${task._id}`, {name: newName}, {withCredentials: true,})
             .then(res => {
-                setName(res.data.name)
-                setSelected(false)
+                setName(newName);
+                setSelected(false);
             })
             .catch(console.log)
     }

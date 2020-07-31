@@ -8,9 +8,7 @@ export default function TaskStatus({ currentTask }) {
     const handleChange = (value) => {
         setStatus(value);
 
-        axios
-            .put(
-                `http://localhost:8000/api/tasks/${currentTask.number}`,
+        axios.put(`http://localhost:8000/api/tasks/${currentTask._id}`,
                 { status: value },
                 { withCredentials: true }
             )
@@ -20,13 +18,14 @@ export default function TaskStatus({ currentTask }) {
 
     return (
         <div>
+            <h5>Status</h5>
             <FormControl
                 as="select"
                 value={status}
                 onChange={(e) => handleChange(e.target.value)}
             >
-                <option value="Todo">To Do</option>
-                <option value="Done">Done</option>
+                <option value="0">To Do</option>
+                <option value="1">Done</option>
             </FormControl>
         </div>
     );

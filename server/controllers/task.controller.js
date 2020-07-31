@@ -50,18 +50,8 @@ module.exports.delete = (req, res) => {
         .catch((err) => res.json(err));
 };
 
-// module.exports.update = (req, res) => {
-//     Task.updateOne({ _id: req.params.id }, req.body, {
-//         new: true,
-//         runValidators: true,
-//     })
-//         .then((r) => res.json(r))
-//         .catch((err) => res.status(400).json(err));
-// };
-
-//changed this update function to search by tast.number instead of task._id
 module.exports.update = (req, res) => {
-    Task.updateOne({ number: req.params.id }, req.body, {
+    Task.updateOne({ _id: req.params.id }, req.body, {
         new: true,
         runValidators: true,
     })
@@ -69,8 +59,20 @@ module.exports.update = (req, res) => {
         .catch((err) => res.status(400).json(err));
 };
 
-module.exports.findByNumber = (req, res) => {
-    Task.findOne({ number: req.params.id })
-        .then((task) => res.json(task))
-        .catch((err) => res.json(err));
-};
+//changed this update function to search by tast.number instead of task._id
+// module.exports.update = (req, res) => {
+//     Task.updateOne({ number: req.params.id }, req.body, {
+//         new: true,
+//         runValidators: true,
+//     })
+//         .then((r) => res.json(r))
+//         .catch((err) => res.status(400).json(err));
+// };
+
+// module.exports.findByNumber = (req, res) => {
+//     Task.findOne({ number: req.params.id })
+//         .then((task) => res.json(task))
+//         .catch((err) => res.json(err));
+// };
+
+

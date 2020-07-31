@@ -25,7 +25,6 @@ export default function Issues({filteredTasks, setTaskNumber}) {
     };
 
     useEffect(()=>{
-        // console.log("Filtered: ", props.filteredTasks);
         setIssues(filteredTasks);
     }, [filteredTasks])
 
@@ -108,13 +107,13 @@ export default function Issues({filteredTasks, setTaskNumber}) {
                     // console.log(issue);
                     return (
                         <div
-                            key={issue.number}
+                            key={issue._id}
                             className={
-                                issue.number === highlighted
+                                issue._id === highlighted
                                     ? `${styles.selected} ${styles.issue}`
                                     : `${styles.notSelected} ${styles.issue}`
                             }
-                            onClick={() => handleClick(issue.number)}
+                            onClick={() => handleClick(issue._id)}
                         >
                             <span>{issue.name}</span>
                             <br />
