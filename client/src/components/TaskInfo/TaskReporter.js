@@ -33,6 +33,7 @@ export default function TaskReporter({
                 value={reporter}
                 onChange={(e) => handleChange(e.target.value)}
             >
+                <option value={null}>Unassigned</option>
                 {allUsers.map((user, idx) => {
                     return (
                         <option key={idx} value={user._id}>

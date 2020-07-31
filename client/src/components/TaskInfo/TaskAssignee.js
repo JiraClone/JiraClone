@@ -34,6 +34,7 @@ export default function TaskAssignee({
                 value={assignee}
                 onChange={(e) => handleChange(e.target.value)}
             >
+                <option value={null}>Unassigned</option>
                 {allUsers.map((user, idx) => {
                     return (
                         <option key={idx} value={user._id}>

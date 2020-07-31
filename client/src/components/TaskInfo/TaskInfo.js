@@ -16,11 +16,12 @@ export default function TaskInfo({ allUsers, taskNumber }) {
     const [loaded, setLoaded] = useState(false);
     const [task, setTask] = useState(null);
 
-
     useEffect(() => {
         setLoaded(false);
-        axios.get(`http://localhost:8000/api/tasks/${taskNumber}`, 
-            {withCredentials: true,})
+        axios
+            .get(`http://localhost:8000/api/tasks/${taskNumber}`, {
+                withCredentials: true,
+            })
             .then((res) => {
                 setTask(res.data);
                 setLoaded(true);
