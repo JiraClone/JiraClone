@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FormControl } from 'react-bootstrap';
+import styles from './task.module.css';
+
 
 export default function TaskPriority({ currentTask }) {
     const [priority, setPriority] = useState(currentTask.priority);
@@ -15,7 +17,7 @@ export default function TaskPriority({ currentTask }) {
     };
 
     return (
-        <div>
+        <div className={ styles.dropdown }>
             <h5>Priority</h5>
             <FormControl
                 as="select"

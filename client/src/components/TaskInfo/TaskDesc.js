@@ -23,9 +23,7 @@ export default function TaskDesc({task}) {
     return(
         <div>
             <h5>Description</h5>
-            <textarea cols="36" 
-                    rows="4" 
-                    value={newDescription} 
+            <textarea value={newDescription} 
                     onChange={e => setNewDescription(e.target.value)} 
                     placeholder="Add a description..."
                     className={styles.textInput}

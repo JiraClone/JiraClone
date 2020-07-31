@@ -26,7 +26,10 @@ export default function TaskHeader({currentProject, setFilteredTasks}) {
                 Project / {currentProject.name}
             </p>
             <h4>All issues</h4>
-            <input type="text" value={search} onChange={e => setSearch(e.target.value)} /> 
+            <input type="text" 
+                value={search} 
+                onChange={e => setSearch(e.target.value)}
+                className= { styles.search } /> 
             <button type="submit"
                     onClick={ performSearch } 
                     className={ styles.searchButton }

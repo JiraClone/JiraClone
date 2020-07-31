@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FormControl } from 'react-bootstrap';
 // import Select from 'react-dropdown-select';
+import styles from './task.module.css';
+
 
 export default function TaskAssignee({
     currentTask,
@@ -27,7 +29,7 @@ export default function TaskAssignee({
 
     if (assignee === undefined) return 'Loading...';
     return (
-        <div>
+        <div className={ styles.dropdown }>
             <h5>Assignee</h5>
             <FormControl
                 as="select"
