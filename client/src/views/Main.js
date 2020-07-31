@@ -20,6 +20,11 @@ export default function Main({ id }) {
     const [socket] = useState(() => io(':8000'));
 
     useEffect(() => {
+        //Make sure a user is logged in
+        if(localStorage.getItem("userID") === null){
+            navigate('/login');
+            return;
+        }
         Axios.get(
             'http://localhost:8000/api/projects/user/' +
                 localStorage.getItem('userID'),
@@ -130,6 +135,9 @@ export default function Main({ id }) {
                         <ProjectSettings
                             currentProj={currentProj}
                             setCurrentView={setCurrentView}
+                            setCurrentProj={setCurrentProj}
+                            allProjects={allProjects}
+                            setAllProjects={setAllProjects}
                         />
                     </div>
                 )}

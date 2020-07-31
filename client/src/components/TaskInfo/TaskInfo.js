@@ -36,12 +36,12 @@ export default function TaskInfo({ allUsers, taskNumber }) {
             <div className="col-9">
                 <p>GEER-{task.number}</p>
                 <TaskTitle task={task} />
-                <div>
+                {/* <div>
                     <span>Attach </span>
                     <span>Create Subtask </span>
                     <span>Link Issue </span>
                     <span>LWaM</span>
-                </div>
+                </div> */}
                 <TaskDesc task={task} />
                 <TaskActivity task={task} />
             </div>

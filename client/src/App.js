@@ -22,9 +22,7 @@ function App() {
                 <Login path="/login" />
                 <Main path="/home" onSubmit={onSubmit} />
                 <Main path="/home/geer/:id" onSubmit={onSubmit} />
-                <Header path="/header" onSubmit={onSubmit} />
                 <Test path="/test" />
-                <ProjectSettings path="/settings"/>
                 <NewUser path="/welcome"/>
             </Router>
         </div>

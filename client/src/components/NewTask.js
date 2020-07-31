@@ -180,18 +180,18 @@ export default function NewTask({
                     onChange={(e) => setName(e.target.value)}
                 />
             </Form.Group>
-            <Form.Group>
+            {/* <Form.Group>
                 <Form.Label>Attachment</Form.Label>
                 <p>This is for the attachment feature</p>
-            </Form.Group>
-            <Form.Group>
+            </Form.Group> */}
+            {/* <Form.Group>
                 <Form.Label>Due Date</Form.Label>
                 <Form.Control
                     type="date"
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
                 />
-            </Form.Group>
+            </Form.Group> */}
             <Form.Group>
                 <Form.Label>Description</Form.Label>
                 <Form.Control
@@ -224,7 +224,7 @@ export default function NewTask({
                         );
                     })}
                 </Form.Control>
-                <a>Assign to me</a>
+                {/* <a>Assign to me</a> */}
             </Form.Group>
             <Form.Group>
                 <Form.Label>Priority</Form.Label>
@@ -238,13 +238,13 @@ export default function NewTask({
                     <option value={3}>Low</option>
                 </Form.Control>
             </Form.Group>
-            <Form.Group>
+            {/* <Form.Group>
                 <Form.Label>Labels</Form.Label>
                 <Form.Control
                     value={labels}
                     onChange={(e) => setLabels(e.target.value)}
                 ></Form.Control>
-            </Form.Group>
+            </Form.Group> */}
             <div className="text-right">
                 <Button variant="primary" type="submit" onClick={closeModal}>
                     Create

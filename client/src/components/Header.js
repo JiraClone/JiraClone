@@ -39,11 +39,14 @@ export default function Header(props) {
 
     //Sign out function
     function signOut() {
-        Axios.delete('http://localhost:8000/api/logout').then((res) => {
-            console.log('Successfully logged out');
-            localStorage.clear();
-            navigate('/login');
-        });
+        console.log('Successfully logged out');
+        localStorage.clear();
+        navigate('/login');
+        // Axios.delete('http://localhost:8000/api/logout').then((res) => {
+        //     console.log('Successfully logged out');
+        //     localStorage.clear();
+        //     navigate('/login');
+        // });
     }
 
     useEffect(() => {

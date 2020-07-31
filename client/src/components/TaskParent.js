@@ -24,7 +24,6 @@ export default function TaskParent({
                     <TaskInfo
                         allUsers={allUsers}
                         taskNumber={taskNum}
-                        className="col-8"
                     />
                 </div>
             </div>
