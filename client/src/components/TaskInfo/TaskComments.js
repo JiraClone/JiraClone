@@ -1,33 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './task.module.css';
+import io from 'socket.io-client';
 
-export default function TaskComments({task}) {
+export default function TaskComments({ task }) {
     const [newComment, setNewComment] = useState('');
-    const [comments, setComments] = useState(task.comments)
+    const [comments, setComments] = useState(task.comments);
     const id = task._id;
+    const [socket] = useState(() => io(':8000'));
 
     const addComment = () => {
         const newCom = {
             sender: localStorage.getItem('userName'),
             message: newComment,
         };
-        axios.put(`http://localhost:8000/api/tasks/${id}`, 
-                { comments: [...comments, newCom] }, 
+        axios
+            .put(
+                `http://localhost:8000/api/tasks/${id}`,
+                { comments: [...comments, newCom] },
                 { withCredentials: true }
-                )
+            )
             .then((res) => {
-                setComments(prevComments => {
+                socket.emit('new comment created', newCom);
+                setComments((prevComments) => {
                     return [...prevComments, newCom];
-                })
+                });
+
                 setNewComment('');
             })
             .catch(console.log);
     };
 
-    if(comments === undefined) return "Loading..."; 
-    
-    return(
+    useEffect(() => {
+        socket.on('new comment added', (newComment) => {
+            setComments((prevComments) => {
+                return [...prevComments, newComment];
+            });
+        });
+
+        return () => socket.disconnect(true);
+    }, []);
+
+    if (comments === undefined) return 'Loading...';
+
+    return (
         <div>
             <div className={styles.commentArea}>
                 {comments.map((comment, idx) => {
