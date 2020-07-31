@@ -18,7 +18,7 @@ export default function Main({ id }) {
     const [tasks, setTasks] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
     const [currentView, setCurrentView] = useState('tasks');
-    const [socket] = useState(() => io(':8000'));
+    const [socket] = useState(() => io(':80'));
     //new
     const [task, setTask] = useState(null);
 
