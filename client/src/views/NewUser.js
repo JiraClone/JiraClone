@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { navigate } from '@reach/router';
+import { useEffect } from 'react';
 
 export default function NewUser() {
+
     const [name, setName] = useState('');
     const user = localStorage.getItem('userName');
+
+    useEffect(() =>{
+        //Make sure a user is logged in if not then redirect to login
+        if(localStorage.getItem("userID") === null){
+            navigate('/login');
+            return;
+        } 
+    })
 
     const createProject = () =>{
         console.log(name);
