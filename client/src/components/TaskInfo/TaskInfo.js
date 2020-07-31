@@ -31,6 +31,8 @@ export default function TaskInfo({ allUsers, taskNumber }) {
 
     if (!loaded) return 'Loading...';
 
+    if(taskNumber === undefined) console.log('tasknumber undefined')
+
     return (
         <div className={`row ${styles.taskInfo} `}>
             <div className="col-8">
@@ -39,12 +41,18 @@ export default function TaskInfo({ allUsers, taskNumber }) {
                 <TaskDesc task={task} />
                 <TaskActivity task={task} />
             </div>
-            <div className="col-4">
-                <TaskStatus currentTask={task} />
-                <TaskAssignee allUsers={allUsers} currentTask={task} />
-                <TaskReporter allUsers={allUsers} currentTask={task} />
-                <TaskPriority currentTask={task} />
-            </div>
+            {taskNumber === undefined ? 
+                <div className="col-4">
+                    <p>Select or create a task to get started!</p> 
+                </div>
+                : 
+                <div className="col-4">
+                    <TaskStatus currentTask={task} />
+                    <TaskAssignee allUsers={allUsers} currentTask={task} />
+                    <TaskReporter allUsers={allUsers} currentTask={task} />
+                    <TaskPriority currentTask={task} />
+                </div>
+                }
         </div>
     );
 }
