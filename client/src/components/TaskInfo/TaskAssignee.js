@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Select from 'react-dropdown-select';
+import { FormControl } from 'react-bootstrap';
+// import Select from 'react-dropdown-select';
 
 export default function TaskAssignee({
     currentTask,
@@ -10,17 +11,13 @@ export default function TaskAssignee({
 }) {
     const [assignee, setAssignee] = useState(currentTask.assignee);
     const handleChange = (value) => {
-        setAssignee(value[0]);
-
-        console.log('this is current task: ', currentTask);
-        console.log('this is all the users: ', allUsers);
-
-        console.log('this is the currentTask.assignee: ', currentTask.assignee);
+        setAssignee(value);
+        console.log('from taskassignee: ', value);
 
         axios
             .put(
-                `http://localhost:8000/api/tasks/${currentTask.number}`,
-                { assignee: value[0] },
+                `http://localhost:8000/api/tasks/${currentTask._id}`,
+                { assignee: value },
                 { withCredentials: true }
             )
             .then((res) => res.data)
@@ -31,20 +28,21 @@ export default function TaskAssignee({
     if (assignee === undefined) return 'Loading...';
     return (
         <div>
-            {/* <FormControl
+            <h5>Assignee</h5>
+            <FormControl
                 as="select"
                 value={assignee}
                 onChange={(e) => handleChange(e.target.value)}
             >
                 {allUsers.map((user, idx) => {
                     return (
-                        <option key={idx} value={user}>
+                        <option key={idx} value={user._id}>
                             {user.name}
                         </option>
                     );
                 })}
-            </FormControl> */}
-            <Select
+            </FormControl>
+            {/* <Select
                 options={allUsers}
                 onChange={(values) => handleChange(values)}
                 multi={false}
@@ -56,7 +54,7 @@ export default function TaskAssignee({
                     allUsers.find((user) => user._id === currentTask.assignee),
                 ]}
                 // placeholder={assignee.name}
-            />
+            /> */}
         </div>
     );
 }

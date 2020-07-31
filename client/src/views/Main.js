@@ -52,6 +52,7 @@ export default function Main({ id }) {
         });
 
         return () => socket.disconnect(true);
+        
     }, [socket]);
 
     const handleClose = () => setShow(false);
@@ -130,7 +131,7 @@ export default function Main({ id }) {
                         />
                     </div>
                 ) : (
-                    <div className="col-9">
+                    <div className="col-10">
                         <ProjectSettings
                             currentProj={currentProj}
                             setCurrentView={setCurrentView}
