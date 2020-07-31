@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FormControl } from 'react-bootstrap';
 
-export default function TaskStatus(currentTask) {
+export default function TaskStatus({ currentTask }) {
     const [status, setStatus] = useState(currentTask.status);
 
     const handleChange = (value) => {
-        console.log('this is the status values: ', value);
         setStatus(value);
 
         axios

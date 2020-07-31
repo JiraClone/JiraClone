@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FormControl } from 'react-bootstrap';
 
-export default function TaskDueDate(currentTask) {
+export default function TaskDueDate({ currentTask }) {
     const [dueDate, setDueDate] = useState(currentTask.dueDate);
 
     const handleChange = (value) => {

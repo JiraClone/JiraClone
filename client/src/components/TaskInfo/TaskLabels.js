@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Select from 'react-dropdown-select';
 
-export default function TaskLabels(currentTask) {
+export default function TaskLabels({ currentTask }) {
     const [labels, setLabels] = useState(currentTask.labels);
 
     const handleChange = (value) => {
@@ -38,7 +38,6 @@ export default function TaskLabels(currentTask) {
                 searchable={true}
                 dropdownHandle={false}
                 labelField="label"
-                valueField="value"
                 create={true}
             />
         </div>
