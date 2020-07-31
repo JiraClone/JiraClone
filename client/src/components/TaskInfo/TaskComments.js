@@ -22,9 +22,6 @@ export default function TaskComments({ task }) {
             )
             .then((res) => {
                 socket.emit('new comment created', newCom);
-                setComments((prevComments) => {
-                    return [...prevComments, newCom];
-                });
 
                 setNewComment('');
             })
