@@ -25,8 +25,8 @@ export default function TaskStatus({ currentTask }) {
                 value={status}
                 onChange={(e) => handleChange(e.target.value)}
             >
-                <option value="Todo">To Do</option>
-                <option value="Done">Done</option>
+                <option value="0">To Do</option>
+                <option value="1">Done</option>
             </FormControl>
         </div>
     );
