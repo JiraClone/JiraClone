@@ -64,6 +64,7 @@ export default function Main({ id }) {
                         showModal={handleShow}
                         setCurrentProject={setCurrentProj}
                         projects={allProjects}
+                        setProjects={setAllProjects}
                         setTasks={setTasks}
                         setFilteredTasks={setFilteredTasks}
                     />
@@ -110,6 +111,9 @@ export default function Main({ id }) {
                         setFilteredTasks={setFilteredTasks}
                         setCurrentView={setCurrentView}
                         currentProj={currentProj}
+                        allProjects={allProjects}
+                        setCurrentProj={setCurrentProj}
+                        setAllProjects={setAllProjects}
                     />
                 </div>
                 {currentView === 'tasks' ? (
@@ -117,6 +121,7 @@ export default function Main({ id }) {
                         <TaskParent
                             id={id}
                             filteredTasks={filteredTasks}
+                            setFilteredTasks={setFilteredTasks}
                             currentProject={currentProj}
                             allUsers={allUsers}
                         />

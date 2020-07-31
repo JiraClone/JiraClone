@@ -6,6 +6,7 @@ import TaskInfo from './TaskInfo/TaskInfo';
 export default function TaskParent({
     id,
     filteredTasks,
+    setFilteredTasks,
     currentProject,
     allUsers,
 }) {

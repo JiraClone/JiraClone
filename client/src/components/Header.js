@@ -6,15 +6,17 @@ import Axios from 'axios';
 import { navigate } from '@reach/router';
 
 export default function Header(props) {
-    const [projects, setProjects] = useState(props.allProjects);
+    const {projects, setProjects, setCurrentProject, setTasks, setFilteredTasks} = props;
 
     //Function to handle when a project is selected in the dropdown menu
-    function selectProject(project, id) {
-        console.log('from the header: ', project);
-        props.setCurrentProject(project);
-        props.setTasks(project.tasks);
-        props.setFilteredTasks(project.tasks);
-        // navigate('/projects/' + id);
+    function selectProject(project) {
+        setCurrentProject(project);
+        //Do a new request to get the new tasks in case they have been updated
+        Axios.get('http://localhost:8000/api/projects/'+project._id)
+            .then(res =>{
+                setTasks(res.data.tasks);
+                setFilteredTasks(res.data.tasks);
+            })
     }
 
     //Function to create a new project
