@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FormControl } from 'react-bootstrap';
 
-export default function TaskPriority(currentTask) {
+export default function TaskPriority({ currentTask }) {
     const [priority, setPriority] = useState(currentTask.priority);
 
     const handleChange = (value) => {
