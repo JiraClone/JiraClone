@@ -12,15 +12,20 @@ export default function TaskParent({
     const [taskNum, setTaskNum] = useState(id);
 
     return (
-        <div className="ml-3 col-9">
+        <div className="">
             <TaskHeader currentProject={currentProject} />
-            <div className="row mt-5 ml-1">
+            <div className="row mt-5">
                 <Issues
                     setTaskNumber={setTaskNum}
                     filteredTasks={filteredTasks}
                 />
-
-                <TaskInfo allUsers={allUsers} taskNumber={taskNum} className="col-8" />
+                <div className="col-8">
+                    <TaskInfo
+                        allUsers={allUsers}
+                        taskNumber={taskNum}
+                        className="col-8"
+                    />
+                </div>
             </div>
         </div>
     );
