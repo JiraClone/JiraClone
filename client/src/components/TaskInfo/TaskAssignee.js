@@ -53,7 +53,7 @@ export default function TaskAssignee({
                 dropdownHandle={false}
                 labelField="name"
                 values={[
-                    allUsers.find((user) => user._id == currentTask.assignee),
+                    allUsers.find((user) => user._id === currentTask.assignee),
                 ]}
                 // placeholder={assignee.name}
             />

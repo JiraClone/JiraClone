@@ -49,7 +49,7 @@ export default function TaskReporter({
                 dropdownHandle={false}
                 labelField="name"
                 values={[
-                    allUsers.find((user) => user._id == currentTask.assignee),
+                    allUsers.find((user) => user._id === currentTask.assignee),
                 ]}
             />
         </div>

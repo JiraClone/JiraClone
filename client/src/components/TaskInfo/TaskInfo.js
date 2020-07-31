@@ -18,6 +18,7 @@ export default function TaskInfo({ allUsers, taskNumber }) {
 
     const [name, setName] = useState(null);
     const [number, setNumber] = useState(null);
+    // const [allLabels, setAllLabels] = useState([]);
     // const [description, setDescription] = useState('');
     // const [type, setType] = useState('To Do');
     // const [dueDate, setDueDate] = useState('');
@@ -83,8 +84,8 @@ export default function TaskInfo({ allUsers, taskNumber }) {
                 <TaskDueDate currentTask={task} />
                 <p>Priority</p>
                 <TaskPriority currentTask={task} />
-                <p>Labels</p>
-                <TaskLabels currentTask={task} />
+                {/* <p>Labels</p> */}
+                {/* <TaskLabels currentTask={task} /> */}
                 {/* <p>Original Estimate</p> */}
                 {/* <p>show 3 more fields</p> */}
             </div>
