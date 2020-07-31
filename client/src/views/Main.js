@@ -47,6 +47,7 @@ export default function Main({id}) {
         })
 
         return () => socket.disconnect(true);
+        
     }, [socket]);
 
     useEffect(() => {});

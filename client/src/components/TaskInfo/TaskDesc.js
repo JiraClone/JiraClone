@@ -6,10 +6,10 @@ import styles from './task.module.css';
 export default function TaskDesc({task}) {
     const [description, setDescription] = useState(task.description);
     const [newDescription, setNewDescription] = useState(task.description);
-    const {number} = task;
+    const id = task._id;
 
     const saveDesc = () => {
-        axios.put(`http://localhost:8000/api/tasks/${number}`, 
+        axios.put(`http://localhost:8000/api/tasks/${id}`, 
                 { description: newDescription }, 
                 { withCredentials: true }
                 )

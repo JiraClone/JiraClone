@@ -15,42 +15,13 @@ export default function TaskInfo({ allUsers, taskNumber }) {
     const [loaded, setLoaded] = useState(false);
     const [task, setTask] = useState(null);
 
-    const [name, setName] = useState(null);
-    const [number, setNumber] = useState(null);
-    // const [description, setDescription] = useState('');
-    // const [type, setType] = useState('To Do');
-    // const [dueDate, setDueDate] = useState('');
-    // const [priority, setPriority] = useState('');
-    // const [assignee, setAssignee] = useState(null);
-    // const [creator, setCreator] = useState(null);
-    // const [estimate, setEstimate] = useState(0);
-    // const [timeTracked, setTimeTracked] = useState(0);
-    // const [labels, setLabels] = useState([]);
-    // const [status, setStatus] = useState('');
-    const [comments, setComments] = useState(null);
 
     useEffect(() => {
         setLoaded(false);
-        axios
-            .get(`http://localhost:8000/api/tasks/${taskNumber}`, {
-                withCredentials: true,
-            })
+        axios.get(`http://localhost:8000/api/tasks/${taskNumber}`, 
+            {withCredentials: true,})
             .then((res) => {
                 setTask(res.data);
-                setName(res.data.name);
-                setNumber(res.data.number);
-                // setDescription(res.data.description);
-                setComments(res.data.comments);
-                // setType(res.data.type);
-                // setDueDate(res.data.dueDate);
-                // setPriority(res.data.priority);
-                // setAssignee(res.data.assignee);
-                // setCreator(res.data.creator);
-                // setEstimate(res.data.estimate);
-                // setTimeTracked(res.data.timeTracked);
-                // setLabels(res.data.labels);
-                // setStatus(res.data.status);
-
                 setLoaded(true);
             })
             .catch(console.log);
@@ -61,7 +32,7 @@ export default function TaskInfo({ allUsers, taskNumber }) {
     return (
         <div className={`row ${styles.taskInfo}`}>
             <div className="col-9">
-                <p>GEER-{number}</p>
+                <p>GEER-{task.number}</p>
                 <TaskTitle task={task} />
                 <div>
                     <span>Attach </span>
@@ -73,18 +44,10 @@ export default function TaskInfo({ allUsers, taskNumber }) {
                 <TaskActivity task={task} />
             </div>
             <div className="col-3">
-                <p>todo</p>
                 <TaskStatus currentTask={task} />
-                <p>Assignee</p>
                 <TaskAssignee allUsers={allUsers} currentTask={task} />
-                <p>Reporter</p>
                 <TaskReporter allUsers={allUsers} currentTask={task} />
-                <p>due date</p>
-                <p>priority</p>
                 <TaskPriority currentTask={task} />
-                <p>labels</p>
-                <TaskLabels currentTask={task} />
-                <p>show 3 more fields</p>
             </div>
         </div>
     );

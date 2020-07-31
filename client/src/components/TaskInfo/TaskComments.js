@@ -5,14 +5,14 @@ import styles from './task.module.css';
 export default function TaskComments({task}) {
     const [newComment, setNewComment] = useState('');
     const [comments, setComments] = useState(task.comments)
-    const {number} = task;
+    const id = task._id;
 
     const addComment = () => {
         const newCom = {
             sender: localStorage.getItem('userName'),
             message: newComment,
         };
-        axios.put(`http://localhost:8000/api/tasks/${number}`, 
+        axios.put(`http://localhost:8000/api/tasks/${id}`, 
                 { comments: [...comments, newCom] }, 
                 { withCredentials: true }
                 )
