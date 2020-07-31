@@ -48,6 +48,9 @@ export default function TaskReporter({
                 searchable={true}
                 dropdownHandle={false}
                 labelField="name"
+                values={[
+                    allUsers.find((user) => user._id == currentTask.assignee),
+                ]}
             />
         </div>
     );
