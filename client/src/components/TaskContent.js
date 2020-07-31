@@ -28,7 +28,6 @@ export default function TaskContent(props) {
             })
             .then((res) => {
                 // Destructuring for DRY
-                console.log(res.data);
                 setTask(res.data);
                 setName(res.data.name);
                 setDescription(res.data.description);
@@ -53,7 +52,6 @@ export default function TaskContent(props) {
             .catch(console.log);
     }, [props.taskNumber]);
 
-    console.log(comments);
 
     const handleSubmit = (e) => {
         e.preventDefault();

@@ -7,7 +7,6 @@ module.exports.create = async (req, res) => {
         const projectID = req.body.projectID;
         //Find the project with the ID passed
         const project = await Project.findById(projectID);
-        console.log("Num", project);
         const newTask = {
             name: req.body.name,
             description: req.body.description,
@@ -23,7 +22,6 @@ module.exports.create = async (req, res) => {
         }
         const task = await Task.create(newTask);
         //Link task to the project and update numTasks
-        console.log(task);
         await Project.updateOne({_id: projectID}, {$push: {tasks: task._id}});
         await Project.updateOne({_id: projectID}, {$set: {numTasks: project.numTasks+1}});
         res.json({task});

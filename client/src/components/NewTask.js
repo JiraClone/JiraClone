@@ -42,7 +42,6 @@ export default function NewTask({
                 withCredentials: true,
             })
             .then((res) => {
-                console.log('Successfully created new task! : ', res.data);
                 //broadcasts new task so the issues list will auto update
                 socket.emit('new task created', res.data.task);
                 return res.data;

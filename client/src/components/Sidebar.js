@@ -21,36 +21,26 @@ export default function Sidebar(props) {
         setCurrentView("tasks");
         switch(e.target.id){
             case '1':
-                console.log("My Open Issues", tasks);
                 let temp = tasks.filter(task => task.assignee === localStorage.getItem("userID") && task.status === "0" );
                 setFilteredTasks(temp);
-                console.log(temp);
                 break;
             case '2':
-                console.log("Reported By Me");
                 let temp1 = tasks.filter(task => task.creator === localStorage.getItem("userID"));
                 setFilteredTasks(temp1);
-                console.log(temp1);
                 break;
             case '3':
-                console.log("All Issues");
                 setFilteredTasks(tasks);
-                console.log(tasks);
                 break;
             case '4':
-                console.log("Open Issues");
                 let temp2 = tasks.filter(task => task.status === "0" );
                 setFilteredTasks(temp2);
-                console.log(temp2);
                 break;
             case '5':
-                console.log("Done Issues");
                 let temp3 = tasks.filter(task => task.status === "1" );
                 setFilteredTasks(temp3);
-                console.log(temp3);
                 break;
             default:
-                console.log("Error: No filter matching for selected item");
+                break;
         }
     }
 
@@ -67,7 +57,6 @@ export default function Sidebar(props) {
                 //Remove project from all projects
                 handleClose();
                 const tempProjects = allProjects.filter(project => project._id !== currentProj._id);
-                console.log("Temp Proj", tempProjects);
                 setAllProjects(tempProjects);
                 //If no more projects left then navigate to welcom
                 if(tempProjects.length < 1){

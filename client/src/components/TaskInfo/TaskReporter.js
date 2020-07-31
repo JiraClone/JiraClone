@@ -16,7 +16,6 @@ export default function TaskReporter({
         if(value === "Unassigned"){
             value = null;
         }
-        console.log('from taskreporter: ', value);
         axios
             .put(
                 `http://localhost:8000/api/tasks/${currentTask._id}`,

@@ -25,18 +25,14 @@ export default function TaskLabels({ currentTask }) {
     // }, []);
 
     const handleChange = (value) => {
-        console.log(
-            'this is the values being passed in labels: ',
-            value[0]['value']
-        );
+
         if (labels === undefined) {
             setLabels([value[0]['value']]);
         } else {
             setLabels([...labels, value[0]['value']]);
         }
 
-        console.log('updated labels: ', labels);
-        console.log('this is the current task', currentTask);
+
         axios
             .put(
                 `http://localhost:8000/api/tasks/${currentTask.number}`,

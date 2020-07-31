@@ -13,12 +13,10 @@ const ProjectSettings = (props) => {
     useEffect(()=>{
         Axios.get('http://localhost:8000/api/users')
             .then(res => {
-                console.log(res.data);
                 setAllUsers(res.data);
             })
         Axios.get('http://localhost:8000/api/projects/'+currentProj._id)
         .then(res =>{
-            console.log(res.data);
             setProjectName(res.data.name);
             setProjectUsers(res.data.users);
         })
@@ -44,7 +42,6 @@ const ProjectSettings = (props) => {
         setCurrentProj(currentProj);
         Axios.put('http://localhost:8000/api/projects/'+currentProj._id, projectUpdates, {withCredentials: true})
             .then(res =>{
-                console.log(res);
                 setCurrentView("tasks");
             })
             .catch(err =>{
@@ -57,14 +54,12 @@ const ProjectSettings = (props) => {
     function addUser(e){
         e.preventDefault();
         const user = document.getElementById('userToAdd');
-        console.log(user.value);
         setProjectUsers([...projectUsers, allUsers[user.value]]);
     }
 
     //Handle removing a user from the project
     //Only removes locally does not update server until hitting save
     function removeUser(userID){
-        console.log("userID: ", userID);
         setProjectUsers(projectUsers.filter(user => user._id !== userID));
     }
 

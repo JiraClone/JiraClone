@@ -14,7 +14,6 @@ export default function TaskDesc({task}) {
                 { withCredentials: true }
                 )
             .then(res => {
-                console.log('successfully updated desc', res)
                 setDescription(newDescription);
             })
             .catch(console.log);

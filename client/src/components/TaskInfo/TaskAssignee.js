@@ -17,7 +17,6 @@ export default function TaskAssignee({
         if(value === "Unassigned"){
             value = null;
         }
-        console.log('from taskassignee: ', value);
 
         axios
             .put(
