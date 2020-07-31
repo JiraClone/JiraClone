@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import styles from './sidebar.module.css';
 import Axios from 'axios';
 import { navigate } from '@reach/router';
@@ -66,7 +66,7 @@ export default function Sidebar(props) {
             .then(res =>{
                 //Remove project from all projects
                 handleClose();
-                const tempProjects = allProjects.filter(project => project._id != currentProj._id);
+                const tempProjects = allProjects.filter(project => project._id !== currentProj._id);
                 console.log("Temp Proj", tempProjects);
                 setAllProjects(tempProjects);
                 //If no more projects left then navigate to welcom
@@ -119,16 +119,16 @@ export default function Sidebar(props) {
                         style={{stroke:"black", strokeWidth:"1", opacity:"0.1"}} />
                 </svg>
                 <div className={ styles.currentSection }>Issues and Filters</div>
-                <div id="1" onClick={handleClick} className={ (selected == 1) ? styles.currentlySelected : styles.link }>My open issues</div>
-                <div id="2" onClick={handleClick} className={ (selected == 2) ? styles.currentlySelected : styles.link }>Reported by me</div>
-                <div id="3" onClick={handleClick} className={ (selected == 3) ? styles.currentlySelected : styles.link }>All issues</div>
-                <div id="4" onClick={handleClick} className={ (selected == 4) ? styles.currentlySelected : styles.link }>Open issues</div>
-                <div id="5" onClick={handleClick} className={ (selected == 5) ? styles.currentlySelected : styles.link  }>Done issues</div>
+                <div id="1" onClick={handleClick} className={ (selected === "1") ? styles.currentlySelected : styles.link }>My open issues</div>
+                <div id="2" onClick={handleClick} className={ (selected === "2") ? styles.currentlySelected : styles.link }>Reported by me</div>
+                <div id="3" onClick={handleClick} className={ (selected === "3") ? styles.currentlySelected : styles.link }>All issues</div>
+                <div id="4" onClick={handleClick} className={ (selected === "4") ? styles.currentlySelected : styles.link }>Open issues</div>
+                <div id="5" onClick={handleClick} className={ (selected === "5") ? styles.currentlySelected : styles.link  }>Done issues</div>
                 <svg width="240" height="24">
                     <rect x="4" y="12" rx="2" ry="2" width="220" height="1"
                         style={{stroke:"black", strokeWidth:"1", opacity:"0.1"}} />
                 </svg>
-                <div id="6" onClick={showProjectSettings} className={ (selected == 6) ? styles.currentlySelected : styles.link } >Project Settings</div>
+                <div id="6" onClick={showProjectSettings} className={ (selected === "6") ? styles.currentlySelected : styles.link } >Project Settings</div>
                 <div onClick={handleShow} className={ styles.link + " text-danger"} >Delete Project</div>
             </div>
             <div className={ styles.collapseButtonDiv }>
