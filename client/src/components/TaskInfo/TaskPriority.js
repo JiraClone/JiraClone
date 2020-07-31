@@ -4,8 +4,10 @@ import { FormControl } from 'react-bootstrap';
 import styles from './task.module.css';
 
 
-export default function TaskPriority({ currentTask }) {
+
+export default function TaskPriority({ currentTask, setTask }) {
     const [priority, setPriority] = useState(currentTask.priority);
+
 
     const handleChange = (value) => {
         axios.put(`http://localhost:8000/api/tasks/${currentTask._id}`,
