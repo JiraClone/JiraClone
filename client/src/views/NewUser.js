@@ -17,7 +17,6 @@ export default function NewUser() {
     })
 
     const createProject = () =>{
-        console.log(name);
 
         axios.post(
             'http://localhost:8000/api/projects',

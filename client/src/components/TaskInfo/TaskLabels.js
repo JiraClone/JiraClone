@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import axios from 'axios';
 import Select from 'react-dropdown-select';
 
@@ -25,18 +25,14 @@ export default function TaskLabels({ currentTask }) {
     // }, []);
 
     const handleChange = (value) => {
-        console.log(
-            'this is the values being passed in labels: ',
-            value[0]['value']
-        );
+
         if (labels === undefined) {
             setLabels([value[0]['value']]);
         } else {
             setLabels([...labels, value[0]['value']]);
         }
 
-        console.log('updated labels: ', labels);
-        console.log('this is the current task', currentTask);
+
         axios
             .put(
                 `http://localhost:8000/api/tasks/${currentTask.number}`,
@@ -47,7 +43,7 @@ export default function TaskLabels({ currentTask }) {
             .catch(console.log);
     };
 
-    if (labels == undefined) return 'Loading...';
+    if (labels === undefined) return 'Loading...';
 
     return (
         <div>
@@ -60,7 +56,7 @@ export default function TaskLabels({ currentTask }) {
                 dropdownHandle={false}
                 // labelField="value"
                 create={true}
-                values={[labels.find((label) => label == currentTask.labels)]}
+                values={[labels.find((label) => label === currentTask.labels)]}
             />
         </div>
     );

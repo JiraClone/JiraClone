@@ -45,7 +45,7 @@ export default function Issues({filteredTasks, setTaskNumber, id, task}) {
         })
 
         return () => socket.disconnect(true);
-    }, []);
+    }, [socket]);
 
     if (issues === null) return 'Loading...';
 

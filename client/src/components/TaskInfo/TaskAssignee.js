@@ -11,10 +11,12 @@ export default function TaskAssignee({
     // errors,
     // setErrors,
 }) {
-    const [assignee, setAssignee] = useState(currentTask.assignee);
+    const [assignee, setAssignee] = useState(currentTask.assignee === null ? "Unassigned" : currentTask.assignee);
     const handleChange = (value) => {
         setAssignee(value);
-        console.log('from taskassignee: ', value);
+        if(value === "Unassigned"){
+            value = null;
+        }
 
         axios
             .put(
@@ -36,7 +38,7 @@ export default function TaskAssignee({
                 value={assignee}
                 onChange={(e) => handleChange(e.target.value)}
             >
-                <option value={null}>Unassigned</option>
+                <option value="Unassigned">Unassigned</option>
                 {allUsers.map((user, idx) => {
                     return (
                         <option key={idx} value={user._id}>

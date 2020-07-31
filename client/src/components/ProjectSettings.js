@@ -6,7 +6,6 @@ const ProjectSettings = (props) => {
     
 
     const {setCurrentView, currentProj, setCurrentProj, allProjects, setAllProjects} = props;
-    const projectID = currentProj._id;
     const [projectName, setProjectName] = useState("");
     const [projectUsers, setProjectUsers] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
@@ -14,12 +13,10 @@ const ProjectSettings = (props) => {
     useEffect(()=>{
         Axios.get('http://localhost:8000/api/users')
             .then(res => {
-                console.log(res.data);
                 setAllUsers(res.data);
             })
-        Axios.get('http://localhost:8000/api/projects/'+projectID)
+        Axios.get('http://localhost:8000/api/projects/'+currentProj._id)
         .then(res =>{
-            console.log(res.data);
             setProjectName(res.data.name);
             setProjectUsers(res.data.users);
         })
@@ -43,9 +40,8 @@ const ProjectSettings = (props) => {
         //Update currentProj fields so data updates on frontend
         currentProj.name = projectName;
         setCurrentProj(currentProj);
-        Axios.put('http://localhost:8000/api/projects/'+projectID, projectUpdates, {withCredentials: true})
+        Axios.put('http://localhost:8000/api/projects/'+currentProj._id, projectUpdates, {withCredentials: true})
             .then(res =>{
-                console.log(res);
                 setCurrentView("tasks");
             })
             .catch(err =>{
@@ -58,15 +54,13 @@ const ProjectSettings = (props) => {
     function addUser(e){
         e.preventDefault();
         const user = document.getElementById('userToAdd');
-        console.log(user.value);
         setProjectUsers([...projectUsers, allUsers[user.value]]);
     }
 
     //Handle removing a user from the project
     //Only removes locally does not update server until hitting save
     function removeUser(userID){
-        console.log("userID: ", userID);
-        setProjectUsers(projectUsers.filter(user => user._id != userID));
+        setProjectUsers(projectUsers.filter(user => user._id !== userID));
     }
 
     if(currentProj === null) return <div>Loading...</div>

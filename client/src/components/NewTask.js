@@ -9,27 +9,18 @@ export default function NewTask({
     projects,
     users,
 }) {
-    const [task, setTask] = useState(null);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [comments, setComments] = useState({});
-    //maybe won't have to initialize it to 'To Do'
-    const [type, setType] = useState('To Do');
-    const [dueDate, setDueDate] = useState('');
     const [priority, setPriority] = useState(0);
     const [assignee, setAssignee] = useState(null);
-    const [creator, setCreator] = useState(localStorage.getItem('userID'));
-    const [estimate, setEstimate] = useState(0);
-    const [timeTracked, setTimeTracked] = useState(0);
-    const [labels, setLabels] = useState([]);
-    const [status, setStatus] = useState('0');
+    const creator = localStorage.getItem('userID');
+    const status = '0';
     const [project, setProject] = useState('');
-    const [errors, setErrors] = useState(null);
     const [socket] = useState(() => io(':8000'));
 
     useEffect(() => {
         setProject(currentProject);
-    }, []);
+    }, [currentProject]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -39,15 +30,9 @@ export default function NewTask({
         const newTask = {
             name,
             description,
-            comments,
-            type,
-            dueDate,
             priority,
             assignee,
             creator,
-            estimate,
-            timeTracked,
-            labels,
             status,
             projectID: project._id,
         };
@@ -57,10 +42,8 @@ export default function NewTask({
                 withCredentials: true,
             })
             .then((res) => {
-                console.log('Successfully created new task! : ', res.data);
                 //broadcasts new task so the issues list will auto update
                 socket.emit('new task created', res.data.task);
-                setTask(res.data.task);
                 return res.data;
             })
             .catch((err) => {
@@ -68,7 +51,6 @@ export default function NewTask({
                     'this is from new task page: ',
                     err.response.data.errors
                 );
-                setErrors(err.response.data.message);
                 // const errorResponse = err.response.data.errors;
                 // const errorArr = [];
                 // for (const key of Object.keys(errorResponse)) {

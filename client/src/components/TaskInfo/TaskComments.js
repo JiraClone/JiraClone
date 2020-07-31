@@ -39,7 +39,7 @@ export default function TaskComments({ task }) {
         });
 
         return () => socket.disconnect(true);
-    }, []);
+    }, [socket]);
 
     if (comments === undefined) return 'Loading...';
 
