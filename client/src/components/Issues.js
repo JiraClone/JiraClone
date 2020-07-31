@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './issues.module.css';
 import io from 'socket.io-client';
-import {Dropdown, ButtonGroup, NavDropdown, Navbar} from 'react-bootstrap';
+import {Dropdown, ButtonGroup} from 'react-bootstrap';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 
 // import { useDispatch} from 'react-redux';
@@ -13,9 +13,9 @@ export default function Issues({filteredTasks, setTaskNumber}) {
 
     // const dispatch = useDispatch();
 
-    const handleClick = (issueNum) => {
-        setHighlighted(issueNum);
-        setTaskNumber(issueNum);
+    const handleClick = (issue) => {
+        setHighlighted(issue.number);
+        setTaskNumber(issue._id);
         // dispatch({
         //     type: 'TASK_NUMBER',
         //     task: {
@@ -44,7 +44,6 @@ export default function Issues({filteredTasks, setTaskNumber}) {
         const [open, setOpen] = useState(false);
         const onToggle = (isOpen, ev, metadata) => {
           if (metadata.source === "select" || metadata.source === "change") {
-            //   console.log(metadata.source);
             setOpen(true);
             return;
           }
@@ -93,7 +92,7 @@ export default function Issues({filteredTasks, setTaskNumber}) {
     }
 
     return (
-        <div className={`${styles.panel} col-2`}>
+        <div className={ styles.panel }>
             <DropdownPersist as={ButtonGroup} >
                 <DropdownToggle style={{"backgroundColor":"transparent", "border": "none"}}><span style={{color:"black"}}>Sort by</span></DropdownToggle>
                 <Dropdown.Menu>
@@ -104,16 +103,15 @@ export default function Issues({filteredTasks, setTaskNumber}) {
             </DropdownPersist>
             <div className={styles.issueGroup}>
                 {issues.map((issue) => {
-                    // console.log(issue);
                     return (
                         <div
                             key={issue._id}
                             className={
-                                issue._id === highlighted
+                                issue.number === highlighted
                                     ? `${styles.selected} ${styles.issue}`
                                     : `${styles.notSelected} ${styles.issue}`
                             }
-                            onClick={() => handleClick(issue._id)}
+                            onClick={() => handleClick(issue)}
                         >
                             <span>{issue.name}</span>
                             <br />

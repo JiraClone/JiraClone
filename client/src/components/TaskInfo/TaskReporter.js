@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 // import { FormControl } from 'react-bootstrap';
 import Select from 'react-dropdown-select';
+import styles from './task.module.css';
+
 
 export default function TaskReporter({
     currentTask,
@@ -22,7 +24,7 @@ export default function TaskReporter({
 
     if (reporter === undefined) return 'Loading...';
     return (
-        <div>
+        <div className={ styles.dropdown }>
             {/* <FormControl
                 as="select"
                 value={reporter}

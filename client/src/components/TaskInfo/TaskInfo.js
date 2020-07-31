@@ -32,19 +32,13 @@ export default function TaskInfo({ allUsers, taskNumber }) {
 
     return (
         <div className={`row ${styles.taskInfo} `}>
-            <div className="col-9">
+            <div className="col-8">
                 <p>GEER-{task.number}</p>
                 <TaskTitle task={task} />
-                <div>
-                    <span>Attach </span>
-                    <span>Create Subtask </span>
-                    <span>Link Issue </span>
-                    <span>LWaM</span>
-                </div>
                 <TaskDesc task={task} />
                 <TaskActivity task={task} />
             </div>
-            <div className="col-3">
+            <div className="col-4">
                 <TaskStatus currentTask={task} />
                 <TaskAssignee allUsers={allUsers} currentTask={task} />
                 <TaskReporter allUsers={allUsers} currentTask={task} />

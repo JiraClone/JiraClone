@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FormControl } from 'react-bootstrap';
+import styles from './task.module.css';
 
 export default function TaskStatus({ currentTask }) {
     const [status, setStatus] = useState(currentTask.status);
@@ -17,7 +18,7 @@ export default function TaskStatus({ currentTask }) {
     };
 
     return (
-        <div>
+        <div className={ styles.dropdown }>
             <h5>Status</h5>
             <FormControl
                 as="select"

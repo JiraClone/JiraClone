@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import TaskHeader from './TaskHeader';
 import Issues from './Issues';
 import TaskInfo from './TaskInfo/TaskInfo';
+import styles from './main.module.css';
+
 
 export default function TaskParent({
     id,
@@ -13,20 +15,17 @@ export default function TaskParent({
     const [taskNum, setTaskNum] = useState(id);
 
     return (
-        <div className="">
-            <TaskHeader currentProject={currentProject} />
-            <div className="row mt-5">
+        <div className={ styles.taskParent }>
+            <TaskHeader currentProject={currentProject} setFilteredTasks={setFilteredTasks}/>
+            <div className={ styles.taskContent }>
                 <Issues
                     setTaskNumber={setTaskNum}
                     filteredTasks={filteredTasks}
                 />
-                <div className="col-8">
-                    <TaskInfo
-                        allUsers={allUsers}
-                        taskNumber={taskNum}
-                        className="col-8"
-                    />
-                </div>
+                <TaskInfo
+                    allUsers={allUsers}
+                    taskNumber={taskNum}
+                />
             </div>
         </div>
     );

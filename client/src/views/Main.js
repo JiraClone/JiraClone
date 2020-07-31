@@ -8,6 +8,7 @@ import Axios from 'axios';
 import ProjectSettings from '../components/ProjectSettings';
 import io from 'socket.io-client';
 import { navigate } from '@reach/router';
+import styles from '../components/main.module.css';
 
 export default function Main({ id }) {
     const [show, setShow] = useState(false);
@@ -100,38 +101,31 @@ export default function Main({ id }) {
                     </Button>
                 </Modal.Footer> */}
             </Modal>
-
-            <div className="row">
-                <div className="col-2">
-                    <Sidebar
-                        tasks={tasks}
-                        setTasks={setTasks}
+            <div className={ styles.main }>
+                <Sidebar
+                    tasks={tasks}
+                    setTasks={setTasks}
+                    filteredTasks={filteredTasks}
+                    setFilteredTasks={setFilteredTasks}
+                    setCurrentView={setCurrentView}
+                    currentProj={currentProj}
+                    allProjects={allProjects}
+                    setCurrentProj={setCurrentProj}
+                    setAllProjects={setAllProjects}
+                />
+                {currentView === 'tasks' ? (
+                    <TaskParent
+                        id={id}
                         filteredTasks={filteredTasks}
                         setFilteredTasks={setFilteredTasks}
-                        setCurrentView={setCurrentView}
-                        currentProj={currentProj}
-                        allProjects={allProjects}
-                        setCurrentProj={setCurrentProj}
-                        setAllProjects={setAllProjects}
+                        currentProject={currentProj}
+                        allUsers={allUsers}
                     />
-                </div>
-                {currentView === 'tasks' ? (
-                    <div className="col-10">
-                        <TaskParent
-                            id={id}
-                            filteredTasks={filteredTasks}
-                            setFilteredTasks={setFilteredTasks}
-                            currentProject={currentProj}
-                            allUsers={allUsers}
-                        />
-                    </div>
                 ) : (
-                    <div className="col-9">
-                        <ProjectSettings
-                            currentProj={currentProj}
-                            setCurrentView={setCurrentView}
-                        />
-                    </div>
+                    <ProjectSettings
+                        currentProj={currentProj}
+                        setCurrentView={setCurrentView}
+                    />
                 )}
             </div>
         </>

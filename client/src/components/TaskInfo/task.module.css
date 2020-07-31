@@ -1,6 +1,8 @@
 .taskInfo{
     height: 500px;
     overflow: auto;
+    width: 75%;
+    padding-right: 12px;
 }
 
 .taskActivity{
@@ -56,10 +58,18 @@
 .textInput{
     display: block;
     height: 81px;
-    width: 270px;
+    width: 80%;
     margin: 4px;
+    resize: none;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    overflow: auto;
 }
 
 .commentArea{
     overflow: auto;
+}
+
+.dropdown{
+    margin: 12px 0px;
 }

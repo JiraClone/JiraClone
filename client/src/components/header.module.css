@@ -1,4 +1,5 @@
 .header {
+    z-index: 1;
     padding: 12px;
     box-shadow: 0px 0px 4px grey;
     display: flex;
@@ -92,9 +93,15 @@
     background-color: transparent;
     color: blue;
     border: none;
+    font-size: 10pt;
 }
 
 .searchButton:focus{
     outline: none;
     box-shadow: none;
+}
+
+.search{
+    border: 1px solid lightgray;
+    border-radius: 4px;
 }
