@@ -11,7 +11,7 @@ export default function TaskAssignee({
     // errors,
     // setErrors,
 }) {
-    const [assignee, setAssignee] = useState(currentTask.assignee);
+    const [assignee, setAssignee] = useState(currentTask.assignee === null ? "Unassigned" : currentTask.assignee);
     const handleChange = (value) => {
         setAssignee(value);
         if(value === "Unassigned"){

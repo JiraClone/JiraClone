@@ -31,7 +31,6 @@ export default function Header(props) {
         )
             .then((res) => {
                 const updatedProjects = [...projects, res.data.project];
-                console.log(updatedProjects);
                 setProjects(updatedProjects);
             })
             .catch((err) => console.log(err));
@@ -39,7 +38,6 @@ export default function Header(props) {
 
     //Sign out function
     function signOut() {
-        console.log('Successfully logged out');
         localStorage.clear();
         navigate('/login');
         // Axios.delete('http://localhost:8000/api/logout').then((res) => {
@@ -57,7 +55,6 @@ export default function Header(props) {
                 localStorage.getItem('userID'),
             { withCredentials: true }
         ).then((projects) => {
-            console.log(projects);
             setProjects(projects.data);
         });
     }, [setProjects]);
@@ -67,7 +64,6 @@ export default function Header(props) {
         const [open, setOpen] = useState(false);
         const onToggle = (isOpen, ev, metadata) => {
             if (metadata.source === 'select' || metadata.source === 'change') {
-                console.log(metadata.source);
                 setOpen(true);
                 return;
             }

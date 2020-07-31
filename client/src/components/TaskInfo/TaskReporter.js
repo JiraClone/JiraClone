@@ -10,7 +10,7 @@ export default function TaskReporter({
     // errors,
     // setErrors,
 }) {
-    const [reporter, setReporter] = useState(currentTask.creator);
+    const [reporter, setReporter] = useState(currentTask.creator === null ? "Unassigned" : currentTask.creator);
     const handleChange = (value) => {
         setReporter(value);
         if(value === "Unassigned"){
