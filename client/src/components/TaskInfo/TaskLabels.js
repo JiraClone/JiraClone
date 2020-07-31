@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import axios from 'axios';
 import Select from 'react-dropdown-select';
 
@@ -60,7 +60,7 @@ export default function TaskLabels({ currentTask }) {
                 dropdownHandle={false}
                 // labelField="value"
                 create={true}
-                values={[labels.find((label) => label == currentTask.labels)]}
+                values={[labels.find((label) => label === currentTask.labels)]}
             />
         </div>
     );
