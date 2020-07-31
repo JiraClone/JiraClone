@@ -15,12 +15,12 @@ export default function NewTask({
     const [assignee, setAssignee] = useState(null);
     const creator = localStorage.getItem('userID');
     const status = '0';
-    const [project, setProject] = useState('');
+    const [projectID, setProjectID] = useState(0);
     const [socket] = useState(() => io(':8000'));
 
-    useEffect(() => {
-        setProject(currentProject);
-    }, [currentProject]);
+    // useEffect(() => {
+    //     setProject(currentProject);
+    // }, [currentProject]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -34,7 +34,7 @@ export default function NewTask({
             assignee,
             creator,
             status,
-            projectID: project._id,
+            projectID,
         };
 
         axios
@@ -128,12 +128,15 @@ export default function NewTask({
                 <Form.Label>Project</Form.Label>
                 <Form.Control
                     as="select"
-                    value={project}
-                    onChange={(e) => setProject(e.target.value)}
+                    value={projectID}
+                    onChange={(e) => {
+                        setProjectID(e.target.value);
+                        console.log('we changed project to: ', e.target.value);
+                    }}
                 >
                     {projects.map((p, idx) => {
                         return (
-                            <option key={idx} value={p}>
+                            <option key={idx} value={p._id}>
                                 {p.name}
                             </option>
                         );

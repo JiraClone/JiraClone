@@ -24,7 +24,7 @@ export default function Main({ id }) {
 
     useEffect(() => {
         //Make sure a user is logged in
-        if(localStorage.getItem("userID") === null){
+        if (localStorage.getItem('userID') === null) {
             navigate('/login');
             return;
         }
@@ -49,10 +49,12 @@ export default function Main({ id }) {
         }).then((users) => setAllUsers(users.data));
 
         //new
-        if(id){
-            Axios.get('http://localhost:8000/api/tasks/'+ id, {withCredentials:true})
-                .then(res => setTask(res.data))
-                .catch(console.log)
+        if (id) {
+            Axios.get('http://localhost:8000/api/tasks/' + id, {
+                withCredentials: true,
+            })
+                .then((res) => setTask(res.data))
+                .catch(console.log);
         }
 
         socket.on('new task added', (newTask) => {
@@ -61,10 +63,8 @@ export default function Main({ id }) {
             });
         });
 
-
         return () => socket.disconnect(true);
-        
-    }, [socket, id]);
+    }, [socket]);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -116,7 +116,7 @@ export default function Main({ id }) {
                     </Button>
                 </Modal.Footer> */}
             </Modal>
-            <div className={ styles.main }>
+            <div className={styles.main}>
                 <Sidebar
                     tasks={tasks}
                     setTasks={setTasks}
