@@ -215,7 +215,7 @@ export default function NewTask({
                     value={assignee}
                     onChange={(e) => setAssignee(e.target.value)}
                 >
-                    {/* <option value={null}>Unassigned</option> */}
+                    {<option value={null}>Unassigned</option>}
                     {users.map((user, idx) => {
                         return (
                             <option value={user._id} key={idx}>
