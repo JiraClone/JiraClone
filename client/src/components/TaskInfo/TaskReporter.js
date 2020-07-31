@@ -13,6 +13,9 @@ export default function TaskReporter({
     const [reporter, setReporter] = useState(currentTask.creator);
     const handleChange = (value) => {
         setReporter(value);
+        if(value === "Unassigned"){
+            value = null;
+        }
         console.log('from taskreporter: ', value);
         axios
             .put(
@@ -34,7 +37,7 @@ export default function TaskReporter({
                 value={reporter}
                 onChange={(e) => handleChange(e.target.value)}
             >
-                <option value={null}>Unassigned</option>
+                <option value="Unassigned">Unassigned</option>
                 {allUsers.map((user, idx) => {
                     return (
                         <option key={idx} value={user._id}>
