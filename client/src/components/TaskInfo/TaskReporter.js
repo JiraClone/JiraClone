@@ -19,7 +19,7 @@ export default function TaskReporter({
                 { creator: value },
                 { withCredentials: true }
             )
-            .then(() => setReporter(value[0]))
+            .then((res) => res.data)
             .catch(console.log);
         // (err) => setErrors([...errors, err.response.data.message]));
     };
