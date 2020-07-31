@@ -5,7 +5,7 @@ const ProjectSettings = (props) => {
 
     
 
-    const {setCurrentView, currentProj} = props;
+    const {setCurrentView, currentProj, setCurrentProj, allProjects, setAllProjects} = props;
     const projectID = currentProj._id;
     const [projectName, setProjectName] = useState("");
     const [projectUsers, setProjectUsers] = useState([]);
@@ -32,6 +32,17 @@ const ProjectSettings = (props) => {
             name: projectName,
             users: projectUsers.map(user => user._id)
         }
+        
+        //Update allProjects with new project name so data updates on frontend
+        setAllProjects(allProjects.map(project => {
+            if(project.name === currentProj.name) {
+                project.name = projectName;
+            }
+            return project;
+        }));
+        //Update currentProj fields so data updates on frontend
+        currentProj.name = projectName;
+        setCurrentProj(currentProj);
         Axios.put('http://localhost:8000/api/projects/'+projectID, projectUpdates, {withCredentials: true})
             .then(res =>{
                 console.log(res);
