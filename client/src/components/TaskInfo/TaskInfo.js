@@ -3,13 +3,14 @@ import axios from 'axios';
 import TaskTitle from './TaskTitle';
 import TaskActivity from './TaskActivity';
 import TaskAssignee from './TaskAssignee';
+import TaskDesc from './TaskDesc';
+import TaskDueDate from './TaskDueDate';
 import TaskLabels from './TaskLabels';
 import TaskPriority from './TaskPriority';
 import TaskReporter from './TaskReporter';
 import TaskStatus from './TaskStatus';
 
 import styles from './task.module.css';
-import TaskDesc from './TaskDesc';
 
 export default function TaskInfo({ allUsers, taskNumber }) {
     const [loaded, setLoaded] = useState(false);
@@ -59,7 +60,7 @@ export default function TaskInfo({ allUsers, taskNumber }) {
     if (!loaded) return 'Loading...';
 
     return (
-        <div className={`row ${styles.taskInfo}`}>
+        <div className={`row ${styles.taskInfo} `}>
             <div className="col-9">
                 <p>GEER-{number}</p>
                 <TaskTitle task={task} />
@@ -73,18 +74,19 @@ export default function TaskInfo({ allUsers, taskNumber }) {
                 <TaskActivity task={task} />
             </div>
             <div className="col-3">
-                <p>todo</p>
                 <TaskStatus currentTask={task} />
                 <p>Assignee</p>
                 <TaskAssignee allUsers={allUsers} currentTask={task} />
                 <p>Reporter</p>
                 <TaskReporter allUsers={allUsers} currentTask={task} />
-                <p>due date</p>
-                <p>priority</p>
+                <p>Due Date</p>
+                <TaskDueDate currentTask={task} />
+                <p>Priority</p>
                 <TaskPriority currentTask={task} />
-                <p>labels</p>
+                <p>Labels</p>
                 <TaskLabels currentTask={task} />
-                <p>show 3 more fields</p>
+                {/* <p>Original Estimate</p> */}
+                {/* <p>show 3 more fields</p> */}
             </div>
         </div>
     );

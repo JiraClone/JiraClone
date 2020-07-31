@@ -3,9 +3,13 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import { Button, Form } from 'react-bootstrap';
 
-export default function NewTask(props) {
+export default function NewTask({
+    closeModal,
+    currentProject,
+    projects,
+    users,
+}) {
     const [task, setTask] = useState(null);
-    const [users] = useState(props.users);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [comments, setComments] = useState({});
@@ -19,19 +23,13 @@ export default function NewTask(props) {
     const [timeTracked, setTimeTracked] = useState(0);
     const [labels, setLabels] = useState([]);
     const [status, setStatus] = useState('0');
-    const [projects] = useState(props.projects);
-    const [project, setProject] = useState(props.currentProject);
+    const [project, setProject] = useState('');
     const [errors, setErrors] = useState(null);
     const [socket] = useState(() => io(':8000'));
 
-    // useEffect(() => {
-    //     axios
-    //         .get('http://localhost:8000/api/projects', {
-    //             withCredentials: true,
-    //         })
-    //         .then((res) => setProjects(res.data))
-    //         .catch(console.log);
-    // }, []);
+    useEffect(() => {
+        setProject(currentProject);
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -51,7 +49,7 @@ export default function NewTask(props) {
             timeTracked,
             labels,
             status,
-            projectID: project._id
+            projectID: project._id,
         };
 
         axios
@@ -70,12 +68,13 @@ export default function NewTask(props) {
                     'this is from new task page: ',
                     err.response.data.errors
                 );
-                const errorResponse = err.response.data.errors;
-                const errorArr = [];
-                for (const key of Object.keys(errorResponse)) {
-                    errorArr.push(errorResponse[key].properties.message);
-                }
-                setErrors(errorArr);
+                setErrors(err.response.data.message);
+                // const errorResponse = err.response.data.errors;
+                // const errorArr = [];
+                // for (const key of Object.keys(errorResponse)) {
+                //     errorArr.push(errorResponse[key].properties.message);
+                // }
+                // setErrors(errorArr);
                 // setErrors(err.response.data.message);
                 // Object.values(err.response.data.errors).map(
                 //     (field) => field.properties.message
@@ -216,7 +215,7 @@ export default function NewTask(props) {
                     value={assignee}
                     onChange={(e) => setAssignee(e.target.value)}
                 >
-                    <option value={null}>Unassigned</option>
+                    {/* <option value={null}>Unassigned</option> */}
                     {users.map((user, idx) => {
                         return (
                             <option value={user._id} key={idx}>
@@ -247,11 +246,7 @@ export default function NewTask(props) {
                 ></Form.Control>
             </Form.Group>
             <div className="text-right">
-                <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={props.closeModal}
-                >
+                <Button variant="primary" type="submit" onClick={closeModal}>
                     Create
                 </Button>
             </div>

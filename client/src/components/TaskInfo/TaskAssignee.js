@@ -47,7 +47,7 @@ export default function TaskAssignee({
                 searchable={true}
                 dropdownHandle={false}
                 labelField="name"
-                placeholder={assignee.name}
+                // placeholder={assignee.name}
             />
         </div>
     );

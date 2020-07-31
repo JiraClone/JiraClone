@@ -9,24 +9,24 @@ import ProjectSettings from '../components/ProjectSettings';
 import io from 'socket.io-client';
 import { navigate } from '@reach/router';
 
-
-export default function Main({id}) {
+export default function Main({ id }) {
     const [show, setShow] = useState(false);
     const [allUsers, setAllUsers] = useState(null);
     const [allProjects, setAllProjects] = useState(null);
     const [currentProj, setCurrentProj] = useState(null);
     const [tasks, setTasks] = useState([]);
     const [filteredTasks, setFilteredTasks] = useState([]);
-    const [currentView, setCurrentView] = useState("tasks");
+    const [currentView, setCurrentView] = useState('tasks');
     const [socket] = useState(() => io(':8000'));
 
-
     useEffect(() => {
-        Axios.get('http://localhost:8000/api/projects/user/' + localStorage.getItem('userID'),
-                { withCredentials: true })
-            .then((res) => {
+        Axios.get(
+            'http://localhost:8000/api/projects/user/' +
+                localStorage.getItem('userID'),
+            { withCredentials: true }
+        ).then((res) => {
             //this is to prevent the site from crashing if a user has no projects created yet
-            if(res.data.length === 0){
+            if (res.data.length === 0) {
                 return navigate('/welcome');
             }
             setAllProjects(res.data);
@@ -36,15 +36,15 @@ export default function Main({id}) {
             setTasks(res.data[0].tasks);
         });
 
-        Axios.get('http://localhost:8000/api/users', 
-            {withCredentials: true,}).
-        then((users) => setAllUsers(users.data));
+        Axios.get('http://localhost:8000/api/users', {
+            withCredentials: true,
+        }).then((users) => setAllUsers(users.data));
 
-        socket.on('new task added', newTask => {
-            setTasks(prevIssues => {
+        socket.on('new task added', (newTask) => {
+            setTasks((prevIssues) => {
                 return [...prevIssues, newTask];
-            })
-        })
+            });
+        });
 
         return () => socket.disconnect(true);
     }, [socket]);
@@ -64,7 +64,7 @@ export default function Main({id}) {
                         showModal={handleShow}
                         setCurrentProject={setCurrentProj}
                         projects={allProjects}
-                        setProjects = {setAllProjects}
+                        setProjects={setAllProjects}
                         setTasks={setTasks}
                         setFilteredTasks={setFilteredTasks}
                     />
@@ -88,9 +88,10 @@ export default function Main({id}) {
                     <NewTask
                         closeModal={handleClose}
                         currentProject={currentProj}
+                        setCurrentProject={setCurrentProj}
                         projects={allProjects}
                         users={allUsers}
-                        setTasks = {setTasks}
+                        // setTasks={setTasks}
                         // onSubmit={(f) => setSubmitFunction(f)}
                     />
                 </Modal.Body>
@@ -109,15 +110,14 @@ export default function Main({id}) {
                         filteredTasks={filteredTasks}
                         setFilteredTasks={setFilteredTasks}
                         setCurrentView={setCurrentView}
-                        currentProj = {currentProj}
-                        allProjects = {allProjects}
-                        setCurrentProj = {setCurrentProj}
-                        setAllProjects = {setAllProjects}
+                        currentProj={currentProj}
+                        allProjects={allProjects}
+                        setCurrentProj={setCurrentProj}
+                        setAllProjects={setAllProjects}
                     />
                 </div>
-                {
-                    (currentView === "tasks") ?
-                    <div className="col-9">
+                {currentView === 'tasks' ? (
+                    <div className="col-10">
                         <TaskParent
                             id={id}
                             filteredTasks={filteredTasks}
@@ -126,14 +126,14 @@ export default function Main({id}) {
                             allUsers={allUsers}
                         />
                     </div>
-                    :
+                ) : (
                     <div className="col-9">
                         <ProjectSettings
                             currentProj={currentProj}
                             setCurrentView={setCurrentView}
                         />
                     </div>
-                }
+                )}
             </div>
         </>
     );
