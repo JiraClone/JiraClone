@@ -15,7 +15,7 @@ export default function TaskParent({
     return (
         <div className="">
             <TaskHeader currentProject={currentProject} />
-            <div className="row mt-5">
+            <div className="row mt-3">
                 <Issues
                     setTaskNumber={setTaskNum}
                     filteredTasks={filteredTasks}
