@@ -11,8 +11,8 @@ export default function TaskTitle({task}){
     const changeName = () => {
         axios.put(`http://localhost:8000/api/tasks/${number}`, {name: newName}, {withCredentials: true,})
             .then(res => {
-                setName(res.data.name)
-                setSelected(false)
+                setName(newName);
+                setSelected(false);
             })
             .catch(console.log)
     }
