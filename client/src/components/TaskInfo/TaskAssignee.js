@@ -12,6 +12,11 @@ export default function TaskAssignee({
     const handleChange = (value) => {
         setAssignee(value[0]);
 
+        console.log('this is current task: ', currentTask);
+        console.log('this is all the users: ', allUsers);
+
+        console.log('this is the currentTask.assignee: ', currentTask.assignee);
+
         axios
             .put(
                 `http://localhost:8000/api/tasks/${currentTask.number}`,
@@ -47,6 +52,9 @@ export default function TaskAssignee({
                 searchable={true}
                 dropdownHandle={false}
                 labelField="name"
+                values={[
+                    allUsers.find((user) => user._id == currentTask.assignee),
+                ]}
                 // placeholder={assignee.name}
             />
         </div>
