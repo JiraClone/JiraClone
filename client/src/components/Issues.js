@@ -10,7 +10,7 @@ import { navigate } from '@reach/router';
 export default function Issues({filteredTasks, setTaskNumber, id, task}) {
     const [issues, setIssues] = useState(null);
     const [highlighted, setHighlighted] = useState(null);
-    const [socket] = useState(() => io(':80'));
+    const [socket] = useState(() => io());
 
     
     // const dispatch = useDispatch();

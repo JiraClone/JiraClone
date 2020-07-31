@@ -7,7 +7,7 @@ export default function TaskComments({ task }) {
     const [newComment, setNewComment] = useState('');
     const [comments, setComments] = useState(task.comments);
     const id = task._id;
-    const [socket] = useState(() => io(':80'));
+    const [socket] = useState(() => io());
 
     const addComment = () => {
         const newCom = {

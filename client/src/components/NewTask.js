@@ -16,7 +16,7 @@ export default function NewTask({
     const creator = localStorage.getItem('userID');
     const status = '0';
     const [projectID, setProjectID] = useState(0);
-    const [socket] = useState(() => io(':80'));
+    const [socket] = useState(() => io());
 
     // useEffect(() => {
     //     setProject(currentProject);
