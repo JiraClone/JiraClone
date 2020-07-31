@@ -64,7 +64,7 @@ export default function Main({ id }) {
 
         return () => socket.disconnect(true);
         
-    }, [socket, id]);
+    }, [socket]);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
