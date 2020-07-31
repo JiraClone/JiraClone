@@ -121,6 +121,7 @@ export default function Main({id}) {
                         <TaskParent
                             id={id}
                             filteredTasks={filteredTasks}
+                            setFilteredTasks={setFilteredTasks}
                             currentProject={currentProj}
                             allUsers={allUsers}
                         />
