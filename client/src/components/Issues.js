@@ -3,19 +3,22 @@ import styles from './issues.module.css';
 import io from 'socket.io-client';
 import {Dropdown, ButtonGroup} from 'react-bootstrap';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
+import { navigate } from '@reach/router';
 
 // import { useDispatch} from 'react-redux';
 
-export default function Issues({filteredTasks, setTaskNumber}) {
+export default function Issues({filteredTasks, setTaskNumber, id, task}) {
     const [issues, setIssues] = useState(null);
     const [highlighted, setHighlighted] = useState(null);
     const [socket] = useState(() => io(':8000'));
 
+    
     // const dispatch = useDispatch();
 
     const handleClick = (issue) => {
         setHighlighted(issue.number);
         setTaskNumber(issue._id);
+        navigate('/home/geer/'+issue._id);
         // dispatch({
         //     type: 'TASK_NUMBER',
         //     task: {
@@ -23,6 +26,12 @@ export default function Issues({filteredTasks, setTaskNumber}) {
         //     },
         // });
     };
+
+    useEffect(() => {
+        if(task){
+            setHighlighted(task.number);
+        }
+    },[task])
 
     useEffect(()=>{
         setIssues(filteredTasks);

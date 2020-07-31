@@ -7,6 +7,7 @@ import styles from './main.module.css';
 
 export default function TaskParent({
     id,
+    task,
     filteredTasks,
     setFilteredTasks,
     currentProject,
@@ -21,6 +22,8 @@ export default function TaskParent({
                 <Issues
                     setTaskNumber={setTaskNum}
                     filteredTasks={filteredTasks}
+                    id={id}
+                    task={task}
                 />
                 <TaskInfo
                     allUsers={allUsers}

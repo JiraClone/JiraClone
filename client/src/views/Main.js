@@ -19,6 +19,8 @@ export default function Main({ id }) {
     const [filteredTasks, setFilteredTasks] = useState([]);
     const [currentView, setCurrentView] = useState('tasks');
     const [socket] = useState(() => io(':8000'));
+    //new
+    const [task, setTask] = useState(null);
 
     useEffect(() => {
         //Make sure a user is logged in
@@ -45,6 +47,13 @@ export default function Main({ id }) {
         Axios.get('http://localhost:8000/api/users', {
             withCredentials: true,
         }).then((users) => setAllUsers(users.data));
+
+        //new
+        if(id){
+            Axios.get('http://localhost:8000/api/tasks/'+ id, {withCredentials:true})
+                .then(res => setTask(res.data))
+                .catch(console.log)
+        }
 
         socket.on('new task added', (newTask) => {
             setTasks((prevIssues) => {
@@ -121,6 +130,7 @@ export default function Main({ id }) {
                 {currentView === 'tasks' ? (
                     <TaskParent
                         id={id}
+                        task={task}
                         filteredTasks={filteredTasks}
                         setFilteredTasks={setFilteredTasks}
                         currentProject={currentProj}
