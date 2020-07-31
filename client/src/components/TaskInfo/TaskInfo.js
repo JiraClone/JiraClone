@@ -48,7 +48,7 @@ export default function TaskInfo({ allUsers, taskNumber }) {
                     <TaskStatus currentTask={task} />
                     <TaskAssignee allUsers={allUsers} currentTask={task} />
                     <TaskReporter allUsers={allUsers} currentTask={task} />
-                    <TaskPriority currentTask={task} />
+                    <TaskPriority currentTask={task} setTask={setTask}/>
                 </div>
                 }
         </div>
