@@ -47,7 +47,7 @@ export default function TaskLabels({ currentTask }) {
             .catch(console.log);
     };
 
-    if (labels == undefined) return 'Loading...';
+    if (labels === undefined) return 'Loading...';
 
     return (
         <div>

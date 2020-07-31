@@ -4,8 +4,6 @@ import TaskTitle from './TaskTitle';
 import TaskActivity from './TaskActivity';
 import TaskAssignee from './TaskAssignee';
 import TaskDesc from './TaskDesc';
-import TaskDueDate from './TaskDueDate';
-import TaskLabels from './TaskLabels';
 import TaskPriority from './TaskPriority';
 import TaskReporter from './TaskReporter';
 import TaskStatus from './TaskStatus';

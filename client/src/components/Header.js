@@ -60,7 +60,7 @@ export default function Header(props) {
             console.log(projects);
             setProjects(projects.data);
         });
-    }, []);
+    }, [setProjects]);
 
     //Component wrapper on Bootstrap Dropdown to make sure dropdown menu doesn't close after selecting something
     const DropdownPersist = (props) => {

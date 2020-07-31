@@ -20,7 +20,7 @@ export default function NewTask({
 
     useEffect(() => {
         setProject(currentProject);
-    }, []);
+    }, [currentProject]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
