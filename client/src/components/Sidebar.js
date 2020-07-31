@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import styles from './sidebar.module.css';
+import Axios from 'axios';
+import { navigate } from '@reach/router';
+import {Modal, Button} from 'react-bootstrap';
 
 export default function Sidebar(props) {
     
-    const {tasks, setTasks, filteredTasks, setFilteredTasks, setCurrentView, currentProj} = props;
+    const {setTasks, tasks, setFilteredTasks, setCurrentView, currentProj, allProjects, setAllProjects, setCurrentProj} = props;
     
     const [selected, setSelected] = useState(3);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
 
     //Handle selection
     function handleClick(e){
@@ -52,9 +60,50 @@ export default function Sidebar(props) {
         setCurrentView("settings");
     }
 
+    //Handle deleting the current project
+    function deleteProject(){
+        Axios.delete('http://localhost:8000/api/projects/'+currentProj._id)
+            .then(res =>{
+                //Remove project from all projects
+                handleClose();
+                const tempProjects = allProjects.filter(project => project._id != currentProj._id);
+                console.log("Temp Proj", tempProjects);
+                setAllProjects(tempProjects);
+                //If no more projects left then navigate to welcom
+                if(tempProjects.length < 1){
+                    navigate('/welcome');
+                }else{
+                    //Set the current project to the first in the project list
+                    setCurrentProj(tempProjects[0]);
+                    //Update the tasks
+                    setTasks(tempProjects[0].tasks);
+                    setFilteredTasks(tempProjects[0].tasks);
+                }
+                
+            })
+            .catch(err =>{
+                console.log(err);
+            })
+    }
+
     if(currentProj === null) return <div>Loading...</div>
 
     return (
+        <>
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Are you sure you want to delete {currentProj.name}?</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Deleting the project will also delete all tasks associated with the project and cannot be undone.</Modal.Body>
+                <Modal.Footer>
+                <Button variant="primary" onClick={handleClose}>
+                    Cancel
+                </Button>
+                <Button variant="danger" onClick={deleteProject}>
+                    Delete
+                </Button>
+            </Modal.Footer>
+        </Modal>
         <div className="row">
             <div className="col">
             <div className={ styles.sidebar }>
@@ -63,12 +112,7 @@ export default function Sidebar(props) {
                     <img className={ styles.logo } src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Picasa.svg/256px-Picasa.svg.png" alt="logo"/>
                     <div>
                         <span className={ styles.projectTitle }>{currentProj.name}</span>
-                        <span className={ styles.titleInfo }>Classic business project</span>
                     </div>
-                </div>
-                <div className={ styles.link }>
-                    <img className={ styles.arrow } src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTOuGJsBtw7TwvfGIR-4W-uLYvTS2lSsswVLw&usqp=CAU" alt="arrow"/>
-                    Back to project
                 </div>
                 <svg width="240" height="24">
                     <rect x="4" y="12" rx="2" ry="2" width="220" height="1"
@@ -85,6 +129,7 @@ export default function Sidebar(props) {
                         style={{stroke:"black", strokeWidth:"1", opacity:"0.1"}} />
                 </svg>
                 <div id="6" onClick={showProjectSettings} className={ (selected == 6) ? styles.currentlySelected : styles.link } >Project Settings</div>
+                <div onClick={handleShow} className={ styles.link + " text-danger"} >Delete Project</div>
             </div>
             <div className={ styles.collapseButtonDiv }>
                 <svg className={ styles.collapseButton } width="26" height="26">
@@ -97,6 +142,6 @@ export default function Sidebar(props) {
         </div>
             </div>
         </div>
-        
+        </>
     )
 }

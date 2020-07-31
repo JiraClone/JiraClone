@@ -64,6 +64,7 @@ export default function Main({id}) {
                         showModal={handleShow}
                         setCurrentProject={setCurrentProj}
                         projects={allProjects}
+                        setProjects = {setAllProjects}
                         setTasks={setTasks}
                         setFilteredTasks={setFilteredTasks}
                     />
@@ -109,6 +110,9 @@ export default function Main({id}) {
                         setFilteredTasks={setFilteredTasks}
                         setCurrentView={setCurrentView}
                         currentProj = {currentProj}
+                        allProjects = {allProjects}
+                        setCurrentProj = {setCurrentProj}
+                        setAllProjects = {setAllProjects}
                     />
                 </div>
                 {
