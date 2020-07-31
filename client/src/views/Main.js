@@ -135,6 +135,9 @@ export default function Main({ id }) {
                         <ProjectSettings
                             currentProj={currentProj}
                             setCurrentView={setCurrentView}
+                            setCurrentProj={setCurrentProj}
+                            allProjects={allProjects}
+                            setAllProjects={setAllProjects}
                         />
                     </div>
                 )}
